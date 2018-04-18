@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">MyPunch</string>
+    <string name="pseudoFieldHint">pseudo</string>
+    <string name="pswdFieldHint">mot de passe</string>
+    <string name="loginButtonText">se connecter</string>
+    <string name="registerButtonText">s\'inscrire</string>
 </resources>
