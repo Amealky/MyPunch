@@ -1,10 +1,7 @@
 package com.example.caroline.mypunch;
 
-/**
- * Created by caroline on 18/04/2018.
- */
 
-public class LoginPresenterImpl implements LoginPresenter {
+public class LoginPresenterImpl implements LoginPresenter, OnLoginFinishedListener {
 
     private LoginView loginView;
 
@@ -20,5 +17,20 @@ public class LoginPresenterImpl implements LoginPresenter {
     @Override
     public void onDestroy() {
         loginView = null;
+    }
+
+    @Override
+    public void onUsernameError() {
+        loginView.setUsernameError();
+    }
+
+    @Override
+    public void onPasswordError() {
+        loginView.setPasswordError();
+    }
+
+    @Override
+    public void onSuccess() {
+        loginView.navigateToPunchList();
     }
 }
