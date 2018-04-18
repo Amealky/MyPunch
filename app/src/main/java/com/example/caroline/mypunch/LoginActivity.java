@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,17 +20,31 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     @BindView(R.id.registerButton) Button registerButton;
     @BindView(R.id.loginProgressBar) ProgressBar loginProgressBar;
 
+    private LoginPresenter loginPresenter;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        loginPresenter = new LoginPresenterImpl(this);
         ButterKnife.bind(this);
         loginProgressBar.setVisibility(View.GONE);
     }
 
+    @Override
+    protected void onDestroy() {
+        loginPresenter.onDestroy();
+        super.onDestroy();
+    }
+
     @OnClick(R.id.loginButton) public void clickOnLogin() {
         showProgress();
-        // call to presenter
+
+        String pseudo = pseudoField.getText().toString();
+        String pwsd = pseudoField.getText().toString();
+        loginPresenter.validateCredentials(pseudo, pwsd);
     }
 
     @OnClick(R.id.registerButton) public void clickOnRegister() {
@@ -52,12 +67,13 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
 
     @Override
     public void setUsernameError() {
-
+        String msg = "Unknown user " + pseudoField.getText().toString();
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void setPasswordError() {
-
+        Toast.makeText(getApplicationContext(), "Wrong password", Toast.LENGTH_LONG).show();
     }
 
     @Override
