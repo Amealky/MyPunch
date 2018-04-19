@@ -1,4 +1,4 @@
-package com.example.caroline.mypunch;
+package com.example.caroline.mypunch.login;
 
 
 public interface OnLoginFinishedListener {

@@ -1,4 +1,4 @@
-package com.example.caroline.mypunch;
+package com.example.caroline.mypunch.login;
 
 
 public class LoginPresenterImpl implements LoginPresenter, OnLoginFinishedListener {
@@ -11,6 +11,7 @@ public class LoginPresenterImpl implements LoginPresenter, OnLoginFinishedListen
 
     @Override
     public void validateCredentials(String username, String password) {
+        loginView.showProgress();
         // TODO call web service
     }
 
@@ -22,11 +23,13 @@ public class LoginPresenterImpl implements LoginPresenter, OnLoginFinishedListen
     @Override
     public void onUsernameError() {
         loginView.setUsernameError();
+        loginView.hideProgress();
     }
 
     @Override
     public void onPasswordError() {
         loginView.setPasswordError();
+        loginView.hideProgress();
     }
 
     @Override

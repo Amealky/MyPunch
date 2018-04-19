@@ -1,4 +1,4 @@
-package com.example.caroline.mypunch;
+package com.example.caroline.mypunch.login;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +7,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.example.caroline.mypunch.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,10 +42,8 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     }
 
     @OnClick(R.id.loginButton) public void clickOnLogin() {
-        showProgress();
-
         String pseudo = pseudoField.getText().toString();
-        String pwsd = pseudoField.getText().toString();
+        String pwsd = pswdField.getText().toString();
         loginPresenter.validateCredentials(pseudo, pwsd);
     }
 

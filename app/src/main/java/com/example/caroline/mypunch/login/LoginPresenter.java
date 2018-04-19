@@ -1,8 +1,5 @@
-package com.example.caroline.mypunch;
+package com.example.caroline.mypunch.login;
 
-/**
- * Created by caroline on 18/04/2018.
- */
 
 public interface LoginPresenter {
 
