@@ -1,4 +1,4 @@
-package com.example.caroline.mypunch.login;
+package com.esgi.mypunch.login;
 
 
 public class LoginPresenterImpl implements LoginPresenter, OnLoginFinishedListener {
@@ -30,6 +30,12 @@ public class LoginPresenterImpl implements LoginPresenter, OnLoginFinishedListen
     public void onPasswordError() {
         loginView.setPasswordError();
         loginView.hideProgress();
+    }
+
+    @Override
+    public void onServerError() {
+        loginView.hideProgress();
+        // TODO onServerError
     }
 
     @Override

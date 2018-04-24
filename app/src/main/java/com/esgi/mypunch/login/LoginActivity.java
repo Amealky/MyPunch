@@ -1,4 +1,4 @@
-package com.example.caroline.mypunch.login;
+package com.esgi.mypunch.login;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +8,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.caroline.mypunch.R;
+import com.esgi.mypunch.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
