@@ -1,5 +1,6 @@
 package com.esgi.mypunch.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.esgi.mypunch.R;
+import com.esgi.mypunch.register.RegisterActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -78,11 +80,13 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
 
     @Override
     public void navigateRegister() {
-
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
     public void navigateToPunchList() {
-
+        // TODO
     }
 }

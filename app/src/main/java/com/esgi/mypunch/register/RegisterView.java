@@ -11,5 +11,7 @@ public interface RegisterView {
 
     void setPasswordError(String msg);
 
+    void setServerError(String msg);
+
     void navigateToLogin();
 }

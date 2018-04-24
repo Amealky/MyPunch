@@ -12,7 +12,7 @@ public class RegisterPresenterImpl implements RegisterPresenter, OnRegisterFinis
     }
 
     @Override
-    public void validateCredentials(String username, String password) {
+    public void validateCredentials(String username, String password, String passwordRepeat) {
         registerView.showProgress();
         // TODO send to web service
     }
@@ -25,14 +25,14 @@ public class RegisterPresenterImpl implements RegisterPresenter, OnRegisterFinis
     @Override
     public void onUsernameError() {
         // TODO if username already taken
-        registerView.setUsernameError(usernameRules);
         registerView.hideProgress();
+        registerView.setUsernameError(usernameRules);
     }
 
     @Override
     public void onPasswordError() {
-        registerView.setPasswordError(passwordRules);
         registerView.hideProgress();
+        registerView.setPasswordError(passwordRules);
     }
 
     @Override
