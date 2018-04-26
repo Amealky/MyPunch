@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.esgi.mypunch.login.LoginActivity">
+    tools:context="com.esgi.mypunch.register.RegisterActivity">
 
     <EditText
-        android:id="@+id/pseudoField"
+        android:id="@+id/registerPseudoField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -18,41 +18,42 @@
         />
 
     <EditText
-        android:id="@+id/pswdField"
+        android:id="@+id/registerPswdField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pseudoField"
+        app:layout_constraintTop_toBottomOf="@id/registerPseudoField"
         android:hint="@string/pswdFieldHint"
         android:inputType="textPassword"
         />
 
-    <Button
-        android:id="@+id/loginButton"
+    <EditText
+        android:id="@+id/repeatPswdField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pswdField"
-        android:text="@string/loginButtonText"
+        app:layout_constraintTop_toBottomOf="@id/registerPswdField"
+        android:hint="@string/repeat_pswd"
+        android:inputType="textPassword"
         />
 
     <Button
-        android:id="@+id/registerButton"
+        android:id="@+id/launchRegistrationButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/loginButton"
+        app:layout_constraintTop_toBottomOf="@id/repeatPswdField"
         android:text="@string/registerButtonText"
         />
 
     <ProgressBar
-        android:id="@+id/loginProgressBar"
+        android:id="@+id/registerProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/registerButton"
+        app:layout_constraintTop_toBottomOf="@id/launchRegistrationButton"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         />

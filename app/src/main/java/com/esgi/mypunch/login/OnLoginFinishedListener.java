@@ -1,4 +1,4 @@
-package com.example.caroline.mypunch.login;
+package com.esgi.mypunch.login;
 
 
 public interface OnLoginFinishedListener {
@@ -6,6 +6,8 @@ public interface OnLoginFinishedListener {
     void onUsernameError();
 
     void onPasswordError();
+
+    void onServerError();
 
     void onSuccess();
 }
