@@ -23,22 +23,22 @@ public class RegisterPresenterImpl implements RegisterPresenter, OnRegisterFinis
     }
 
     @Override
-    public void onUsernameError() {
+    public void onUsernameError(String msg) {
         // TODO if username already taken
         registerView.hideProgress();
         registerView.setUsernameError(usernameRules);
     }
 
     @Override
-    public void onPasswordError() {
+    public void onPasswordError(String msg) {
         registerView.hideProgress();
         registerView.setPasswordError(passwordRules);
     }
 
     @Override
-    public void onServerError() {
+    public void onServerError(String msg) {
         registerView.hideProgress();
-        // TODO other errors
+        registerView.setServerError(msg);
     }
 
     @Override
