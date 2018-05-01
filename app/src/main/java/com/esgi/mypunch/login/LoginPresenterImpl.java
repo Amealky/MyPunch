@@ -21,21 +21,21 @@ public class LoginPresenterImpl implements LoginPresenter, OnLoginFinishedListen
     }
 
     @Override
-    public void onUsernameError() {
-        loginView.setUsernameError();
+    public void onUsernameError(String msg) {
         loginView.hideProgress();
+        loginView.setUsernameError(msg);
     }
 
     @Override
-    public void onPasswordError() {
-        loginView.setPasswordError();
+    public void onPasswordError(String msg) {
         loginView.hideProgress();
+        loginView.setPasswordError(msg);
     }
 
     @Override
-    public void onServerError() {
+    public void onServerError(String msg) {
         loginView.hideProgress();
-        // TODO onServerError
+        loginView.setServerError(msg);
     }
 
     @Override

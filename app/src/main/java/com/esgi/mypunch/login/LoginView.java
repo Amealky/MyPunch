@@ -7,9 +7,11 @@ public interface LoginView {
 
     void hideProgress();
 
-    void setUsernameError();
+    void setUsernameError(String msg);
 
-    void setPasswordError();
+    void setPasswordError(String msg);
+
+    void setServerError(String msg);
 
     void navigateRegister();
 
