@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.esgi.mypunch.R;
 import com.esgi.mypunch.login.LoginActivity;
@@ -61,17 +62,17 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
 
     @Override
     public void setUsernameError(String msg) {
-        // TODO
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void setPasswordError(String msg) {
-        // TODO
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public  void setServerError(String msg) {
-        // TODO
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
     }
 
     @Override

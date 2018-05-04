@@ -68,14 +68,18 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     }
 
     @Override
-    public void setUsernameError() {
-        String msg = "Unknown user " + pseudoField.getText().toString();
+    public void setUsernameError(String msg) {
         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
     }
 
     @Override
-    public void setPasswordError() {
-        Toast.makeText(getApplicationContext(), "Wrong password", Toast.LENGTH_LONG).show();
+    public void setPasswordError(String msg) {
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void setServerError(String msg) {
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
     }
 
     @Override

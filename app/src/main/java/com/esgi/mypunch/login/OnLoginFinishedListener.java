@@ -3,11 +3,11 @@ package com.esgi.mypunch.login;
 
 public interface OnLoginFinishedListener {
 
-    void onUsernameError();
+    void onUsernameError(String msg);
 
-    void onPasswordError();
+    void onPasswordError(String msg);
 
-    void onServerError();
+    void onServerError(String msg);
 
     void onSuccess();
 }
