@@ -3,10 +3,10 @@ package com.esgi.mypunch.punchlist;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
 
 import com.esgi.mypunch.R;
 import com.esgi.mypunch.data.dtos.BoxingSession;
@@ -43,7 +43,7 @@ public class PunchListActivity extends AppCompatActivity {
         sessionsRecyclerView.setLayoutManager(mLayoutManager);
         sessionsRecyclerView.setItemAnimator(new DefaultItemAnimator());
         sessionsRecyclerView.setAdapter(adapter);
-        sessionsRecyclerView.setVisibility(View.VISIBLE);
+        sessionsRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
         dummySamples();
     }
