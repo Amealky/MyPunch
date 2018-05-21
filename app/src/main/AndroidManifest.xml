@@ -18,7 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".register.RegisterActivity"></activity>
+        <activity android:name=".register.RegisterActivity" />
+        <activity android:name=".punchlist.PunchListActivity"></activity>
     </application>
 
 </manifest>
