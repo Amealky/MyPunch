@@ -63,8 +63,8 @@ public class BoxingSessionAdapter extends RecyclerView.Adapter<BoxingSessionAdap
         long startInMillis = session.getStart().getTime();
         long endInMillis = session.getEnd().getTime();
         long durationInMillis = endInMillis - startInMillis;
-        long durationInSeconds = durationInMillis * 1000;
-        String durationText = durationInSeconds + " seconds";
+        long durationInSeconds = durationInMillis / 1000;
+        String durationText = durationInSeconds + " s";
         holder.sessionDuration.setText(durationText);
     }
 
