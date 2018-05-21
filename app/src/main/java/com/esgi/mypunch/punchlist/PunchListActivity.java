@@ -2,6 +2,8 @@ package com.esgi.mypunch.punchlist;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.esgi.mypunch.R;
@@ -20,6 +22,7 @@ public class PunchListActivity extends AppCompatActivity {
     public static final String TAG = "PunchListActivity";
     private PunchMyNodeProvider provider;
     private List<BoxingSession> sessions;
+    private BoxingSessionAdapter adapter;
 
     @BindView(R.id.boxingSessionList) RecyclerView sessionsRecyclerView;
 
@@ -31,7 +34,14 @@ public class PunchListActivity extends AppCompatActivity {
         setTitle("Boxing sessions");
         provider = new PunchMyNodeProvider();
         ButterKnife.bind(this);
+        sessions = new ArrayList<>();
+
+        adapter = new BoxingSessionAdapter(sessions);
         dummySamples();
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        sessionsRecyclerView.setLayoutManager(mLayoutManager);
+        sessionsRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        sessionsRecyclerView.setAdapter(adapter);
     }
 
     private void dummySamples() {
@@ -47,5 +57,6 @@ public class PunchListActivity extends AppCompatActivity {
             BoxingSession session = new BoxingSession(startCal.getTime(), endCal.getTime(), avgAcceleration, avgForce);
             sessions.add(session);
         }
+        adapter.notifyDataSetChanged();
     }
 }
