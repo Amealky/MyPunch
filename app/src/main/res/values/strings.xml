@@ -5,4 +5,5 @@
     <string name="loginButtonText">se connecter</string>
     <string name="registerButtonText">s\'inscrire</string>
     <string name="repeat_pswd">répéter mot de passe</string>
+    <string name="sessionOf">Session du </string>
 </resources>

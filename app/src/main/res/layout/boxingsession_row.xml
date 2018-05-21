@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/sessionOf"
+        style="@style/sessionRow"
+        android:layout_marginLeft="10dp"
+        android:text="@string/sessionOf"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/sessionDate"
+        style="@style/sessionRow"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/sessionOf"
+        app:layout_constraintRight_toLeftOf="@id/twoDots"
+        android:text="../../...."
+        />
+
+    <TextView
+        android:id="@+id/twoDots"
+        style="@style/sessionRow"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/sessionDate"
+        app:layout_constraintRight_toLeftOf="@id/sessionDuration"
+        android:text=":"
+        />
+
+    <TextView
+        android:id="@+id/sessionDuration"
+        style="@style/sessionRow"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/twoDots"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="X min"
+        />
+
+</android.support.constraint.ConstraintLayout>
