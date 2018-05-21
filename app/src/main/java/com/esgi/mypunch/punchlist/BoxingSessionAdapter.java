@@ -1,6 +1,7 @@
 package com.esgi.mypunch.punchlist;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import butterknife.ButterKnife;
 public class BoxingSessionAdapter extends RecyclerView.Adapter<BoxingSessionAdapter.MyViewHolder> {
 
     private List<BoxingSession> boxingSessions;
+    private static final String TAG = "BoxingSessionAdapter";
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.sessionDate)     TextView sessionDate;
@@ -27,16 +29,23 @@ public class BoxingSessionAdapter extends RecyclerView.Adapter<BoxingSessionAdap
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(itemView);
+            ButterKnife.bind(this, itemView);
+            Log.d(TAG, "view holder called");
         }
     }
 
     public BoxingSessionAdapter(List<BoxingSession> boxingSessions) {
+        Log.d(TAG, "BoxingSessionAdapter");
+        this.boxingSessions = boxingSessions;
+    }
+
+    public void updateData(List<BoxingSession> boxingSessions) {
         this.boxingSessions = boxingSessions;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.d(TAG, "onCreateViewHolder");
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.boxingsession_row, parent, false);
         return new MyViewHolder(itemView);
@@ -44,6 +53,7 @@ public class BoxingSessionAdapter extends RecyclerView.Adapter<BoxingSessionAdap
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+        Log.d(TAG, "onBindViewHolder");
         BoxingSession session = boxingSessions.get(position);
         // format session date
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);

@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
 
 import com.esgi.mypunch.R;
 import com.esgi.mypunch.data.dtos.BoxingSession;
@@ -37,11 +39,13 @@ public class PunchListActivity extends AppCompatActivity {
         sessions = new ArrayList<>();
 
         adapter = new BoxingSessionAdapter(sessions);
-        dummySamples();
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         sessionsRecyclerView.setLayoutManager(mLayoutManager);
         sessionsRecyclerView.setItemAnimator(new DefaultItemAnimator());
         sessionsRecyclerView.setAdapter(adapter);
+        sessionsRecyclerView.setVisibility(View.VISIBLE);
+
+        dummySamples();
     }
 
     private void dummySamples() {
@@ -51,12 +55,15 @@ public class PunchListActivity extends AppCompatActivity {
 
         for (int i = 1; i <= 10; i++) {
             Calendar startCal = Calendar.getInstance();
-            startCal.set(2018, Calendar.MAY, i, 10, 30, 00);
+            startCal.set(2018, Calendar.MAY, i, 10, 30, 0);
             Calendar endCal = Calendar.getInstance();
-            endCal.set(2018, Calendar.MAY, i, 10, 33, 00);
+            endCal.set(2018, Calendar.MAY, i, 10, 31, 0);
             BoxingSession session = new BoxingSession(startCal.getTime(), endCal.getTime(), avgAcceleration, avgForce);
             sessions.add(session);
         }
+
+        Log.d(TAG, sessions.toString());
+        adapter.updateData(sessions);
         adapter.notifyDataSetChanged();
     }
 }
