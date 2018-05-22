@@ -11,7 +11,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PunchMyNodeProvider {
-    private static final String BASE_URL = "?";
+    private static final String BASE_URL = "https://dummy.fr/";
 
     private PunchMyNodeService pmnService;
     private String token;

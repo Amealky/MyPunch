@@ -13,6 +13,7 @@ public class LoginPresenterImpl implements LoginPresenter, OnLoginFinishedListen
     public void validateCredentials(String username, String password) {
         loginView.showProgress();
         // TODO call web service
+        onSuccess();
     }
 
     @Override
