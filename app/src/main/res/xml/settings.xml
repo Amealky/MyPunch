@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/connectivity">
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="pref_bluetooth_checkbox"
+            android:title="Bluetooth"
+            android:summaryOn="Le bluetooth est activé"
+            android:summaryOff="Le bluetooth est désactivé"
+            />
+
+        <Preference
+            android:dependency="pref_bluetooth_checkbox"
+            android:key="pref_list"
+            android:title="Liste des bluetooth"
+            />
+
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/account">
+
+        <Preference
+            android:key="pref_disconnect"
+            android:title="Deconnexion"
+            />
+    </PreferenceCategory>
+
+</PreferenceScreen>

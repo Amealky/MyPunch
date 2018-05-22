@@ -6,4 +6,7 @@
     <string name="registerButtonText">s\'inscrire</string>
     <string name="repeat_pswd">répéter mot de passe</string>
     <string name="sessionOf">Session du </string>
+    <string name="session">Session</string>
+    <string name="connectivity">Connectivité</string>
+    <string name="account">Compte</string>
 </resources>
