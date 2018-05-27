@@ -17,6 +17,8 @@
             android:title="Liste des bluetooth"
             />
 
+
+
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/account">
 
