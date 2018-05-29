@@ -33,10 +33,10 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
-    compile "com.jakewharton:butterknife:$project.butterKnifeVersion"
+    implementation "com.jakewharton:butterknife:$project.butterKnifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$project.butterKnifeVersion"
-    compile "com.squareup.retrofit2:retrofit:$project.retrofit2Version"
-    compile "com.squareup.retrofit2:converter-gson:$project.retrofit2Version"
-    compile "com.squareup.okhttp3:okhttp-urlconnection:$project.okhttp3Version"
-    compile "com.android.support:recyclerview-v7:$project.appCompatVersion"
+    implementation "com.squareup.retrofit2:retrofit:$project.retrofit2Version"
+    implementation "com.squareup.retrofit2:converter-gson:$project.retrofit2Version"
+    implementation "com.squareup.okhttp3:okhttp-urlconnection:$project.okhttp3Version"
+    implementation "com.android.support:recyclerview-v7:$project.appCompatVersion"
 }
