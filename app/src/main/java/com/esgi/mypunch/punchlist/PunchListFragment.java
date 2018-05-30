@@ -39,7 +39,6 @@ public class PunchListFragment extends Fragment {
         View view = inflater.inflate(R.layout.activity_punch_list, container, false);
         ButterKnife.bind(this, view);
 
-        adapter = new BoxingSessionAdapter(sessions);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
         sessionsRecyclerView.setLayoutManager(mLayoutManager);
         sessionsRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -55,6 +54,7 @@ public class PunchListFragment extends Fragment {
         provider = new PunchMyNodeProvider();
         sessions = new ArrayList<>();
         context = getActivity().getApplicationContext();
+        adapter = new BoxingSessionAdapter(sessions);
         dummySamples();
     }
 

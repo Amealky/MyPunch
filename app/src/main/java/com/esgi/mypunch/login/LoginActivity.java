@@ -10,7 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.esgi.mypunch.R;
-import com.esgi.mypunch.punchlist.PunchListFragment;
+import com.esgi.mypunch.punchlist.SomeActivity;
 import com.esgi.mypunch.register.RegisterActivity;
 
 import butterknife.BindView;
@@ -92,7 +92,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
 
     @Override
     public void navigateToPunchList() {
-        Intent intent = new Intent(this, PunchListFragment.class);
+        Intent intent = new Intent(this, SomeActivity.class);
         startActivity(intent);
         finish();
     }
