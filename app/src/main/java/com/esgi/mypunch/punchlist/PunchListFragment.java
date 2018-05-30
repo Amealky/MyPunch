@@ -1,12 +1,16 @@
 package com.esgi.mypunch.punchlist;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.esgi.mypunch.R;
 import com.esgi.mypunch.data.dtos.BoxingSession;
@@ -19,32 +23,38 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PunchListActivity extends AppCompatActivity {
+public class PunchListFragment extends Fragment {
 
     public static final String TAG = "PunchListActivity";
     private PunchMyNodeProvider provider;
     private List<BoxingSession> sessions;
     private BoxingSessionAdapter adapter;
+    private Context context;
 
     @BindView(R.id.boxingSessionList) RecyclerView sessionsRecyclerView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_punch_list);
-
-        setTitle("Boxing sessions");
-        provider = new PunchMyNodeProvider();
-        ButterKnife.bind(this);
-        sessions = new ArrayList<>();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        View view = inflater.inflate(R.layout.activity_punch_list, container, false);
+        ButterKnife.bind(this, view);
 
         adapter = new BoxingSessionAdapter(sessions);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
         sessionsRecyclerView.setLayoutManager(mLayoutManager);
         sessionsRecyclerView.setItemAnimator(new DefaultItemAnimator());
         sessionsRecyclerView.setAdapter(adapter);
-        sessionsRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        sessionsRecyclerView.addItemDecoration(new DividerItemDecoration(context, LinearLayoutManager.VERTICAL));
 
+        return view;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        provider = new PunchMyNodeProvider();
+        sessions = new ArrayList<>();
+        context = getActivity().getApplicationContext();
         dummySamples();
     }
 

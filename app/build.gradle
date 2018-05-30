@@ -40,6 +40,6 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$project.retrofit2Version"
     implementation "com.squareup.okhttp3:okhttp-urlconnection:$project.okhttp3Version"
     implementation "com.android.support:recyclerview-v7:$project.appCompatVersion"
-
     implementation "com.github.devlight.navigationtabstrip:navigationtabstrip:$project.navigationTabsStripVersion"
+
 }
