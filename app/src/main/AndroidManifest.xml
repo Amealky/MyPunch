@@ -19,9 +19,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".register.RegisterActivity" />
-        <activity android:name=".punchlist.PunchListActivity" />
         <activity android:name=".settings.SettingsActivity" />
         <activity android:name=".navbar.NavContentActivity"/>
+        <activity android:name=".punchlist.SomeActivity"></activity>
+
     </application>
 
 </manifest>

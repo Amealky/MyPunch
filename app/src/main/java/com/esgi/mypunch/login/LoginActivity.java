@@ -10,10 +10,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.esgi.mypunch.R;
-
 import com.esgi.mypunch.navbar.NavContentActivity;
-
-
+import com.esgi.mypunch.punchlist.SomeActivity;
 import com.esgi.mypunch.register.RegisterActivity;
 
 import butterknife.BindView;

@@ -11,6 +11,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.esgi.mypunch.R;
+import com.esgi.mypunch.login.LoginPresenter;
+import com.esgi.mypunch.login.LoginPresenterImpl;
+import com.esgi.mypunch.login.LoginView;
 import com.esgi.mypunch.punchlist.PunchListFragment;
 import com.esgi.mypunch.settings.SettingsActivity;
 import com.esgi.mypunch.settings.SettingsFragment;
@@ -22,7 +25,7 @@ import java.util.Vector;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class NavContentActivity extends AppCompatActivity {
+public class NavContentActivity extends AppCompatActivity implements NavContentView {
 
     @BindView(R.id.viewPager)
     ViewPager viewPager;
@@ -30,35 +33,43 @@ public class NavContentActivity extends AppCompatActivity {
     @BindView(R.id.navigation_bar)
     NavigationTabStrip appNavigationTabStrip;
 
-    NavPageAdapter navPageAdapter;
+    private NavPageAdapter navPageAdapter;
 
+    private NavContentPresenter navContentPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navcontent);
         ButterKnife.bind(this);
+        navContentPresenter = new NavContentPresenterImpl(this);
 
 
         List<Fragment> fragments = new Vector<>();
 
         fragments.add(Fragment.instantiate(this, PunchListFragment.class.getName()));
+        fragments.add(new Fragment());
 
         navPageAdapter = new NavPageAdapter(super.getSupportFragmentManager(), fragments);
 
         viewPager.setAdapter(navPageAdapter);
-        appNavigationTabStrip.setViewPager(viewPager, 1);
-
+        appNavigationTabStrip.setViewPager(viewPager, 0);
         appNavigationTabStrip.setTitles("Sessions", "Synthèse");
-        appNavigationTabStrip.setTabIndex(1, true);
+        appNavigationTabStrip.setTabIndex(0, true);
         appNavigationTabStrip.setStripColor(Color.RED);
         appNavigationTabStrip.setTypeface("fonts/typeface.ttf");
 
     }
 
     @Override
+    protected void onDestroy() {
+        navContentPresenter.onDestroy();
+        super.onDestroy();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //ajoute les entrées de menu_test à l'ActionBar
+        //ajoute les entrées de menu à l'ActionBar
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
@@ -68,14 +79,15 @@ public class NavContentActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_settings:
-                callSettings();
+                this.navigateSettings();
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    public void callSettings(){
+    @Override
+    public void navigateSettings(){
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
         finish();
