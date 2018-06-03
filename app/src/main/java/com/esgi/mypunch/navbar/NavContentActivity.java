@@ -1,8 +1,8 @@
 package com.esgi.mypunch.navbar;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.esgi.mypunch.R;
+import com.esgi.mypunch.punchlist.PunchListFragment;
 import com.esgi.mypunch.settings.SettingsActivity;
 import com.esgi.mypunch.settings.SettingsFragment;
 import com.gigamole.navigationtabstrip.NavigationTabStrip;
@@ -39,14 +40,14 @@ public class NavContentActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
 
-      /*  List<Fragment> fragments = new Vector<>();
+        List<Fragment> fragments = new Vector<>();
 
-        fragments.add(Fragment.instantiate(this, SettingsFragment.class.getName()));*/
+        fragments.add(Fragment.instantiate(this, PunchListFragment.class.getName()));
 
-        /*navPageAdapter = new NavPageAdapter(super.getSupportFragmentManager(), fragments);
+        navPageAdapter = new NavPageAdapter(super.getSupportFragmentManager(), fragments);
 
         viewPager.setAdapter(navPageAdapter);
-        appNavigationTabStrip.setViewPager(viewPager, 1);*/
+        appNavigationTabStrip.setViewPager(viewPager, 1);
 
         appNavigationTabStrip.setTitles("Sessions", "Synthèse");
         appNavigationTabStrip.setTabIndex(1, true);
