@@ -6,9 +6,10 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toast;
+
 
 import com.esgi.mypunch.R;
+import com.esgi.mypunch.login.LoginActivity;
 import com.esgi.mypunch.navbar.NavContentActivity;
 
 public class SettingsActivity extends AppCompatActivity implements SettingsView{
@@ -28,31 +29,6 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView{
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 
-
-
-               /*Preference checkboxBluetooth =  findPreference("pref_bluetooth_checkbox");
-        checkboxBluetooth.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            public boolean onPreferenceClick(Preference preference) {
-                //activate or desactivate bluetooth here
-                return true;
-            }
-        });
-
-        Preference bluetoothList =  findPreference("pref_list");
-        checkboxBluetooth.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            public boolean onPreferenceClick(Preference preference) {
-                //do with selected bluetooth
-                return true;
-            }
-        });
-
-        Preference disconnectUser = findPreference("pref_disconnect");
-        checkboxBluetooth.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            public boolean onPreferenceClick(Preference preference) {
-                //disconnect and redirect to login page
-                return true;
-            }
-        });*/
     }
 
     @Override
@@ -77,5 +53,16 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView{
         Intent intent = new Intent(this, NavContentActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void navigateLogin(){
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public SettingsPresenter getSettingsPresenter() {
+        return settingsPresenter;
     }
 }

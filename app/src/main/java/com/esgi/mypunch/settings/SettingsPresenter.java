@@ -4,4 +4,6 @@ public interface SettingsPresenter {
 
 
     void onDestroy();
+
+    void clickBluetooth();
 }
