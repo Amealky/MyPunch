@@ -1,35 +1,35 @@
 package com.esgi.mypunch.data.dtos;
 
 public class Credentials {
-    private String login;
-    private String pswd; // don't forget to crypt it !
+    private String email;
+    private String password; // don't forget to crypt it !
 
-    public Credentials(String login, String pswd) {
-        this.login = login;
-        this.pswd = pswd;
+    public Credentials(String login, String password) {
+        this.email = login;
+        this.password = password;
     }
 
-    public String getLogin() {
-        return login;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getPswd() {
-        return pswd;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPswd(String pswd) {
-        this.pswd = pswd;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
     public String toString() {
         return "Credentials{" +
-                "login='" + login + '\'' +
-                ", pswd='" + pswd + '\'' +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
                 '}';
     }
 }
