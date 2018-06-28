@@ -11,6 +11,13 @@
             android:summaryOff="Le bluetooth est désactivé"
             />
 
+        <Preference
+            android:dependency="pref_bluetooth_checkbox"
+            android:key="pref_bluetooth_devices"
+            android:title="Bluetooth devices"
+
+
+            />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/account">
 

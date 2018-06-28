@@ -1,6 +1,7 @@
 package com.esgi.mypunch.settings;
 
 import android.bluetooth.BluetoothAdapter;
+import android.widget.ListAdapter;
 
 public class SettingsPresenterImpl implements SettingsPresenter {
 
@@ -22,9 +23,17 @@ public class SettingsPresenterImpl implements SettingsPresenter {
     public void clickBluetooth() {
         if(mBluetoothAdapter.isEnabled()){
             mBluetoothAdapter.disable();
+            //scanLeDevice(true);
+
         } else {
             mBluetoothAdapter.enable();
         }
     }
+
+    @Override
+    public void clickDevices(ListAdapter adapterLeScanResult) {
+        settingsView.showDialogDevices(adapterLeScanResult);
+    }
+
 
 }
