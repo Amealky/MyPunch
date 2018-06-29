@@ -72,17 +72,7 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView{
         finish();
     }
 
-    @Override
-    public void showDialogDevices(ListAdapter adapterLeScanResult) {
 
-        final Dialog dialog = new Dialog(this);
-        View view = getLayoutInflater().inflate(R.layout.dialog_bluetooth_devices, null);
-        ListView rvDevices =  view.findViewById(R.id.bluetoothDevices);
-        rvDevices.setAdapter(adapterLeScanResult);
-        Log.i("LIST SIZE : ", String.valueOf(adapterLeScanResult.getCount()));
-        dialog.setContentView(view);
-        dialog.show();
-    }
 
     public SettingsPresenter getSettingsPresenter() {
         return settingsPresenter;

@@ -1,12 +1,15 @@
 package com.esgi.mypunch.navbar;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -58,6 +61,20 @@ public class NavContentActivity extends AppCompatActivity implements NavContentV
         appNavigationTabStrip.setTabIndex(0, true);
         appNavigationTabStrip.setStripColor(Color.RED);
         appNavigationTabStrip.setTypeface("fonts/typeface.ttf");
+
+        SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+        boolean hasBluetooth = sharedPreferences.getBoolean("pref_bluetooth_checkbox", );
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if(hasBluetooth){
+            if (!mBluetoothAdapter.isEnabled()) {
+                mBluetoothAdapter.enable();
+            }
+        }else{
+           /* if(mBluetoothAdapter.isEnabled()){
+                sharedPreferences.
+            }*/
+        }
+
 
     }
 

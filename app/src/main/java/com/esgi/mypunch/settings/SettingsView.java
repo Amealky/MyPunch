@@ -8,5 +8,4 @@ public interface SettingsView {
 
     void navigateLogin();
 
-    void showDialogDevices(ListAdapter adapterLeScanResult);
 }

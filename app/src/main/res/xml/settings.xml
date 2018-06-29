@@ -6,7 +6,7 @@
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="pref_bluetooth_checkbox"
-            android:title="Bluetooth"
+            android:title="@string/bluetooth"
             android:summaryOn="Le bluetooth est activé"
             android:summaryOff="Le bluetooth est désactivé"
             />
@@ -14,17 +14,14 @@
         <Preference
             android:dependency="pref_bluetooth_checkbox"
             android:key="pref_bluetooth_devices"
-            android:title="Bluetooth devices"
-
-
+            android:title="@string/bluetooth_devices"
             />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/account">
+    <PreferenceCategory android:title="@string/comptes">
 
         <Preference
             android:key="pref_disconnect"
-            android:title="Deconnexion"
-            />
+            android:title="@string/deconnexion"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

@@ -5,9 +5,12 @@ import android.widget.ListAdapter;
 public interface SettingsPresenter {
 
 
+    boolean hasBluetooth = false;
+
     void onDestroy();
 
-    void clickBluetooth();
+    boolean clickBluetooth(boolean checkBoxValue);
 
-    void clickDevices(ListAdapter adapterLeScanResult);
+
 }
+
