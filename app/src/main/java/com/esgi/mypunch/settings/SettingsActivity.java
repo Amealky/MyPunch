@@ -31,6 +31,7 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView{
 
         settingsPresenter = new SettingsPresenterImpl(this);
 
+
         getFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).commit();
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);

@@ -4,6 +4,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -40,13 +41,18 @@ public class NavContentActivity extends AppCompatActivity implements NavContentV
 
     private NavContentPresenter navContentPresenter;
 
+    private static final int RQS_ENABLE_BLUETOOTH = 1;
+
+    BluetoothAdapter mBluetoothAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navcontent);
         ButterKnife.bind(this);
-        navContentPresenter = new NavContentPresenterImpl(this);
 
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        navContentPresenter = new NavContentPresenterImpl(this);
 
         List<Fragment> fragments = new Vector<>();
 
@@ -62,20 +68,28 @@ public class NavContentActivity extends AppCompatActivity implements NavContentV
         appNavigationTabStrip.setStripColor(Color.RED);
         appNavigationTabStrip.setTypeface("fonts/typeface.ttf");
 
-        SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
-        boolean hasBluetooth = sharedPreferences.getBoolean("pref_bluetooth_checkbox", );
-        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if(hasBluetooth){
-            if (!mBluetoothAdapter.isEnabled()) {
-                mBluetoothAdapter.enable();
-            }
-        }else{
-           /* if(mBluetoothAdapter.isEnabled()){
-                sharedPreferences.
-            }*/
+        PreferenceManager.setDefaultValues(this, R.xml.settings, false);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        boolean hasBluetooth = sharedPreferences.getBoolean("pref_bluetooth_checkbox", true);
+
+
+        if (!mBluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, RQS_ENABLE_BLUETOOTH);
         }
 
-
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+// Check which request we're responding to
+        if (requestCode == RQS_ENABLE_BLUETOOTH) {
+            if (resultCode == RESULT_OK) {
+                mBluetoothAdapter.enable();
+            } else {
+                mBluetoothAdapter.disable();
+            }
+        }
     }
 
     @Override

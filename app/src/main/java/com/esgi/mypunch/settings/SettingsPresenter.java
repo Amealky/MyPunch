@@ -9,7 +9,7 @@ public interface SettingsPresenter {
 
     void onDestroy();
 
-    boolean clickBluetooth(boolean checkBoxValue);
+    void clickBluetooth(boolean checkBoxValue);
 
 
 }

@@ -14,5 +14,7 @@
     <string name="deconnexion">Deconnexion</string>
     <string name="connectivites">connectivity</string>
     <string name="comptes">Comptes</string>
+    <string name="scan_devices">Scan Devices</string>
+    <string name="liste_vide">Liste vide</string>
 
 </resources>

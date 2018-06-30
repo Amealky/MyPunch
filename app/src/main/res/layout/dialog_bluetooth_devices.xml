@@ -1,19 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <Button
         android:id="@+id/scanButton"
-        android:text="Scan Devices"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="@string/scan_devices"
+ />
 
-    <ListView
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_empty"
+        android:textAlignment="center"
+        android:text="@string/liste_vide"
+
+        />
+
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/bluetoothDevices"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
+        android:layout_margin="10sp"/>
+
+
+
+    <ProgressBar
+        android:id="@+id/scanProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
         />
 
 
