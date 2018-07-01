@@ -58,11 +58,11 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
     List<BluetoothDevice> listBluetoothDevice;
     BluetoothDevicesAdapter bluetoothDevicesAdapter;
 
-    private boolean mScanning;
+    private boolean mScanning = false;
 
 
     private Handler mHandler;
-    private static final long SCAN_PERIOD = 3000;
+    private static final long SCAN_PERIOD = 10000;
 
     CheckBoxPreference checkboxBluetooth;
     Preference buttonDeconnection;
@@ -104,9 +104,20 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
         bt_Scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialogProgressBar.setVisibility(View.VISIBLE);
-                tv_emptyList.setVisibility(View.GONE);
-                scanLeDevice(true);
+
+                if(mScanning){
+                    bt_Scan.setText(R.string.scan_devices);
+                    dialogProgressBar.setVisibility(View.GONE);
+                    tv_emptyList.setVisibility(View.VISIBLE);
+                    scanLeDevice(false);
+
+                }else{
+                    bt_Scan.setText(R.string.stop_scan_devices);
+                    dialogProgressBar.setVisibility(View.VISIBLE);
+                    tv_emptyList.setVisibility(View.GONE);
+                    scanLeDevice(true);
+                }
+
 
             }
         });
@@ -202,7 +213,6 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
     }
 
     public void showDialogDevices() {
-
         dialog.show();
     }
 
@@ -265,48 +275,49 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
 
 
     private void scanLeDevice(final boolean enable) {
-        if (enable) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (enable) {
 
-            //listBluetoothDevice.clear();
-            //listViewLE.invalidateViews();
+                // Stops scanning after a pre-defined scan period.
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
 
-            // Stops scanning after a pre-defined scan period.
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         mBluetoothLeScanner.stopScan(scanCallback);
+
+                        //listViewLE.invalidateViews();
+
+                        Toast.makeText(getActivity(),
+                                "Scan timeout",
+                                Toast.LENGTH_LONG).show();
+
+                        dialogProgressBar.setVisibility(View.GONE);
+                        bt_Scan.setText(R.string.scan_devices);
+                        if (listBluetoothDevice.isEmpty()) {
+                            tv_emptyList.setVisibility(View.VISIBLE);
+                        } else {
+                            tv_emptyList.setVisibility(View.GONE);
+                        }
+
+                        mScanning = false;
+
                     }
-                    //listViewLE.invalidateViews();
+                }, SCAN_PERIOD);
 
-                    Toast.makeText(getActivity(),
-                            "Scan timeout",
-                            Toast.LENGTH_LONG).show();
 
-                    dialogProgressBar.setVisibility(View.GONE);
-                    if(listBluetoothDevice.isEmpty()){
-                        tv_emptyList.setVisibility(View.VISIBLE);
-                    }else{
-                        tv_emptyList.setVisibility(View.GONE);
-                    }
-
-                    mScanning = false;
-
-                    //btnScan.setEnabled(true);
-                }
-            }, SCAN_PERIOD);
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 mBluetoothLeScanner.startScan(scanCallback);
-            }
-            mScanning = true;
-            //btnScan.setEnabled(false);
-        } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+                mScanning = true;
+
+            } else {
+
                 mBluetoothLeScanner.stopScan(scanCallback);
+
+                mScanning = false;
             }
-            mScanning = false;
-           // btnScan.setEnabled(true);
+
+        }else{
+            Toast.makeText(getActivity(), "Votre version ne supporte pas cette fonction", Toast.LENGTH_SHORT);
         }
     }
 
@@ -347,12 +358,32 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
         }
 
         private void addBluetoothDevice(BluetoothDevice device){
+            /*    private void addDevice(BluetoothDevice device, int rssi) {
+        boolean deviceFound = false;
+
+        for (BluetoothDevice listDev : deviceList) {
+            if (listDev.getAddress().equals(device.getAddress())) {
+                deviceFound = true;
+                break;
+            }
+        }
+
+
+        devRssiValues.put(device.getAddress(), rssi);
+        if (!deviceFound) {
+        	deviceList.add(device);
+            mEmptyList.setVisibility(View.GONE);
+
+
+
+
+            deviceAdapter.notifyDataSetChanged();
+        }*/
             if(!listBluetoothDevice.contains(device)){
-                    if(device.getName() != null){
-                        Log.i("NAME  ", device.getName());
+
                         boolean hasDevice = false;
                         for(int i = 0; i <  listBluetoothDevice.size(); i++){
-                            if(listBluetoothDevice.get(i).getName() == device.getName()){
+                            if(listBluetoothDevice.get(i).getAddress() == device.getAddress()){
                                 hasDevice = true;
                             }
                         }
@@ -360,11 +391,6 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
                             listBluetoothDevice.add(device);
                         }
 
-                    }
-
-
-
-                //listViewLE.invalidateViews();
             }
         }
     };
@@ -374,18 +400,10 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
 
-            final Intent mIntent = intent;
             //*********************//
             if (action.equals(BluetoothLEService.ACTION_GATT_CONNECTED)) {
-                getActivity().closeContextMenu();
+                Log.d("BROAD", "UART_CONNECT_MSG");
 
-                getActivity().runOnUiThread(new Runnable() {
-                    public void run() {
-                        String currentDateTimeString = DateFormat.getTimeInstance().format(new Date());
-                        Log.d("BROAD", "UART_CONNECT_MSG");
-
-                    }
-                });
             }
 
             //*********************//
@@ -435,7 +453,12 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
     };
 
     @Override
-    public void onDeviceClick(BluetoothDevice device) {
-        mBluetoothLeService.connect(device.getAddress());
+    public boolean onDeviceClick(BluetoothDevice device) {
+        return mBluetoothLeService.connect(device.getAddress());
+    }
+
+    @Override
+    public boolean onDisconnectBluetoothClick(BluetoothDevice device) {
+        return  mBluetoothLeService.disconnect();
     }
 }

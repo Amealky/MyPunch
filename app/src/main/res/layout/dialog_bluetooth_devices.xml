@@ -4,12 +4,25 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/BluetoothDevicesTitle"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        android:text="@string/bluetooth_devices"
+        android:textSize="20sp"
+
+        android:padding="10sp"
+
+        />
+
     <Button
         android:id="@+id/scanButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/scan_devices"
- />
+        android:text="@string/scan_devices" />
 
     <TextView
         android:layout_width="match_parent"
@@ -17,8 +30,8 @@
         android:id="@+id/text_empty"
         android:textAlignment="center"
         android:text="@string/liste_vide"
-
         />
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/bluetoothDevices"

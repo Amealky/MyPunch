@@ -19,9 +19,10 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="$PROJECT_DIR$/../../../Images/blueetooth-logo.png" />
-                                      <entry key="outputName" value="ic_bold_ble" />
+                                      <entry key="imageAsset" value="$PROJECT_DIR$/../../../Images/remove-button.png" />
+                                      <entry key="outputName" value="ic_disconnect_ble" />
                                       <entry key="theme" value="CUSTOM" />
+                                      <entry key="themeColor" value="ff4455" />
                                     </map>
                                   </option>
                                 </PersistentState>
