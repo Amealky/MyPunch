@@ -1,17 +1,14 @@
 package com.esgi.mypunch.settings;
 
-import android.bluetooth.BluetoothAdapter;
-import android.content.Intent;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 
 import com.esgi.mypunch.R;
-import com.esgi.mypunch.login.LoginActivity;
-import com.esgi.mypunch.navbar.NavContentActivity;
+import com.esgi.mypunch.data.SharedPreferencesKeys;
 
 
 public class SettingsFragment extends PreferenceFragment {
@@ -41,9 +38,15 @@ public class SettingsFragment extends PreferenceFragment {
         buttonDeconnection.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
                 ((SettingsView)getActivity()).navigateLogin();
+                eraseToken();
                 return true;
             }
         });
 
+    }
+
+    private void eraseToken() {
+        SharedPreferences prefs = getActivity().getSharedPreferences(SharedPreferencesKeys.BASE_KEY, Context.MODE_PRIVATE);
+        prefs.edit().putString(SharedPreferencesKeys.CONNEXION_TOKEN, null).apply();
     }
 }
