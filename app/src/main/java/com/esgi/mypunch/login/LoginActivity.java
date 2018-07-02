@@ -36,6 +36,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         loginPresenter = new LoginPresenterImpl(this);
         ButterKnife.bind(this);
         loginProgressBar.setVisibility(View.GONE);
+        loginPresenter.checkToken();
     }
 
     @Override
@@ -92,9 +93,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
 
     @Override
     public void navigateToPunchList() {
-
         Intent intent = new Intent(this, NavContentActivity.class);
-
         startActivity(intent);
         finish();
     }

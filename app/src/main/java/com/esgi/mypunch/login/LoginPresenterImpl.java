@@ -22,6 +22,7 @@ public class LoginPresenterImpl implements LoginPresenter, OnLoginFinishedListen
 
     LoginPresenterImpl(LoginView loginView) {
         this.loginView = loginView;
+        this.provider = new PunchMyNodeProvider();
     }
 
     @Override
@@ -29,7 +30,6 @@ public class LoginPresenterImpl implements LoginPresenter, OnLoginFinishedListen
         loginView.showProgress();
 
         Credentials credentials = new Credentials(username, password);
-        provider = new PunchMyNodeProvider();
         Call<Token> call = provider.getToken(credentials);
         call.enqueue(new Callback<Token>() {
             @Override
@@ -68,6 +68,33 @@ public class LoginPresenterImpl implements LoginPresenter, OnLoginFinishedListen
         Context ctxt = (Context) this.loginView;
         SharedPreferences prefs = ctxt.getSharedPreferences(SharedPreferencesKeys.BASE_KEY, Context.MODE_PRIVATE);
         prefs.edit().putString(SharedPreferencesKeys.CONNEXION_TOKEN, token.getEncryptedToken()).apply();
+    }
+
+    @Override
+    public void checkToken() {
+        Log.d(TAG, "checkToken");
+        // get token from shared preferences
+        Context ctxt = (Context) this.loginView;
+        SharedPreferences prefs = ctxt.getSharedPreferences(SharedPreferencesKeys.BASE_KEY, Context.MODE_PRIVATE);
+        String encryptedToken = prefs.getString(SharedPreferencesKeys.CONNEXION_TOKEN, null);
+        Log.d(TAG, "token = " + encryptedToken);
+        // use api
+        Call<Void> apiResponse =  provider.checkToken(encryptedToken);
+        apiResponse.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                Log.d(TAG, "onResponse");
+                if (response.code() == 200) {
+                    Log.d(TAG, "200");
+                    onSuccess();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.d(TAG, t.getMessage());
+            }
+        });
     }
 
     @Override

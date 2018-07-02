@@ -10,4 +10,6 @@ public interface LoginPresenter {
     void onDestroy();
 
     void saveToken(Token token);
+
+    void checkToken();
 }
