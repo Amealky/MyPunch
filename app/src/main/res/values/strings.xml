@@ -18,5 +18,6 @@
     <string name="stop_scan_devices">Stop</string>
     <string name="liste_vide">Liste vide</string>
     <string name="disconnect">Disconnect</string>
+    <string name="no_name">No Name</string>
 
 </resources>

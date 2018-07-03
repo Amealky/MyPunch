@@ -46,7 +46,6 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_disconnect_ble"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
-        app:layout_constraintLeft_toRightOf="@id/addressDevice"
         app:layout_constraintBottom_toBottomOf="@id/addressDevice"
         app:layout_constraintTop_toTopOf="@id/titleDevice"
         app:layout_constraintRight_toRightOf="parent"/>

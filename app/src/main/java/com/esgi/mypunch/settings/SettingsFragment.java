@@ -358,27 +358,7 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
         }
 
         private void addBluetoothDevice(BluetoothDevice device){
-            /*    private void addDevice(BluetoothDevice device, int rssi) {
-        boolean deviceFound = false;
 
-        for (BluetoothDevice listDev : deviceList) {
-            if (listDev.getAddress().equals(device.getAddress())) {
-                deviceFound = true;
-                break;
-            }
-        }
-
-
-        devRssiValues.put(device.getAddress(), rssi);
-        if (!deviceFound) {
-        	deviceList.add(device);
-            mEmptyList.setVisibility(View.GONE);
-
-
-
-
-            deviceAdapter.notifyDataSetChanged();
-        }*/
             if(!listBluetoothDevice.contains(device)){
 
                         boolean hasDevice = false;
@@ -404,6 +384,7 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
             if (action.equals(BluetoothLEService.ACTION_GATT_CONNECTED)) {
                 Log.d("BROAD", "UART_CONNECT_MSG");
 
+
             }
 
             //*********************//
@@ -412,7 +393,6 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
                     public void run() {
                         String currentDateTimeString = DateFormat.getTimeInstance().format(new Date());
                         Log.d("BROAD", "UART_DISCONNECT_MSG");
-
 
                         mBluetoothLeService.close();
                         //setUiState();
@@ -454,7 +434,8 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
 
     @Override
     public boolean onDeviceClick(BluetoothDevice device) {
-        return mBluetoothLeService.connect(device.getAddress());
+        mBluetoothLeService.connect(device.getAddress());
+        return false;
     }
 
     @Override

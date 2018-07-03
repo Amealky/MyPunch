@@ -1,7 +1,6 @@
 package com.esgi.mypunch.settings;
 
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothClass;
+
 import android.bluetooth.BluetoothDevice;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,14 +13,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.esgi.mypunch.R;
-import com.esgi.mypunch.data.dtos.BoxingSession;
-import com.esgi.mypunch.punchlist.BoxingSessionAdapter;
 
-import java.io.File;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+
+
 import java.util.List;
-import java.util.Locale;
+
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -75,6 +71,8 @@ public class BluetoothDevicesAdapter extends RecyclerView.Adapter<BluetoothDevic
 
     @Override
     public void onBindViewHolder(final BluetoothDevicesAdapter.MyViewHolder holder, int position) {
+
+
         Log.d(TAG, "onBindViewHolder");
         holder.connectProgressBar.setVisibility(View.GONE);
         holder.disconnectBluetooth.setVisibility(View.GONE);
@@ -83,7 +81,7 @@ public class BluetoothDevicesAdapter extends RecyclerView.Adapter<BluetoothDevic
         if(device.getName() != null){
             holder.titleDevice.setText(device.getName());
         }else {
-            holder.titleDevice.setText("");
+            holder.titleDevice.setText(R.string.no_name);
         }
 
         holder.addressDevice.setText(device.getAddress());
@@ -110,6 +108,7 @@ public class BluetoothDevicesAdapter extends RecyclerView.Adapter<BluetoothDevic
                 }
             }
         });
+
 
 
     }
