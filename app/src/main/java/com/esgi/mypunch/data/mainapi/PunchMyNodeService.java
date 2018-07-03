@@ -17,6 +17,9 @@ public interface PunchMyNodeService {
     @POST("./auth/login")
     Call<Token> getToken(@Body Credentials credentials);
 
+    @POST("./auth/logout")
+    Call<Void> logout(@Header("Authorization") String token);
+
     @GET("./auth/check/{token}")
     Call<Void> checkToken(@Path("token") String token);
 

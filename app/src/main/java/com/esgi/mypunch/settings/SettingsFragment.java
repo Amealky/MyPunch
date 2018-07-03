@@ -6,14 +6,20 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.esgi.mypunch.R;
 import com.esgi.mypunch.data.SharedPreferencesKeys;
+import com.esgi.mypunch.data.mainapi.PunchMyNodeProvider;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class SettingsFragment extends PreferenceFragment {
 
-
+    public static final String TAG = "SettingsFragment";
     Preference checkboxBluetooth;
     Preference buttonDeconnection;
 
@@ -47,6 +53,26 @@ public class SettingsFragment extends PreferenceFragment {
 
     private void eraseToken() {
         SharedPreferences prefs = getActivity().getSharedPreferences(SharedPreferencesKeys.BASE_KEY, Context.MODE_PRIVATE);
+        String token = prefs.getString(SharedPreferencesKeys.CONNEXION_TOKEN, null);
+        // remove from device
         prefs.edit().putString(SharedPreferencesKeys.CONNEXION_TOKEN, null).apply();
+        // remove from database
+        PunchMyNodeProvider provider = new PunchMyNodeProvider();
+        Call<Void> response = provider.logout(token);
+        response.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.code() == 200) {
+                    Log.i(TAG, "Successful logout.");
+                } else {
+                    Log.e(TAG, response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e(TAG, t.getMessage());
+            }
+        });
     }
 }

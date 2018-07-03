@@ -32,6 +32,10 @@ public class PunchMyNodeProvider {
         return pmnService.getToken(credentials);
     }
 
+    public Call<Void> logout(String token) {
+        return pmnService.logout(token);
+    }
+
     public Call<Void> checkToken(String token) {
         return pmnService.checkToken(token);
     }
