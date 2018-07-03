@@ -1,7 +1,7 @@
 package com.esgi.mypunch.data.mainapi;
 
 import com.esgi.mypunch.data.dtos.Credentials;
-import com.esgi.mypunch.data.dtos.Token;
+import com.esgi.mypunch.data.dtos.User;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -28,7 +28,7 @@ public class PunchMyNodeProvider {
         return okBuilder.build();
     }
 
-    public Call<Token> getToken(Credentials credentials) {
+    public Call<User> connect(Credentials credentials) {
         return pmnService.getToken(credentials);
     }
 

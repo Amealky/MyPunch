@@ -8,6 +8,7 @@ import android.util.Log;
 import com.esgi.mypunch.data.SharedPreferencesKeys;
 import com.esgi.mypunch.data.dtos.Credentials;
 import com.esgi.mypunch.data.dtos.Token;
+import com.esgi.mypunch.data.dtos.User;
 import com.esgi.mypunch.data.mainapi.PunchMyNodeProvider;
 
 import retrofit2.Call;
@@ -30,18 +31,19 @@ public class LoginPresenterImpl implements LoginPresenter, OnLoginFinishedListen
         loginView.showProgress();
 
         Credentials credentials = new Credentials(username, password);
-        Call<Token> call = provider.getToken(credentials);
-        call.enqueue(new Callback<Token>() {
+        Call<User> call = provider.connect(credentials);
+        call.enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<Token> call, Response<Token> response) {
+            public void onResponse(Call<User> call, Response<User> response) {
                 if (response.code() >= 500) {
                     onServerError("Server error.");
                 } else if (response.code() >= 400) {
                     onUsernameError("Wrong credentials.");
                 } else {
-                    Token token = response.body();
-                    if (token != null) {
-                        Log.i(TAG, "token = " + token.getEncryptedToken());
+                    User user = response.body();
+                    if (user != null) {
+                        Log.i(TAG, "user = " + user.toString());
+                        Token token = new Token(user.getToken());
                         saveToken(token);
                         onSuccess();
                     } else {
@@ -51,7 +53,7 @@ public class LoginPresenterImpl implements LoginPresenter, OnLoginFinishedListen
             }
 
             @Override
-            public void onFailure(Call<Token> call, Throwable t) {
+            public void onFailure(Call<User> call, Throwable t) {
                 Log.e(TAG, t.getMessage());
                 onServerError("Unknown error.");
             }
