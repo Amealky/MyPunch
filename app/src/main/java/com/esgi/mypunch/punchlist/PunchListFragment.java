@@ -13,7 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.esgi.mypunch.R;
+import com.esgi.mypunch.data.SharedPreferencesManager;
 import com.esgi.mypunch.data.dtos.BoxingSession;
+import com.esgi.mypunch.data.dtos.User;
 import com.esgi.mypunch.data.mainapi.PunchMyNodeProvider;
 
 import java.util.ArrayList;
@@ -22,6 +24,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PunchListFragment extends Fragment {
 
@@ -56,12 +61,29 @@ public class PunchListFragment extends Fragment {
         context = getActivity().getApplicationContext();
         adapter = new BoxingSessionAdapter(sessions);
         dummySamples();
+
+        User user = SharedPreferencesManager.getUser(getActivity());
+        Log.i(TAG, user.toString());
+        Call<List<BoxingSession>> response = provider.getSessionsForUser(user);
+        response.enqueue(new Callback<List<BoxingSession>>() {
+            @Override
+            public void onResponse(Call<List<BoxingSession>> call, Response<List<BoxingSession>> response) {
+                if (response.code() == 200) {
+                    Log.i(TAG, response.body().toString());
+                } else {
+                    Log.e(TAG, response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<BoxingSession>> call, Throwable t) {
+                Log.e(TAG, t.getMessage());
+            }
+        });
     }
 
     private void dummySamples() {
         sessions = new ArrayList<>();
-        double avgAcceleration = 5;
-        double avgForce = 10;
 
         for (int i = 1; i <= 10; i++) {
             Calendar startCal = Calendar.getInstance();

@@ -16,6 +16,18 @@ public class SharedPreferencesManager {
     public static final String FIRSTNAME = "com.esgi.mypunch.firstname";
     public static final String LASTNAME = "com.esgi.mypunch.lastname";
 
+    public static User getUser(Context ctxt) {
+        SharedPreferences prefs = ctxt.getSharedPreferences(SharedPreferencesManager.BASE_KEY, Context.MODE_PRIVATE);
+
+        int id = prefs.getInt(ID, 0);
+        String token = prefs.getString(CONNEXION_TOKEN, null);
+        String email = prefs.getString(EMAIL, null);
+        String firstname = prefs.getString(FIRSTNAME, null);
+        String lastname = prefs.getString(LASTNAME, null);
+
+        return new User(id, email, firstname, lastname, token);
+    }
+
     public static void saveUserData(Context ctxt, User user) {
         SharedPreferences prefs = ctxt.getSharedPreferences(SharedPreferencesManager.BASE_KEY, Context.MODE_PRIVATE);
 

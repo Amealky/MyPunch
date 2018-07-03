@@ -23,6 +23,6 @@ public interface PunchMyNodeService {
     @GET("./auth/check/{token}")
     Call<Void> checkToken(@Path("token") String token);
 
-    @GET("sessions")
-    Call<List<BoxingSession>> getUserPunches(@Header("token") String token);
+    @GET("./sessions/{userId}")
+    Call<List<BoxingSession>> getUserPunches(@Path("userId") int userId, @Header("Authorization") String token);
 }
