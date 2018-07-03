@@ -19,7 +19,6 @@ import com.esgi.mypunch.data.dtos.User;
 import com.esgi.mypunch.data.mainapi.PunchMyNodeProvider;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -60,7 +59,7 @@ public class PunchListFragment extends Fragment {
         sessions = new ArrayList<>();
         context = getActivity().getApplicationContext();
         adapter = new BoxingSessionAdapter(sessions);
-        dummySamples();
+        //dummySamples();
 
         User user = SharedPreferencesManager.getUser(getActivity());
         Log.i(TAG, user.toString());
@@ -70,6 +69,9 @@ public class PunchListFragment extends Fragment {
             public void onResponse(Call<List<BoxingSession>> call, Response<List<BoxingSession>> response) {
                 if (response.code() == 200) {
                     Log.i(TAG, response.body().toString());
+                    sessions = response.body();
+                    adapter.updateData(sessions);
+                    adapter.notifyDataSetChanged();
                 } else {
                     Log.e(TAG, response.message());
                 }
@@ -81,7 +83,7 @@ public class PunchListFragment extends Fragment {
             }
         });
     }
-
+/*
     private void dummySamples() {
         sessions = new ArrayList<>();
 
@@ -98,4 +100,5 @@ public class PunchListFragment extends Fragment {
         adapter.updateData(sessions);
         adapter.notifyDataSetChanged();
     }
+    */
 }
