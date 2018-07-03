@@ -68,7 +68,7 @@ public class PunchListFragment extends Fragment {
             startCal.set(2018, Calendar.MAY, i, 10, 30, 0);
             Calendar endCal = Calendar.getInstance();
             endCal.set(2018, Calendar.MAY, i, 10, 31, 0);
-            BoxingSession session = new BoxingSession(startCal.getTime(), endCal.getTime(), avgAcceleration, avgForce);
+            BoxingSession session = new BoxingSession(startCal.getTime(), endCal.getTime(), 20, 15, 5, 20);
             sessions.add(session);
         }
 
