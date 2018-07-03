@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.esgi.mypunch.data.SharedPreferencesKeys;
+import com.esgi.mypunch.data.SharedPreferencesManager;
 import com.esgi.mypunch.data.dtos.Credentials;
 import com.esgi.mypunch.data.dtos.Token;
 import com.esgi.mypunch.data.dtos.User;
@@ -44,7 +44,7 @@ public class LoginPresenterImpl implements LoginPresenter, OnLoginFinishedListen
                     if (user != null) {
                         Log.i(TAG, "user = " + user.toString());
                         Token token = new Token(user.getToken());
-                        saveToken(token);
+                        saveUser(user);
                         onSuccess();
                     } else {
                         onServerError("Couldn't join server.");
@@ -66,10 +66,9 @@ public class LoginPresenterImpl implements LoginPresenter, OnLoginFinishedListen
     }
 
     @Override
-    public void saveToken(Token token) {
+    public void saveUser(User user) {
         Context ctxt = (Context) this.loginView;
-        SharedPreferences prefs = ctxt.getSharedPreferences(SharedPreferencesKeys.BASE_KEY, Context.MODE_PRIVATE);
-        prefs.edit().putString(SharedPreferencesKeys.CONNEXION_TOKEN, token.getEncryptedToken()).apply();
+        SharedPreferencesManager.saveUserData(ctxt, user);
     }
 
     @Override
@@ -77,8 +76,8 @@ public class LoginPresenterImpl implements LoginPresenter, OnLoginFinishedListen
         Log.d(TAG, "checkToken");
         // get token from shared preferences
         Context ctxt = (Context) this.loginView;
-        SharedPreferences prefs = ctxt.getSharedPreferences(SharedPreferencesKeys.BASE_KEY, Context.MODE_PRIVATE);
-        String encryptedToken = prefs.getString(SharedPreferencesKeys.CONNEXION_TOKEN, null);
+        SharedPreferences prefs = ctxt.getSharedPreferences(SharedPreferencesManager.BASE_KEY, Context.MODE_PRIVATE);
+        String encryptedToken = prefs.getString(SharedPreferencesManager.CONNEXION_TOKEN, null);
         Log.d(TAG, "token = " + encryptedToken);
         // use api
         Call<Void> apiResponse =  provider.checkToken(encryptedToken);

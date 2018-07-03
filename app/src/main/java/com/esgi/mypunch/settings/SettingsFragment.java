@@ -9,7 +9,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.esgi.mypunch.R;
-import com.esgi.mypunch.data.SharedPreferencesKeys;
+import com.esgi.mypunch.data.SharedPreferencesManager;
 import com.esgi.mypunch.data.mainapi.PunchMyNodeProvider;
 
 import retrofit2.Call;
@@ -52,10 +52,10 @@ public class SettingsFragment extends PreferenceFragment {
     }
 
     private void eraseToken() {
-        SharedPreferences prefs = getActivity().getSharedPreferences(SharedPreferencesKeys.BASE_KEY, Context.MODE_PRIVATE);
-        String token = prefs.getString(SharedPreferencesKeys.CONNEXION_TOKEN, null);
+        SharedPreferences prefs = getActivity().getSharedPreferences(SharedPreferencesManager.BASE_KEY, Context.MODE_PRIVATE);
+        String token = prefs.getString(SharedPreferencesManager.CONNEXION_TOKEN, null);
         // remove from device
-        prefs.edit().putString(SharedPreferencesKeys.CONNEXION_TOKEN, null).apply();
+        SharedPreferencesManager.eraseUserData(getActivity());
         // remove from database
         PunchMyNodeProvider provider = new PunchMyNodeProvider();
         Call<Void> response = provider.logout(token);
