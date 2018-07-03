@@ -1,10 +1,7 @@
 package com.esgi.mypunch.data.mainapi;
 
-import com.esgi.mypunch.data.dtos.BoxingSession;
 import com.esgi.mypunch.data.dtos.Credentials;
 import com.esgi.mypunch.data.dtos.Token;
-
-import java.util.List;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -16,7 +13,6 @@ public class PunchMyNodeProvider {
     private static final String BASE_URL = "http://192.168.1.19:8080";
 
     private PunchMyNodeService pmnService;
-    private String token;
 
     public PunchMyNodeProvider() {
         Retrofit retrofit = new Retrofit.Builder()
@@ -36,7 +32,7 @@ public class PunchMyNodeProvider {
         return pmnService.getToken(credentials);
     }
 
-    public Call<List<BoxingSession>> getPeopleList() {
-        return pmnService.getUserPunches(token);
+    public Call<Void> checkToken(String token) {
+        return pmnService.checkToken(token);
     }
 }
