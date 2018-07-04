@@ -1,7 +1,7 @@
 package com.esgi.mypunch.login;
 
 
-import com.esgi.mypunch.data.dtos.Token;
+import com.esgi.mypunch.data.dtos.User;
 
 public interface LoginPresenter {
 
@@ -9,7 +9,7 @@ public interface LoginPresenter {
 
     void onDestroy();
 
-    void saveToken(Token token);
+    void saveUser(User user);
 
     void checkToken();
 }

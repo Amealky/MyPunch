@@ -5,9 +5,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.esgi.mypunch.data.SharedPreferencesKeys;
+import com.esgi.mypunch.data.SharedPreferencesManager;
 import com.esgi.mypunch.data.dtos.Credentials;
 import com.esgi.mypunch.data.dtos.Token;
+import com.esgi.mypunch.data.dtos.User;
 import com.esgi.mypunch.data.mainapi.PunchMyNodeProvider;
 
 import retrofit2.Call;
@@ -30,19 +31,20 @@ public class LoginPresenterImpl implements LoginPresenter, OnLoginFinishedListen
         loginView.showProgress();
 
         Credentials credentials = new Credentials(username, password);
-        Call<Token> call = provider.getToken(credentials);
-        call.enqueue(new Callback<Token>() {
+        Call<User> call = provider.connect(credentials);
+        call.enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<Token> call, Response<Token> response) {
+            public void onResponse(Call<User> call, Response<User> response) {
                 if (response.code() >= 500) {
                     onServerError("Server error.");
                 } else if (response.code() >= 400) {
                     onUsernameError("Wrong credentials.");
                 } else {
-                    Token token = response.body();
-                    if (token != null) {
-                        Log.i(TAG, "token = " + token.getEncryptedToken());
-                        saveToken(token);
+                    User user = response.body();
+                    if (user != null) {
+                        Log.i(TAG, "user = " + user.toString());
+                        Token token = new Token(user.getToken());
+                        saveUser(user);
                         onSuccess();
                     } else {
                         onServerError("Couldn't join server.");
@@ -51,7 +53,7 @@ public class LoginPresenterImpl implements LoginPresenter, OnLoginFinishedListen
             }
 
             @Override
-            public void onFailure(Call<Token> call, Throwable t) {
+            public void onFailure(Call<User> call, Throwable t) {
                 Log.e(TAG, t.getMessage());
                 onServerError("Unknown error.");
             }
@@ -64,10 +66,9 @@ public class LoginPresenterImpl implements LoginPresenter, OnLoginFinishedListen
     }
 
     @Override
-    public void saveToken(Token token) {
+    public void saveUser(User user) {
         Context ctxt = (Context) this.loginView;
-        SharedPreferences prefs = ctxt.getSharedPreferences(SharedPreferencesKeys.BASE_KEY, Context.MODE_PRIVATE);
-        prefs.edit().putString(SharedPreferencesKeys.CONNEXION_TOKEN, token.getEncryptedToken()).apply();
+        SharedPreferencesManager.saveUserData(ctxt, user);
     }
 
     @Override
@@ -75,8 +76,8 @@ public class LoginPresenterImpl implements LoginPresenter, OnLoginFinishedListen
         Log.d(TAG, "checkToken");
         // get token from shared preferences
         Context ctxt = (Context) this.loginView;
-        SharedPreferences prefs = ctxt.getSharedPreferences(SharedPreferencesKeys.BASE_KEY, Context.MODE_PRIVATE);
-        String encryptedToken = prefs.getString(SharedPreferencesKeys.CONNEXION_TOKEN, null);
+        SharedPreferences prefs = ctxt.getSharedPreferences(SharedPreferencesManager.BASE_KEY, Context.MODE_PRIVATE);
+        String encryptedToken = prefs.getString(SharedPreferencesManager.CONNEXION_TOKEN, null);
         Log.d(TAG, "token = " + encryptedToken);
         // use api
         Call<Void> apiResponse =  provider.checkToken(encryptedToken);
