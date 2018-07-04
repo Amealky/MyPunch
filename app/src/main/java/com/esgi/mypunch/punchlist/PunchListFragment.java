@@ -27,7 +27,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PunchListFragment extends Fragment {
+public class PunchListFragment extends Fragment implements BoxingSessionAdapter.Listener {
 
     public static final String TAG = "PunchListActivity";
     private PunchMyNodeProvider provider;
@@ -47,6 +47,7 @@ public class PunchListFragment extends Fragment {
         sessionsRecyclerView.setLayoutManager(mLayoutManager);
         sessionsRecyclerView.setItemAnimator(new DefaultItemAnimator());
         sessionsRecyclerView.setAdapter(adapter);
+        this.adapter.setListener(this);
         sessionsRecyclerView.addItemDecoration(new DividerItemDecoration(context, LinearLayoutManager.VERTICAL));
 
         return view;
@@ -59,7 +60,6 @@ public class PunchListFragment extends Fragment {
         sessions = new ArrayList<>();
         context = getActivity().getApplicationContext();
         adapter = new BoxingSessionAdapter(sessions);
-        //dummySamples();
 
         User user = SharedPreferencesManager.getUser(getActivity());
         Log.i(TAG, user.toString());
@@ -68,7 +68,6 @@ public class PunchListFragment extends Fragment {
             @Override
             public void onResponse(Call<List<BoxingSession>> call, Response<List<BoxingSession>> response) {
                 if (response.code() == 200) {
-                    Log.i(TAG, response.body().toString());
                     sessions = response.body();
                     adapter.updateData(sessions);
                     adapter.notifyDataSetChanged();
@@ -83,22 +82,9 @@ public class PunchListFragment extends Fragment {
             }
         });
     }
-/*
-    private void dummySamples() {
-        sessions = new ArrayList<>();
 
-        for (int i = 1; i <= 10; i++) {
-            Calendar startCal = Calendar.getInstance();
-            startCal.set(2018, Calendar.MAY, i, 10, 30, 0);
-            Calendar endCal = Calendar.getInstance();
-            endCal.set(2018, Calendar.MAY, i, 10, 31, 0);
-            BoxingSession session = new BoxingSession(startCal.getTime(), endCal.getTime(), 20, 15, 5, 20);
-            sessions.add(session);
-        }
-
-        Log.d(TAG, sessions.toString());
-        adapter.updateData(sessions);
-        adapter.notifyDataSetChanged();
+    @Override
+    public void onBoxingSessionClick(BoxingSession bSession) {
+        Log.d(TAG, "Clicked on session : " + bSession.toString());
     }
-    */
 }
