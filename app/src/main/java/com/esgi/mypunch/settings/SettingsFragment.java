@@ -17,6 +17,8 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -50,6 +52,17 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import android.util.Log;
+
+import com.esgi.mypunch.R;
+import com.esgi.mypunch.data.SharedPreferencesManager;
+import com.esgi.mypunch.data.mainapi.PunchMyNodeProvider;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+
 
 public class SettingsFragment extends PreferenceFragment implements BluetoothDevicesAdapter.BluetoothDeviceAdapterListener {
 
@@ -69,6 +82,9 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
     private static final long SCAN_PERIOD = 10000;
 
     CheckBoxPreference checkboxBluetooth;
+
+    public static final String TAG = "SettingsFragment";
+
     Preference buttonDeconnection;
     Preference buttonDevices;
 
@@ -202,6 +218,7 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
         buttonDeconnection.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
                 ((SettingsView)getActivity()).navigateLogin();
+                eraseToken();
                 return true;
             }
         });
@@ -466,5 +483,30 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
     @Override
     public boolean onDisconnectBluetoothClick(BleDevice device) {
         return  mBluetoothLeService.disconnect();
+    }
+
+    private void eraseToken() {
+        SharedPreferences prefs = getActivity().getSharedPreferences(SharedPreferencesManager.BASE_KEY, Context.MODE_PRIVATE);
+        String token = prefs.getString(SharedPreferencesManager.CONNEXION_TOKEN, null);
+        // remove from device
+        SharedPreferencesManager.eraseUserData(getActivity());
+        // remove from database
+        PunchMyNodeProvider provider = new PunchMyNodeProvider();
+        Call<Void> response = provider.logout(token);
+        response.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.code() == 200) {
+                    Log.i(TAG, "Successful logout.");
+                } else {
+                    Log.e(TAG, response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e(TAG, t.getMessage());
+            }
+        });
     }
 }
