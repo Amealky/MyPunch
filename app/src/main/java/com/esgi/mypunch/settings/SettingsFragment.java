@@ -32,6 +32,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -39,6 +40,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.esgi.mypunch.R;
+import com.esgi.mypunch.data.BleDevice;
+import com.esgi.mypunch.data.enums.CONNECTION_STATE;
 import com.esgi.mypunch.services.BluetoothLEService;
 
 import java.text.DateFormat;
@@ -55,8 +58,9 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
     private BluetoothLeScanner mBluetoothLeScanner;
     private BluetoothLEService mBluetoothLeService;
 
-    List<BluetoothDevice> listBluetoothDevice;
+    List<BleDevice> listBluetoothDevice;
     BluetoothDevicesAdapter bluetoothDevicesAdapter;
+    BleDevice bluetoothConnecting;
 
     private boolean mScanning = false;
 
@@ -73,6 +77,7 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
     RecyclerView rvDevices;
     Button bt_Scan;
     TextView tv_emptyList;
+    ImageButton bt_exit_dialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -90,6 +95,7 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
         rvDevices =  view.findViewById(R.id.bluetoothDevices);
         bt_Scan = (Button) view.findViewById(R.id.scanButton);
         tv_emptyList = (TextView) view.findViewById(R.id.text_empty);
+        bt_exit_dialog = (ImageButton) view.findViewById(R.id.exit_dialogButton);
 
         dialog.setContentView(view);
 
@@ -119,6 +125,13 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
                 }
 
 
+            }
+        });
+
+        bt_exit_dialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.cancel();
             }
         });
 
@@ -359,19 +372,17 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
 
         private void addBluetoothDevice(BluetoothDevice device){
 
-            if(!listBluetoothDevice.contains(device)){
+                boolean hasDevice = false;
+                for(int i = 0; i <  listBluetoothDevice.size(); i++){
+                    if(listBluetoothDevice.get(i).getBluetoothDevice().getAddress().equals(device.getAddress())){
+                        hasDevice = true;
+                    }
+                }
+                if(!hasDevice){
+                    listBluetoothDevice.add(new BleDevice(device));
+                }
 
-                        boolean hasDevice = false;
-                        for(int i = 0; i <  listBluetoothDevice.size(); i++){
-                            if(listBluetoothDevice.get(i).getAddress() == device.getAddress()){
-                                hasDevice = true;
-                            }
-                        }
-                        if(!hasDevice){
-                            listBluetoothDevice.add(device);
-                        }
 
-            }
         }
     };
 
@@ -379,10 +390,14 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
 
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
+            bt_Scan.setEnabled(true);
 
             //*********************//
             if (action.equals(BluetoothLEService.ACTION_GATT_CONNECTED)) {
+
                 Log.d("BROAD", "UART_CONNECT_MSG");
+                bluetoothConnecting.isConnected = CONNECTION_STATE.CONNECTED;
+                refreshDialogDevices();
 
 
             }
@@ -391,11 +406,11 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
             if (action.equals(BluetoothLEService.ACTION_GATT_DISCONNECTED)) {
                 getActivity().runOnUiThread(new Runnable() {
                     public void run() {
-                        String currentDateTimeString = DateFormat.getTimeInstance().format(new Date());
                         Log.d("BROAD", "UART_DISCONNECT_MSG");
-
+                        bluetoothConnecting.isConnected = CONNECTION_STATE.DISCONNECTED;
+                        refreshDialogDevices();
                         mBluetoothLeService.close();
-                        //setUiState();
+
 
                     }
                 });
@@ -433,13 +448,23 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
     };
 
     @Override
-    public boolean onDeviceClick(BluetoothDevice device) {
-        mBluetoothLeService.connect(device.getAddress());
-        return false;
+    public void onDeviceClick(BleDevice device) {
+        bt_Scan.setEnabled(false);
+        onDisconnectBluetoothClick(device);
+        for(BleDevice d : listBluetoothDevice){
+            d.isConnected = CONNECTION_STATE.DISCONNECTED;
+        }
+        refreshDialogDevices();
+
+        mBluetoothLeService.connect(device.getBluetoothDevice().getAddress());
+        device.isConnected = CONNECTION_STATE.CONNECTING;
+        bluetoothConnecting = device;
+
+
     }
 
     @Override
-    public boolean onDisconnectBluetoothClick(BluetoothDevice device) {
+    public boolean onDisconnectBluetoothClick(BleDevice device) {
         return  mBluetoothLeService.disconnect();
     }
 }

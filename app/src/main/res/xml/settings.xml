@@ -21,7 +21,9 @@
 
         <Preference
             android:key="pref_disconnect"
-            android:title="@string/deconnexion"/>
+            android:title="@string/deconnexion"
+            android:icon="@drawable/ic_disconnect_app"
+            />
     </PreferenceCategory>
 
 </PreferenceScreen>

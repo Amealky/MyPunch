@@ -13,7 +13,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.esgi.mypunch.R;
-
+import com.esgi.mypunch.data.BleDevice;
+import com.esgi.mypunch.data.enums.CONNECTION_STATE;
 
 
 import java.util.List;
@@ -23,7 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class BluetoothDevicesAdapter extends RecyclerView.Adapter<BluetoothDevicesAdapter.MyViewHolder> {
-    private List<BluetoothDevice> bluetoothDevices;
+    private List<BleDevice> bluetoothDevices;
     private static final String TAG = "BluetoothDevicesAdapter";
 
     private BluetoothDeviceAdapterListener listener;
@@ -50,12 +51,12 @@ public class BluetoothDevicesAdapter extends RecyclerView.Adapter<BluetoothDevic
         }
     }
 
-    public BluetoothDevicesAdapter(List<BluetoothDevice> bluetoothDevices) {
+    public BluetoothDevicesAdapter(List<BleDevice> bluetoothDevices) {
         Log.d(TAG, "BluetoothDevicesAdapter");
         this.bluetoothDevices = bluetoothDevices;
     }
 
-    public void updateData(List<BluetoothDevice> bluetoothDevices) {
+    public void updateData(List<BleDevice> bluetoothDevices) {
         this.bluetoothDevices = bluetoothDevices;
     }
 
@@ -71,46 +72,59 @@ public class BluetoothDevicesAdapter extends RecyclerView.Adapter<BluetoothDevic
 
     @Override
     public void onBindViewHolder(final BluetoothDevicesAdapter.MyViewHolder holder, int position) {
+        final BleDevice device = bluetoothDevices.get(position);
 
 
-        Log.d(TAG, "onBindViewHolder");
-        holder.connectProgressBar.setVisibility(View.GONE);
-        holder.disconnectBluetooth.setVisibility(View.GONE);
-        final BluetoothDevice device = bluetoothDevices.get(position);
 
-        if(device.getName() != null){
-            holder.titleDevice.setText(device.getName());
+        if(device.getBluetoothDevice().getName() != null){
+            holder.titleDevice.setText(device.getBluetoothDevice().getName());
         }else {
             holder.titleDevice.setText(R.string.no_name);
         }
 
-        holder.addressDevice.setText(device.getAddress());
+        refreshHolder(device, holder);
+
+        holder.addressDevice.setText(device.getBluetoothDevice().getAddress());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                holder.iconBluetooth.setVisibility(View.GONE);
-                holder.connectProgressBar.setVisibility(View.VISIBLE);
-
-                if(listener.onDeviceClick(device)){
-                    holder.iconBluetooth.setImageResource(R.drawable.ic_connected_ble);
-                    holder.disconnectBluetooth.setVisibility(View.VISIBLE);
+                if(device.isConnected == CONNECTION_STATE.DISCONNECTED){
+                    listener.onDeviceClick(device);
+                    refreshHolder(device, holder);
                 }
-                holder.connectProgressBar.setVisibility(View.GONE);
-                holder.iconBluetooth.setVisibility(View.VISIBLE);
+
             }
         });
         holder.disconnectBluetooth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(listener.onDisconnectBluetoothClick(device)){
-                    holder.iconBluetooth.setImageResource(R.drawable.ic_disconnected_ble);
-                    holder.disconnectBluetooth.setVisibility(View.GONE);
-                }
+                listener.onDisconnectBluetoothClick(device);
+                refreshHolder(device, holder);
             }
         });
 
 
 
+    }
+
+    public void refreshHolder(BleDevice device, MyViewHolder holder){
+        if(device.isConnected == CONNECTION_STATE.DISCONNECTED){
+            holder.connectProgressBar.setVisibility(View.GONE);
+            holder.disconnectBluetooth.setVisibility(View.GONE);
+            holder.iconBluetooth.setImageResource(R.drawable.ic_disconnected_ble);
+            holder.iconBluetooth.setVisibility(View.VISIBLE);
+        }
+        if(device.isConnected == CONNECTION_STATE.CONNECTING){
+            holder.iconBluetooth.setVisibility(View.GONE);
+            holder.disconnectBluetooth.setVisibility(View.GONE);
+            holder.connectProgressBar.setVisibility(View.VISIBLE);
+        }
+        if(device.isConnected == CONNECTION_STATE.CONNECTED){
+            holder.connectProgressBar.setVisibility(View.GONE);
+            holder.iconBluetooth.setVisibility(View.VISIBLE);
+            holder.iconBluetooth.setImageResource(R.drawable.ic_connected_ble);
+            holder.disconnectBluetooth.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -119,7 +133,7 @@ public class BluetoothDevicesAdapter extends RecyclerView.Adapter<BluetoothDevic
     }
 
     public interface BluetoothDeviceAdapterListener {
-        boolean onDeviceClick(BluetoothDevice device);
-        boolean onDisconnectBluetoothClick(BluetoothDevice device);
+        void onDeviceClick(BleDevice device);
+        boolean onDisconnectBluetoothClick(BleDevice device);
     }
 }

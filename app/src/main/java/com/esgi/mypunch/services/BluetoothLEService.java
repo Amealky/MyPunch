@@ -17,6 +17,8 @@ import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.esgi.mypunch.data.BleDevice;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -215,14 +217,14 @@ public class BluetoothLEService extends Service {
             }
         }
 
-        final BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
-        if (device == null) {
+        final BleDevice device = new BleDevice(mBluetoothAdapter.getRemoteDevice(address));
+        if (device.getBluetoothDevice() == null) {
             Log.w(TAG, "Device not found.  Unable to connect.");
             return false;
         }
         // We want to directly connect to the device, so we are setting the autoConnect
         // parameter to false.
-        mBluetoothGatt = device.connectGatt(this, false, mGattCallback);
+        mBluetoothGatt = device.getBluetoothDevice().connectGatt(this, false, mGattCallback);
         Log.d(TAG, "Trying to create a new connection.");
         mBluetoothDeviceAddress = address;
         mConnectionState = STATE_CONNECTING;
