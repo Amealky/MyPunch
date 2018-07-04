@@ -7,115 +7,100 @@
     tools:context="com.esgi.mypunch.PunchDetailsActivity">
 
     <TextView
+        style="@style/boxingDetailsTextView"
         android:id="@+id/dayLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/dayLabel"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        style="@style/boxingDetailsTextView"
         android:id="@+id/day"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toRightOf="@id/dayLabel"/>
 
     <TextView
+        style="@style/boxingDetailsTextView"
         android:id="@+id/startLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/startLabel"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dayLabel"/>
 
     <TextView
+        style="@style/boxingDetailsTextView"
         android:id="@+id/start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         app:layout_constraintLeft_toRightOf="@id/startLabel"
         app:layout_constraintTop_toBottomOf="@id/day"/>
 
     <TextView
+        style="@style/boxingDetailsTextView"
         android:id="@+id/endLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/endLabel"
         app:layout_constraintLeft_toRightOf="@id/start"
         app:layout_constraintTop_toBottomOf="@id/dayLabel"/>
 
     <TextView
+        style="@style/boxingDetailsTextView"
         android:id="@+id/end"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/day"
         app:layout_constraintLeft_toRightOf="@id/endLabel"/>
 
     <TextView
+        style="@style/boxingDetailsTextView"
         android:id="@+id/nbPunchesLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/nbPunchesLabel"
         app:layout_constraintTop_toBottomOf="@id/startLabel"
         app:layout_constraintLeft_toLeftOf="parent"/>
 
     <TextView
+        style="@style/boxingDetailsTextView"
         android:id="@+id/nbPunches"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/end"
         app:layout_constraintLeft_toRightOf="@id/nbPunchesLabel"/>
 
     <TextView
+        style="@style/boxingDetailsTextView"
         android:id="@+id/powerLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/powerLabel"
         app:layout_constraintTop_toBottomOf="@id/nbPunchesLabel"
         app:layout_constraintLeft_toLeftOf="parent"/>
 
     <TextView
+        style="@style/boxingDetailsTextView"
         android:id="@+id/minPowerLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/minPowerLabel"
         app:layout_constraintTop_toBottomOf="@id/powerLabel"/>
 
     <TextView
+        style="@style/boxingDetailsTextView"
         android:id="@+id/minPower"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/powerLabel"
         app:layout_constraintLeft_toRightOf="@id/minPowerLabel"/>
 
     <TextView
+        style="@style/boxingDetailsTextView"
         android:id="@+id/avgPowerLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/avgPowerLabel"
-        app:layout_constraintTop_toBottomOf="@id/powerLabel"
-        app:layout_constraintLeft_toRightOf="@id/minPower"/>
+        app:layout_constraintTop_toBottomOf="@id/minPowerLabel"
+        app:layout_constraintLeft_toLeftOf="parent"/>
 
     <TextView
+        style="@style/boxingDetailsTextView"
         android:id="@+id/avgPower"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/powerLabel"
+        app:layout_constraintTop_toBottomOf="@id/minPower"
         app:layout_constraintLeft_toRightOf="@id/avgPowerLabel"/>
 
     <TextView
+        style="@style/boxingDetailsTextView"
         android:id="@+id/maxPowerLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/maxPowerLabel"
-        app:layout_constraintTop_toBottomOf="@id/powerLabel"
-        app:layout_constraintLeft_toRightOf="@id/avgPower"/>
+        app:layout_constraintTop_toBottomOf="@id/avgPower"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
+        style="@style/boxingDetailsTextView"
         android:id="@+id/maxPower"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/powerLabel"
+        app:layout_constraintTop_toBottomOf="@id/avgPower"
         app:layout_constraintLeft_toRightOf="@id/maxPowerLabel"/>
 
 </android.support.constraint.ConstraintLayout>

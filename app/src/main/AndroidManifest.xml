@@ -23,7 +23,8 @@
         <activity android:name=".register.RegisterActivity" />
         <activity android:name=".settings.SettingsActivity" />
         <activity android:name=".navbar.NavContentActivity" />
-        <activity android:name=".PunchDetailsActivity"></activity>
+        <activity android:name=".PunchDetailsActivity"
+            android:parentActivityName=".navbar.NavContentActivity" />
     </application>
 
 </manifest>

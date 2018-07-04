@@ -19,8 +19,6 @@ import butterknife.ButterKnife;
 public class PunchDetailsActivity extends AppCompatActivity {
 
     public static final String TAG = "PunchDetailsActivity";
-    private static final String DAY_FORMAT = "DD/MM/YYYY";
-    private static final String HOUR_FORMAT = "HH:MM:SS";
     private BoxingSession bSession;
 
     @BindView(R.id.day) TextView dayTv;
@@ -65,5 +63,8 @@ public class PunchDetailsActivity extends AppCompatActivity {
         dayTv.setText(dayFormat.format(startDate));
         startTv.setText(hourFormat.format(startDate));
         endTv.setText(hourFormat.format(endDate));
+
+        String title = dayFormat.format(startDate) + " " + hourFormat.format(startDate);
+        setTitle(title);
     }
 }
