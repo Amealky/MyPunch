@@ -1,8 +1,9 @@
 package com.esgi.mypunch.data.dtos;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class BoxingSession {
+public class BoxingSession implements Serializable {
 
     private int id;
     private Date start;

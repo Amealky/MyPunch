@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.esgi.mypunch.PunchDetailsActivity">
+
+    <TextView
+        android:id="@+id/dayLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dayLabel"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/dayLabel"/>
+
+    <TextView
+        android:id="@+id/startLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/startLabel"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dayLabel"/>
+
+    <TextView
+        android:id="@+id/start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@id/startLabel"
+        app:layout_constraintTop_toBottomOf="@id/day"/>
+
+    <TextView
+        android:id="@+id/endLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/endLabel"
+        app:layout_constraintLeft_toRightOf="@id/start"
+        app:layout_constraintTop_toBottomOf="@id/dayLabel"/>
+
+    <TextView
+        android:id="@+id/end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/day"
+        app:layout_constraintLeft_toRightOf="@id/endLabel"/>
+
+    <TextView
+        android:id="@+id/nbPunchesLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nbPunchesLabel"
+        app:layout_constraintTop_toBottomOf="@id/startLabel"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <TextView
+        android:id="@+id/nbPunches"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/end"
+        app:layout_constraintLeft_toRightOf="@id/nbPunchesLabel"/>
+
+    <TextView
+        android:id="@+id/powerLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/powerLabel"
+        app:layout_constraintTop_toBottomOf="@id/nbPunchesLabel"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <TextView
+        android:id="@+id/minPowerLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/minPowerLabel"
+        app:layout_constraintTop_toBottomOf="@id/powerLabel"/>
+
+    <TextView
+        android:id="@+id/minPower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/powerLabel"
+        app:layout_constraintLeft_toRightOf="@id/minPowerLabel"/>
+
+    <TextView
+        android:id="@+id/avgPowerLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/avgPowerLabel"
+        app:layout_constraintTop_toBottomOf="@id/powerLabel"
+        app:layout_constraintLeft_toRightOf="@id/minPower"/>
+
+    <TextView
+        android:id="@+id/avgPower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/powerLabel"
+        app:layout_constraintLeft_toRightOf="@id/avgPowerLabel"/>
+
+    <TextView
+        android:id="@+id/maxPowerLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/maxPowerLabel"
+        app:layout_constraintTop_toBottomOf="@id/powerLabel"
+        app:layout_constraintLeft_toRightOf="@id/avgPower"/>
+
+    <TextView
+        android:id="@+id/maxPower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/powerLabel"
+        app:layout_constraintLeft_toRightOf="@id/maxPowerLabel"/>
+
+</android.support.constraint.ConstraintLayout>

@@ -1,6 +1,7 @@
 package com.esgi.mypunch.punchlist;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.esgi.mypunch.PunchDetailsActivity;
 import com.esgi.mypunch.R;
 import com.esgi.mypunch.data.SharedPreferencesManager;
 import com.esgi.mypunch.data.dtos.BoxingSession;
@@ -30,6 +32,7 @@ import retrofit2.Response;
 public class PunchListFragment extends Fragment implements BoxingSessionAdapter.Listener {
 
     public static final String TAG = "PunchListActivity";
+    public static final String SESSION_KEY = "boxingSession";
     private PunchMyNodeProvider provider;
     private List<BoxingSession> sessions;
     private BoxingSessionAdapter adapter;
@@ -86,5 +89,8 @@ public class PunchListFragment extends Fragment implements BoxingSessionAdapter.
     @Override
     public void onBoxingSessionClick(BoxingSession bSession) {
         Log.d(TAG, "Clicked on session : " + bSession.toString());
+        Intent intent = new Intent(this.getActivity(), PunchDetailsActivity.class);
+        intent.putExtra(SESSION_KEY, bSession);
+        startActivity(intent);
     }
 }

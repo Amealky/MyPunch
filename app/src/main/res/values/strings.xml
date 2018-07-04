@@ -9,4 +9,12 @@
     <string name="session">Session</string>
     <string name="connectivity">Connectivité</string>
     <string name="account">Compte</string>
+    <string name="startLabel">from </string>
+    <string name="endLabel">to </string>
+    <string name="nbPunchesLabel">Punches given :</string>
+    <string name="powerLabel">Power</string>
+    <string name="minPowerLabel">minimum : </string>
+    <string name="avgPowerLabel">average :</string>
+    <string name="maxPowerLabel">maximum :</string>
+    <string name="dayLabel">on </string>
 </resources>
