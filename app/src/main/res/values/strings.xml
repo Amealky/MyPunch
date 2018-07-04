@@ -9,4 +9,15 @@
     <string name="session">Session</string>
     <string name="connectivity">Connectivité</string>
     <string name="account">Compte</string>
+    <string name="bluetooth">Bluetooth</string>
+    <string name="bluetooth_devices">Bluetooth devices</string>
+    <string name="deconnexion">Deconnexion</string>
+    <string name="connectivites">connectivity</string>
+    <string name="comptes">Comptes</string>
+    <string name="scan_devices">Scan Devices</string>
+    <string name="stop_scan_devices">Stop</string>
+    <string name="liste_vide">Liste vide</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="no_name">No Name</string>
+
 </resources>

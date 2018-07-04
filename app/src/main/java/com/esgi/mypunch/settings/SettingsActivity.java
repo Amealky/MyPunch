@@ -1,11 +1,17 @@
 package com.esgi.mypunch.settings;
 
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 
 import com.esgi.mypunch.R;
@@ -17,6 +23,7 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView{
 
     private SettingsPresenter settingsPresenter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,10 +31,13 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView{
 
         settingsPresenter = new SettingsPresenterImpl(this);
 
+
         getFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).commit();
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
+
+
 
     }
 
@@ -36,6 +46,7 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView{
         settingsPresenter.onDestroy();
         super.onDestroy();
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -61,6 +72,8 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView{
         startActivity(intent);
         finish();
     }
+
+
 
     public SettingsPresenter getSettingsPresenter() {
         return settingsPresenter;

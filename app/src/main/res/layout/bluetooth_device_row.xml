@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="?android:attr/selectableItemBackground"
+    >
+
+    <ProgressBar
+        android:id="@+id/connectProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+
+        />
+
+    <ImageView
+        android:id="@+id/iconBluetooth"
+        android:src="@drawable/ic_disconnected_ble"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@id/connectProgressBar"
+        app:layout_constraintBottom_toBottomOf="@id/addressDevice"
+        app:layout_constraintTop_toTopOf="@id/titleDevice"/>
+
+    <TextView
+        android:id="@+id/titleDevice"
+        android:text="Mon bluetooth"
+        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/iconBluetooth"
+        />
+    <TextView
+        android:id="@+id/addressDevice"
+        android:text="Mon addresse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@id/iconBluetooth"
+        app:layout_constraintTop_toBottomOf="@id/titleDevice"/>
+    <ImageButton
+        android:id="@+id/disconnectBluetooth"
+        android:layout_width="50sp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_disconnect_ble"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        app:layout_constraintBottom_toBottomOf="@id/addressDevice"
+        app:layout_constraintTop_toTopOf="@id/titleDevice"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@id/addressDevice"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="5sp"/>
+
+</android.support.constraint.ConstraintLayout>

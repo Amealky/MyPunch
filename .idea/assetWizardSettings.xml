@@ -23,7 +23,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="paddingPercent" value="20" />
+                                                <entry key="paddingPercent" value="-5" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -34,8 +34,10 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="$PROJECT_DIR$/../../../Images/icons8-paramètres-filled-100.png" />
-                                      <entry key="outputName" value="ic_settings" />
+                                      <entry key="imageAsset" value="$PROJECT_DIR$/../../../Images/logout.png" />
+                                      <entry key="outputName" value="ic_disconnect_app" />
+                                      <entry key="theme" value="CUSTOM" />
+                                      <entry key="themeColor" value="ff4455" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -51,7 +53,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="paddingPercent" value="-10" />
+                                                <entry key="paddingPercent" value="5" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -62,9 +64,38 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="iconShape" value="NONE" />
-                                      <entry key="imageAsset" value="$PROJECT_DIR$/../../../Images/icons8-paramètres-filled.svg" />
-                                      <entry key="outputName" value="ic_settings" />
+                                      <entry key="backgroundColor" value="4ac8ff" />
+                                      <entry key="cropped" value="true" />
+                                      <entry key="iconShape" value="CIRCLE" />
+                                      <entry key="imageAsset" value="$PROJECT_DIR$/../../../Images/blueetooth-logo.png" />
+                                      <entry key="outputName" value="ic_boldBle" />
+                                    </map>
+                                  </option>
+                                </PersistentState>
+                              </value>
+                            </entry>
+                            <entry key="notification">
+                              <value>
+                                <PersistentState>
+                                  <option name="children">
+                                    <map>
+                                      <entry key="image">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="paddingPercent" value="5" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                    </map>
+                                  </option>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="imageAsset" value="$PROJECT_DIR$/../../../Images/blueetooth-logo.png" />
                                     </map>
                                   </option>
                                 </PersistentState>
