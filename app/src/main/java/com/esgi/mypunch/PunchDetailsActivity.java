@@ -9,6 +9,9 @@ import com.esgi.mypunch.data.dtos.BoxingSession;
 import com.esgi.mypunch.punchlist.PunchListFragment;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -16,6 +19,8 @@ import butterknife.ButterKnife;
 public class PunchDetailsActivity extends AppCompatActivity {
 
     public static final String TAG = "PunchDetailsActivity";
+    private static final String DAY_FORMAT = "DD/MM/YYYY";
+    private static final String HOUR_FORMAT = "HH:MM:SS";
     private BoxingSession bSession;
 
     @BindView(R.id.day) TextView dayTv;
@@ -48,9 +53,17 @@ public class PunchDetailsActivity extends AppCompatActivity {
         String avgPower = bSession.getAverage_power() + "";
         String maxPower = bSession.getMax_power() + "";
 
+        Date startDate = bSession.getStart();
+        Date endDate = bSession.getEnd();
+        DateFormat dayFormat = SimpleDateFormat.getDateInstance();
+        DateFormat hourFormat = SimpleDateFormat.getTimeInstance();
+
         nbPunchesTv.setText(nbPunches);
         minPowerTv.setText(minPower);
         avgPowerTv.setText(avgPower);
         maxPowerTv.setText(maxPower);
+        dayTv.setText(dayFormat.format(startDate));
+        startTv.setText(hourFormat.format(startDate));
+        endTv.setText(hourFormat.format(endDate));
     }
 }
