@@ -415,8 +415,6 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
                 Log.d("BROAD", "UART_CONNECT_MSG");
                 bluetoothConnecting.isConnected = CONNECTION_STATE.CONNECTED;
                 refreshDialogDevices();
-
-
             }
 
             //*********************//
