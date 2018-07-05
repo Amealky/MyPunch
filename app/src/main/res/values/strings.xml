@@ -19,5 +19,12 @@
     <string name="liste_vide">Liste vide</string>
     <string name="disconnect">Disconnect</string>
     <string name="no_name">No Name</string>
-
+    <string name="startLabel">from </string>
+    <string name="endLabel">to </string>
+    <string name="nbPunchesLabel">Punches given :</string>
+    <string name="powerLabel"><b>Power</b></string>
+    <string name="minPowerLabel">minimum : </string>
+    <string name="avgPowerLabel">average :</string>
+    <string name="maxPowerLabel">maximum :</string>
+    <string name="dayLabel">on </string>
 </resources>

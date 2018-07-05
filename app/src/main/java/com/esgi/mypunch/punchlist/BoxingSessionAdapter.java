@@ -22,6 +22,7 @@ public class BoxingSessionAdapter extends RecyclerView.Adapter<BoxingSessionAdap
 
     private List<BoxingSession> boxingSessions;
     private static final String TAG = "BoxingSessionAdapter";
+    private Listener listener;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.sessionDate)     TextView sessionDate;
@@ -39,6 +40,10 @@ public class BoxingSessionAdapter extends RecyclerView.Adapter<BoxingSessionAdap
         this.boxingSessions = boxingSessions;
     }
 
+    public void setListener(Listener listener) {
+        this.listener = listener;
+    }
+
     public void updateData(List<BoxingSession> boxingSessions) {
         this.boxingSessions = boxingSessions;
     }
@@ -54,7 +59,7 @@ public class BoxingSessionAdapter extends RecyclerView.Adapter<BoxingSessionAdap
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder");
-        BoxingSession session = boxingSessions.get(position);
+        final BoxingSession session = boxingSessions.get(position);
         // format session date
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
         String stringDate = format.format(session.getStart());
@@ -66,10 +71,21 @@ public class BoxingSessionAdapter extends RecyclerView.Adapter<BoxingSessionAdap
         long durationInSeconds = durationInMillis / 1000;
         String durationText = durationInSeconds + " s";
         holder.sessionDuration.setText(durationText);
+        // on item click
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (listener != null) listener.onBoxingSessionClick(session);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return boxingSessions.size();
+    }
+
+    public interface Listener {
+        void onBoxingSessionClick(BoxingSession bSession);
     }
 }

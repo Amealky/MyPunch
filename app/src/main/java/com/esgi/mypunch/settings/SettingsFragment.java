@@ -436,7 +436,10 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
 
             //*********************//
             if (action.equals(BluetoothLEService.ACTION_GATT_SERVICES_DISCOVERED)) {
-                mBluetoothLeService.enableTXNotification();
+                if(bluetoothConnecting.isConnected == CONNECTION_STATE.CONNECTED){
+                    mBluetoothLeService.enableTXNotification();
+                }
+
             }
             //*********************//
             if (action.equals(BluetoothLEService.ACTION_DATA_AVAILABLE)) {

@@ -1,13 +1,14 @@
 package com.esgi.mypunch.data.dtos;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class BoxingSession {
+public class BoxingSession implements Serializable {
 
     private int id;
     private Date start;
     private Date end;
-    private int nbPunches;
+    private int nb_punches;
     private int average_power;
     private int min_power;
     private int max_power;
@@ -17,7 +18,7 @@ public class BoxingSession {
         this.id = id;
         this.start = start;
         this.end = end;
-        this.nbPunches = nbPunches;
+        this.nb_punches = nbPunches;
         this.average_power = average_power;
         this.min_power = min_power;
         this.max_power = max_power;
@@ -27,7 +28,7 @@ public class BoxingSession {
     public BoxingSession(Date start, Date end, int nbPunches, int average_power, int min_power, int max_power) {
         this.start = start;
         this.end = end;
-        this.nbPunches = nbPunches;
+        this.nb_punches = nbPunches;
         this.average_power = average_power;
         this.min_power = min_power;
         this.max_power = max_power;
@@ -58,11 +59,11 @@ public class BoxingSession {
     }
 
     public int getNbPunches() {
-        return nbPunches;
+        return nb_punches;
     }
 
     public void setNbPunches(int nbPunches) {
-        this.nbPunches = nbPunches;
+        this.nb_punches = nbPunches;
     }
 
     public int getAverage_power() {
@@ -95,7 +96,7 @@ public class BoxingSession {
                 "id=" + id +
                 ", start=" + start +
                 ", end=" + end +
-                ", nbPunches=" + nbPunches +
+                ", nbPunches=" + nb_punches +
                 ", average_power=" + average_power +
                 ", min_power=" + min_power +
                 ", max_power=" + max_power +

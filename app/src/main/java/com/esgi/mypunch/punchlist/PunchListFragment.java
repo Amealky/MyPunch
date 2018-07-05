@@ -1,6 +1,7 @@
 package com.esgi.mypunch.punchlist;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.esgi.mypunch.PunchDetailsActivity;
 import com.esgi.mypunch.R;
 import com.esgi.mypunch.data.SharedPreferencesManager;
 import com.esgi.mypunch.data.dtos.BoxingSession;
@@ -27,9 +29,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PunchListFragment extends Fragment {
+public class PunchListFragment extends Fragment implements BoxingSessionAdapter.Listener {
 
     public static final String TAG = "PunchListActivity";
+    public static final String SESSION_KEY = "boxingSession";
     private PunchMyNodeProvider provider;
     private List<BoxingSession> sessions;
     private BoxingSessionAdapter adapter;
@@ -47,6 +50,7 @@ public class PunchListFragment extends Fragment {
         sessionsRecyclerView.setLayoutManager(mLayoutManager);
         sessionsRecyclerView.setItemAnimator(new DefaultItemAnimator());
         sessionsRecyclerView.setAdapter(adapter);
+        this.adapter.setListener(this);
         sessionsRecyclerView.addItemDecoration(new DividerItemDecoration(context, LinearLayoutManager.VERTICAL));
 
         return view;
@@ -59,7 +63,6 @@ public class PunchListFragment extends Fragment {
         sessions = new ArrayList<>();
         context = getActivity().getApplicationContext();
         adapter = new BoxingSessionAdapter(sessions);
-        //dummySamples();
 
         User user = SharedPreferencesManager.getUser(getActivity());
         Log.i(TAG, user.toString());
@@ -68,7 +71,6 @@ public class PunchListFragment extends Fragment {
             @Override
             public void onResponse(Call<List<BoxingSession>> call, Response<List<BoxingSession>> response) {
                 if (response.code() == 200) {
-                    Log.i(TAG, response.body().toString());
                     sessions = response.body();
                     adapter.updateData(sessions);
                     adapter.notifyDataSetChanged();
@@ -83,22 +85,12 @@ public class PunchListFragment extends Fragment {
             }
         });
     }
-/*
-    private void dummySamples() {
-        sessions = new ArrayList<>();
 
-        for (int i = 1; i <= 10; i++) {
-            Calendar startCal = Calendar.getInstance();
-            startCal.set(2018, Calendar.MAY, i, 10, 30, 0);
-            Calendar endCal = Calendar.getInstance();
-            endCal.set(2018, Calendar.MAY, i, 10, 31, 0);
-            BoxingSession session = new BoxingSession(startCal.getTime(), endCal.getTime(), 20, 15, 5, 20);
-            sessions.add(session);
-        }
-
-        Log.d(TAG, sessions.toString());
-        adapter.updateData(sessions);
-        adapter.notifyDataSetChanged();
+    @Override
+    public void onBoxingSessionClick(BoxingSession bSession) {
+        Log.d(TAG, "Clicked on session : " + bSession.toString());
+        Intent intent = new Intent(this.getActivity(), PunchDetailsActivity.class);
+        intent.putExtra(SESSION_KEY, bSession);
+        startActivity(intent);
     }
-    */
 }
