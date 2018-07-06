@@ -3,6 +3,7 @@ package com.esgi.mypunch.punchlist;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.esgi.mypunch.NewSession.NewSessionActivity;
 import com.esgi.mypunch.PunchDetailsActivity;
 import com.esgi.mypunch.R;
 import com.esgi.mypunch.data.SharedPreferencesManager;
@@ -39,6 +41,8 @@ public class PunchListFragment extends Fragment implements BoxingSessionAdapter.
     private Context context;
 
     @BindView(R.id.boxingSessionList) RecyclerView sessionsRecyclerView;
+    @BindView(R.id.fab_addSession)
+    FloatingActionButton fab_addSession;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,6 +56,15 @@ public class PunchListFragment extends Fragment implements BoxingSessionAdapter.
         sessionsRecyclerView.setAdapter(adapter);
         this.adapter.setListener(this);
         sessionsRecyclerView.addItemDecoration(new DividerItemDecoration(context, LinearLayoutManager.VERTICAL));
+
+        fab_addSession.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), NewSessionActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
 
         return view;
     }

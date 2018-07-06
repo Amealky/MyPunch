@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:id="@+id/dialog_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimary"
+        android:weightSum="100">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/timePickerTitle"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:padding="10sp"
+            android:layout_weight="100"
+            />
+        <ImageButton
+            android:id="@+id/exit_dialogButton"
+            android:layout_width="50sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+            android:tint="@color/white"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:src="@drawable/ic_disconnect_ble"
+            />
+
+
+    </LinearLayout>
+
+    <NumberPicker
+        android:id="@+id/np_hours"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dialog_title_bar"
+        app:layout_constraintRight_toLeftOf="@id/np_minute"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <NumberPicker
+        android:id="@+id/np_minute"
+        app:layout_constraintLeft_toRightOf="@id/np_hours"
+        app:layout_constraintTop_toBottomOf="@id/dialog_title_bar"
+        app:layout_constraintRight_toLeftOf="@id/np_seconde"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <NumberPicker
+        android:id="@+id/np_seconde"
+        app:layout_constraintLeft_toRightOf="@id/np_minute"
+        app:layout_constraintTop_toBottomOf="@id/dialog_title_bar"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    
+    <Button
+        android:id="@+id/bt_reset"
+        android:background="@color/colorPrimary"
+        android:layout_width="100sp"
+        android:layout_height="wrap_content"
+        android:text="@string/reset"
+        android:drawableTint="@color/white"
+        android:textColor="@color/white"
+        android:drawableLeft="@drawable/ic_disconnect_ble"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        
+        android:layout_margin="20sp"/>
+    <Button
+        android:id="@+id/bt_validate"
+        android:background="@color/colorPrimary"
+        android:layout_width="100sp"
+        android:layout_height="wrap_content"
+        android:text="@string/valider"
+        android:drawableTint="@color/white"
+        android:textColor="@color/white"
+        android:drawableLeft="@drawable/ic_check"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_margin="20sp"/>
+
+</android.support.constraint.ConstraintLayout>

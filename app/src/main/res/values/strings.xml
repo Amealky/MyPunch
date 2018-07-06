@@ -27,4 +27,12 @@
     <string name="avgPowerLabel">average :</string>
     <string name="maxPowerLabel">maximum :</string>
     <string name="dayLabel">on </string>
+    <string name="info_new_session">Vous n’êtes pas obligé de spécifier un temps à votre séance</string>
+    <string name="commence_dans">Commence dans :</string>
+    <string name="initTime">0h0m0s</string>
+    <string name="termine_dans">Termine dans :</string>
+    <string name="start">Start</string>
+    <string name="indetermine">Indéterminé</string>
+    <string name="reset">Reset</string>
+    <string name="valider">Valider</string>
 </resources>

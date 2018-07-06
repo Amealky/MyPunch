@@ -14,6 +14,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 
+import com.esgi.mypunch.NewSession.NewSessionActivity;
 import com.esgi.mypunch.R;
 import com.esgi.mypunch.login.LoginActivity;
 import com.esgi.mypunch.navbar.NavContentActivity;
@@ -36,7 +37,6 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView{
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
-
 
 
     }

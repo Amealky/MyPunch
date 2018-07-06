@@ -19,10 +19,10 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="$PROJECT_DIR$/../../../Images/add-circular-outlined-button.png" />
-                                      <entry key="outputName" value="ic_add" />
+                                      <entry key="imageAsset" value="$PROJECT_DIR$/../../../Images/two-circling-arrows.png" />
+                                      <entry key="outputName" value="ic_refresh" />
                                       <entry key="theme" value="CUSTOM" />
-                                      <entry key="themeColor" value="ffffff" />
+                                      <entry key="themeColor" value="ff4455" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -99,6 +99,11 @@
                 </map>
               </option>
             </PersistentState>
+          </value>
+        </entry>
+        <entry key="vectorWizard">
+          <value>
+            <PersistentState />
           </value>
         </entry>
       </map>

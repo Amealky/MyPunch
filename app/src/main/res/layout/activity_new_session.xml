@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.esgi.mypunch.NewSession.NewSessionActivity">
+
+<LinearLayout
+    android:id="@+id/ll_infoLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintLeft_toRightOf="parent"
+    android:layout_margin="20sp">
+    <ImageView
+        android:id="@+id/iv_infoNewSession"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_info"/>
+
+    <TextView
+        android:id="@+id/tv_infoNewSession"
+        android:gravity="left"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="20sp"
+        android:text="@string/info_new_session" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_beginSessionIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="@string/commence_dans"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_infoLayout"
+        />
+
+    <Button
+        android:id="@+id/bt_dateStart"
+        android:drawableLeft="@drawable/ic_time"
+        android:text="@string/indetermine"
+        android:background="@color/colorPrimaryLight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:src="@drawable/ic_time"
+        app:layout_constraintTop_toBottomOf="@id/tv_beginSessionIn"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+
+    <TextView
+        android:id="@+id/tv_endSessionIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="@string/termine_dans"
+        android:layout_margin="20sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bt_dateStart"
+        />
+
+    <Button
+        android:id="@+id/bt_dateEnd"
+        android:drawableLeft="@drawable/ic_time"
+        android:text="@string/indetermine"
+        android:background="@color/colorPrimaryLight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_time"
+        app:layout_constraintTop_toBottomOf="@id/tv_endSessionIn"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+
+
+
+    <Button
+        android:id="@+id/bt_startSession"
+        android:layout_width="match_parent"
+        android:layout_height="80sp"
+        android:background="@color/colorPrimary"
+        android:text="@string/start"
+
+
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+
+</android.support.constraint.ConstraintLayout>
