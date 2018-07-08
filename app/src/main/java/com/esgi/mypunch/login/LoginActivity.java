@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.esgi.mypunch.BaseActivity;
 import com.esgi.mypunch.R;
 import com.esgi.mypunch.navbar.NavContentActivity;
 import com.esgi.mypunch.register.RegisterActivity;
@@ -17,7 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class LoginActivity extends AppCompatActivity implements LoginView {
+public class LoginActivity extends BaseActivity implements LoginView {
 
     @BindView(R.id.pseudoField) EditText pseudoField;
     @BindView(R.id.pswdField) EditText pswdField;

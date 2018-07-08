@@ -44,6 +44,7 @@ import android.widget.Toast;
 import com.esgi.mypunch.R;
 import com.esgi.mypunch.data.BleDevice;
 import com.esgi.mypunch.data.enums.CONNECTION_STATE;
+
 import com.esgi.mypunch.services.BluetoothLEService;
 
 import java.text.DateFormat;
@@ -67,9 +68,10 @@ import retrofit2.Response;
 public class SettingsFragment extends PreferenceFragment implements BluetoothDevicesAdapter.BluetoothDeviceAdapterListener {
 
 
+    private SettingsActivity parentActivity;
+
     private BluetoothAdapter mBluetoothAdapter;
     private BluetoothLeScanner mBluetoothLeScanner;
-    private BluetoothLEService mBluetoothLeService;
 
     List<BleDevice> listBluetoothDevice;
     BluetoothDevicesAdapter bluetoothDevicesAdapter;
@@ -99,9 +101,10 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.settings);
+        parentActivity = (SettingsActivity) getActivity();
 
-        dialog = new Dialog(getActivity());
-        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_bluetooth_devices, null);
+        dialog = new Dialog(parentActivity);
+        View view = parentActivity.getLayoutInflater().inflate(R.layout.dialog_bluetooth_devices, null);
 
         checkboxBluetooth = (CheckBoxPreference) findPreference("pref_bluetooth_checkbox");
         buttonDeconnection =  findPreference("pref_disconnect");
@@ -115,7 +118,7 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
 
         dialog.setContentView(view);
 
-        rvDevices.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rvDevices.setLayoutManager(new LinearLayoutManager(parentActivity));
 
         listBluetoothDevice = new ArrayList<>();
 
@@ -154,21 +157,21 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
 
 
         // Check if BLE is supported on the device.
-        if (!getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
-            Toast.makeText(getActivity(),
+        if (!parentActivity.getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
+            Toast.makeText(parentActivity,
                     "BLUETOOTH_LE not supported in this device!",
                     Toast.LENGTH_SHORT).show();
-            getActivity().finish();
+            parentActivity.finish();
         }
 
         getBluetoothAdapterAndLeScanner();
 
         // Checks if Bluetooth is supported on the device.
         if (mBluetoothAdapter == null) {
-            Toast.makeText(getActivity(),
+            Toast.makeText(parentActivity,
                     "bluetoothManager.getAdapter()==null",
                     Toast.LENGTH_SHORT).show();
-            getActivity().finish();
+            parentActivity.finish();
             return;
         }else {
             if(mBluetoothAdapter.isEnabled()){
@@ -181,15 +184,15 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
 
         int permissionCheck = 0;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            permissionCheck = getActivity().checkSelfPermission("Manifest.permission.ACCESS_FINE_LOCATION");
+            permissionCheck = parentActivity.checkSelfPermission("Manifest.permission.ACCESS_FINE_LOCATION");
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            permissionCheck += getActivity().checkSelfPermission("Manifest.permission.ACCESS_COARSE_LOCATION");
+            permissionCheck += parentActivity.checkSelfPermission("Manifest.permission.ACCESS_COARSE_LOCATION");
         }
         if (permissionCheck != 0) {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                getActivity().requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1001); //Any number
+                parentActivity.requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1001); //Any number
             }
         }
 
@@ -200,7 +203,7 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
         checkboxBluetooth.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
                 //Il faut inversé il faut que le presenter envoie la vue et non l'inverse
-                ((SettingsActivity)getActivity()).getSettingsPresenter().clickBluetooth(checkboxBluetooth.isChecked());
+                parentActivity.getSettingsPresenter().clickBluetooth(checkboxBluetooth.isChecked());
                 return true;
             }
         });
@@ -217,13 +220,15 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
 
         buttonDeconnection.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
-                ((SettingsView)getActivity()).navigateLogin();
+                parentActivity.navigateLogin();
                 eraseToken();
                 return true;
             }
         });
-     //   scanLeDevice(true);
-        service_init();
+        parentActivity.setBroadcastReceiver(UARTStatusChangeReceiver);
+        parentActivity.setmServiceConnection(mServiceConnection);
+        parentActivity.service_init();
+
     }
 
     @Override
@@ -236,9 +241,17 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
     @Override
     public void onDestroy() {
         super.onDestroy();
-        getActivity().unbindService(mServiceConnection);
-        mBluetoothLeService.stopSelf();
-        mBluetoothLeService = null;
+        scanLeDevice(false);
+        try {
+            LocalBroadcastManager.getInstance(parentActivity).unregisterReceiver(UARTStatusChangeReceiver);
+        } catch (Exception ignore) {
+            Log.e(TAG, ignore.toString());
+        }
+        parentActivity.unbindService(parentActivity.getmServiceConnection());
+      //  parentActivity.getBluetoothLeService().stopSelf();
+
+
+
 
     }
 
@@ -255,40 +268,7 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
 
 
 
-    private void service_init() {
-        Intent bindIntent;
-        bindIntent = new Intent(getActivity(), BluetoothLEService.class);
-        getActivity().bindService(bindIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
 
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(UARTStatusChangeReceiver, makeGattUpdateIntentFilter());
-    }
-    private static IntentFilter makeGattUpdateIntentFilter() {
-        final IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(BluetoothLEService.ACTION_GATT_CONNECTED);
-        intentFilter.addAction(BluetoothLEService.ACTION_GATT_DISCONNECTED);
-        intentFilter.addAction(BluetoothLEService.ACTION_GATT_SERVICES_DISCOVERED);
-        intentFilter.addAction(BluetoothLEService.ACTION_DATA_AVAILABLE);
-        intentFilter.addAction(BluetoothLEService.DEVICE_DOES_NOT_SUPPORT_UART);
-        return intentFilter;
-    }
-
-    //UART service connected/disconnected
-    private ServiceConnection mServiceConnection = new ServiceConnection() {
-        public void onServiceConnected(ComponentName className, IBinder rawBinder) {
-            mBluetoothLeService = ((BluetoothLEService.LocalBinder) rawBinder).getService();
-            Log.d("BLESERVICE", "onServiceConnected mService= " + mBluetoothLeService);
-            if (!mBluetoothLeService.initialize()) {
-                Log.e("BLESERVICE", "Unable to initialize Bluetooth");
-                getActivity().finish();
-            }
-
-        }
-
-        public void onServiceDisconnected(ComponentName classname) {
-            ////     mService.disconnect(mDevice);
-            mBluetoothLeService = null;
-        }
-    };
 
     private void getBluetoothAdapterAndLeScanner(){
         // Get BluetoothAdapter and BluetoothLeScanner.
@@ -317,9 +297,6 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
 
                         //listViewLE.invalidateViews();
 
-                        Toast.makeText(getActivity(),
-                                "Scan timeout",
-                                Toast.LENGTH_LONG).show();
 
                         dialogProgressBar.setVisibility(View.GONE);
                         bt_Scan.setText(R.string.scan_devices);
@@ -389,18 +366,37 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
 
         private void addBluetoothDevice(BluetoothDevice device){
 
-                boolean hasDevice = false;
-                for(int i = 0; i <  listBluetoothDevice.size(); i++){
-                    if(listBluetoothDevice.get(i).getBluetoothDevice().getAddress().equals(device.getAddress())){
-                        hasDevice = true;
-                    }
+            boolean hasDevice = false;
+            for(int i = 0; i <  listBluetoothDevice.size(); i++){
+                if(listBluetoothDevice.get(i).getBluetoothDevice().getAddress().equals(device.getAddress())){
+                    hasDevice = true;
                 }
-                if(!hasDevice){
-                    listBluetoothDevice.add(new BleDevice(device));
-                }
+            }
+            if(!hasDevice){
+                listBluetoothDevice.add(new BleDevice(device));
+            }
+        }
+    };
+    //UART service connected/disconnected
+    private ServiceConnection mServiceConnection = new ServiceConnection() {
+        public void onServiceConnected(ComponentName className, IBinder rawBinder) {
+            parentActivity.setmBluetoothLeService(((BluetoothLEService.LocalBinder) rawBinder).getService());
+            Log.d("BLESERVICE", "onServiceConnected mService= " + parentActivity.getBluetoothLeService());
+            if (!parentActivity.getBluetoothLeService().initialize()) {
+                Log.e("BLESERVICE", "Unable to initialize Bluetooth");
+                parentActivity.finish();
+            }
+
 
 
         }
+
+        public void onServiceDisconnected(ComponentName classname) {
+            ////     mService.disconnect(mDevice);
+            parentActivity.setmBluetoothLeService(null);
+        }
+
+
     };
 
     private final BroadcastReceiver UARTStatusChangeReceiver = new BroadcastReceiver() {
@@ -424,41 +420,17 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
                         Log.d("BROAD", "UART_DISCONNECT_MSG");
                         bluetoothConnecting.isConnected = CONNECTION_STATE.DISCONNECTED;
                         refreshDialogDevices();
-                        mBluetoothLeService.close();
+                        parentActivity.getBluetoothLeService().close();
 
 
                     }
                 });
             }
 
-
-            //*********************//
-            if (action.equals(BluetoothLEService.ACTION_GATT_SERVICES_DISCOVERED)) {
-                if(bluetoothConnecting.isConnected == CONNECTION_STATE.CONNECTED){
-                    mBluetoothLeService.enableTXNotification();
-                }
-
-            }
-            //*********************//
-            if (action.equals(BluetoothLEService.ACTION_DATA_AVAILABLE)) {
-
-                final byte[] txValue = intent.getByteArrayExtra(BluetoothLEService.EXTRA_DATA);
-                getActivity().runOnUiThread(new Runnable() {
-                    public void run() {
-                        try {
-                            String text = new String(txValue, "UTF-8");
-                            String currentDateTimeString = DateFormat.getTimeInstance().format(new Date());
-                            Log.i("TX", text);
-                        } catch (Exception e) {
-                            Log.e("BROAD", e.toString());
-                        }
-                    }
-                });
-            }
             //*********************//
             if (action.equals(BluetoothLEService.DEVICE_DOES_NOT_SUPPORT_UART)){
                 Log.i("BROAD","Device doesn't support UART. Disconnecting");
-                mBluetoothLeService.disconnect();
+                parentActivity.getBluetoothLeService().disconnect();
             }
 
 
@@ -474,7 +446,7 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
         }
         refreshDialogDevices();
 
-        mBluetoothLeService.connect(device.getBluetoothDevice().getAddress());
+        parentActivity.getBluetoothLeService().connect(device.getBluetoothDevice().getAddress());
         device.isConnected = CONNECTION_STATE.CONNECTING;
         bluetoothConnecting = device;
 
@@ -483,7 +455,7 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
 
     @Override
     public boolean onDisconnectBluetoothClick(BleDevice device) {
-        return  mBluetoothLeService.disconnect();
+        return  parentActivity.getBluetoothLeService().disconnect();
     }
 
     private void eraseToken() {
@@ -511,3 +483,4 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
         });
     }
 }
+

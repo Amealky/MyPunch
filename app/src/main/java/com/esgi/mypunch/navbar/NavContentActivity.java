@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.esgi.mypunch.BaseActivity;
 import com.esgi.mypunch.R;
 import com.esgi.mypunch.login.LoginPresenter;
 import com.esgi.mypunch.login.LoginPresenterImpl;
@@ -29,7 +30,7 @@ import java.util.Vector;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class NavContentActivity extends AppCompatActivity implements NavContentView {
+public class NavContentActivity extends BaseActivity implements NavContentView {
 
     @BindView(R.id.viewPager)
     ViewPager viewPager;

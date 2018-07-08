@@ -8,6 +8,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.esgi.mypunch.BaseActivity;
 import com.esgi.mypunch.R;
 import com.esgi.mypunch.login.LoginActivity;
 
@@ -15,7 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class RegisterActivity extends AppCompatActivity implements RegisterView {
+public class RegisterActivity extends BaseActivity implements RegisterView {
 
     @BindView(R.id.registerPseudoField) TextView pseudoField;
     @BindView(R.id.registerPswdField) TextView registerPswdField;

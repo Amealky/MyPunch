@@ -70,7 +70,7 @@
         android:text="@string/reset"
         android:drawableTint="@color/white"
         android:textColor="@color/white"
-        android:drawableLeft="@drawable/ic_disconnect_ble"
+        android:drawableLeft="@drawable/ic_refresh"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         

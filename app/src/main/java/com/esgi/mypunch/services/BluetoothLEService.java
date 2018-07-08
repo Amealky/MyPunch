@@ -155,7 +155,7 @@ public class BluetoothLEService extends Service {
         // After using a given device, you should make sure that BluetoothGatt.close() is called
         // such that resources are cleaned up properly.  In this particular example, close() is
         // invoked when the UI is disconnected from the Service.
-        close();
+      // close();
         return super.onUnbind(intent);
 
 
@@ -224,6 +224,7 @@ public class BluetoothLEService extends Service {
         }
         // We want to directly connect to the device, so we are setting the autoConnect
         // parameter to false.
+
         mBluetoothGatt = device.getBluetoothDevice().connectGatt(this, false, mGattCallback);
         Log.d(TAG, "Trying to create a new connection.");
         mBluetoothDeviceAddress = address;
@@ -255,6 +256,7 @@ public class BluetoothLEService extends Service {
         if (mBluetoothGatt == null) {
             return;
         }
+
         Log.w(TAG, "mBluetoothGatt closed");
         mBluetoothDeviceAddress = null;
         mBluetoothGatt.close();
@@ -311,6 +313,28 @@ public class BluetoothLEService extends Service {
 
         BluetoothGattDescriptor descriptor = TxChar.getDescriptor(CCCD);
         descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
+        mBluetoothGatt.writeDescriptor(descriptor);
+
+    }
+    public void disableTXNotification()
+    {
+
+        BluetoothGattService RxService = mBluetoothGatt.getService(RX_SERVICE_UUID);
+        if (RxService == null) {
+            showMessage("Rx service not found!");
+            broadcastUpdate(DEVICE_DOES_NOT_SUPPORT_UART);
+            return;
+        }
+        BluetoothGattCharacteristic TxChar = RxService.getCharacteristic(TX_CHAR_UUID);
+        if (TxChar == null) {
+            showMessage("Tx charateristic not found!");
+            broadcastUpdate(DEVICE_DOES_NOT_SUPPORT_UART);
+            return;
+        }
+        mBluetoothGatt.setCharacteristicNotification(TxChar,false);
+
+        BluetoothGattDescriptor descriptor = TxChar.getDescriptor(CCCD);
+        descriptor.setValue(BluetoothGattDescriptor.DISABLE_NOTIFICATION_VALUE);
         mBluetoothGatt.writeDescriptor(descriptor);
 
     }

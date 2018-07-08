@@ -35,4 +35,5 @@
     <string name="indetermine">Indéterminé</string>
     <string name="reset">Reset</string>
     <string name="valider">Valider</string>
+    <string name="stop">STOP</string>
 </resources>

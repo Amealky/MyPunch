@@ -16,7 +16,7 @@ import java.util.Date;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PunchDetailsActivity extends AppCompatActivity {
+public class PunchDetailsActivity extends BaseActivity {
 
     public static final String TAG = "PunchDetailsActivity";
     private BoxingSession bSession;
