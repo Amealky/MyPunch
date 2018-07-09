@@ -36,4 +36,6 @@
     <string name="reset">Reset</string>
     <string name="valider">Valider</string>
     <string name="stop">STOP</string>
+    <string name="annuler">Annuler</string>
+    <string name="settings">settings</string>
 </resources>

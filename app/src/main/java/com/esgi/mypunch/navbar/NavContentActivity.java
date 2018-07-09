@@ -66,7 +66,6 @@ public class NavContentActivity extends BaseActivity implements NavContentView {
         appNavigationTabStrip.setViewPager(viewPager, 0);
         appNavigationTabStrip.setTitles("Sessions", "Synthèse");
         appNavigationTabStrip.setTabIndex(0, true);
-        appNavigationTabStrip.setStripColor(Color.RED);
         appNavigationTabStrip.setTypeface("fonts/typeface.ttf");
 
         PreferenceManager.setDefaultValues(this, R.xml.settings, false);

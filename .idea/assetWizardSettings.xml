@@ -16,13 +16,28 @@
                             <entry key="actionbar">
                               <value>
                                 <PersistentState>
+                                  <option name="children">
+                                    <map>
+                                      <entry key="image">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="paddingPercent" value="-5" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                    </map>
+                                  </option>
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="$PROJECT_DIR$/../../../Images/two-circling-arrows.png" />
-                                      <entry key="outputName" value="ic_refresh" />
+                                      <entry key="imageAsset" value="$PROJECT_DIR$/../../../Images/icons8-paramètres-filled-100.png" />
+                                      <entry key="outputName" value="ic_settings" />
                                       <entry key="theme" value="CUSTOM" />
-                                      <entry key="themeColor" value="ff4455" />
+                                      <entry key="themeColor" value="ffffff" />
                                     </map>
                                   </option>
                                 </PersistentState>

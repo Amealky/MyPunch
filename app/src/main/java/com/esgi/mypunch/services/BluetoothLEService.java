@@ -61,6 +61,9 @@ public class BluetoothLEService extends Service {
     public static final UUID TX_CHAR_UUID = UUID.fromString("6e400003-b5a3-f393-e0a9-e50e24dcca9e");
 
 
+    public static BleDevice device;
+
+
     private final IBinder mBinder = new LocalBinder();
 
     // Implements callback methods for GATT events that the app cares about.  For example,
@@ -217,7 +220,7 @@ public class BluetoothLEService extends Service {
             }
         }
 
-        final BleDevice device = new BleDevice(mBluetoothAdapter.getRemoteDevice(address));
+        device = new BleDevice(mBluetoothAdapter.getRemoteDevice(address));
         if (device.getBluetoothDevice() == null) {
             Log.w(TAG, "Device not found.  Unable to connect.");
             return false;
@@ -244,6 +247,7 @@ public class BluetoothLEService extends Service {
             return false;
         }
         mBluetoothGatt.disconnect();
+        device = null;
         // mBluetoothGatt.close();
         return true;
     }

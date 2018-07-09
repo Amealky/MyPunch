@@ -133,7 +133,10 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
                 if(mScanning){
                     bt_Scan.setText(R.string.scan_devices);
                     dialogProgressBar.setVisibility(View.GONE);
-                    tv_emptyList.setVisibility(View.VISIBLE);
+                    if (listBluetoothDevice.isEmpty()) {
+                        tv_emptyList.setVisibility(View.VISIBLE);
+                    }
+
                     scanLeDevice(false);
 
                 }else{
@@ -319,7 +322,7 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
             } else {
 
                 mBluetoothLeScanner.stopScan(scanCallback);
-
+                mHandler.removeCallbacks(null);
                 mScanning = false;
             }
 

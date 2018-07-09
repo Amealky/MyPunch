@@ -7,7 +7,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
+import android.support.annotation.RequiresApi;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +26,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.NumberPicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.esgi.mypunch.BaseActivity;
 import com.esgi.mypunch.R;
@@ -35,15 +41,23 @@ import org.w3c.dom.Text;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static android.os.VibrationEffect.createOneShot;
+
 public class NewSessionActivity extends BaseActivity {
 
 
     public enum DIALOGS{DEBUT, FIN};
+    public enum STEP{STARTED, WAIT, ENDED};
 
     int dhours, dminute, dseconde;
     int fhours, fminute, fseconde;
 
-    boolean sessionRunning = false;
+    final Handler handler = new Handler();
+
+    STEP step = STEP.ENDED;
+
+    Vibrator vibrator;
+
     //Activity elements
     @BindView(R.id.bt_dateStart)
     Button bt_dateStart;
@@ -77,16 +91,20 @@ public class NewSessionActivity extends BaseActivity {
 
     View view_stop;
 
+    long[] mVibratePattern = new long[]{0, 500, 800, 500, 800, 500};
+    int[] mAmplitudes = new int[]{0, 255, 0, 255, 0, 255};
 
-
+    int vibrationDuration = (int) (mVibratePattern[1]+mVibratePattern[2]+mVibratePattern[3]+mVibratePattern[4]+mVibratePattern[5]);
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_session);
         ButterKnife.bind(this);
 
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
-        //mBluetoothLeService = mBinder.getService();
+
         dhours = dminute = dseconde = fhours = fminute = fseconde = 0;
 
         dialog = new Dialog(this);
@@ -166,16 +184,21 @@ public class NewSessionActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
 
-                if(sessionRunning){
-                    bt_startSession.setText(R.string.start);
-                    sessionRunning = false;
-                    mBluetoothLeService.disableTXNotification();
-                }else{
-                    bt_startSession.setText(R.string.stop);
-                    sessionRunning = true;
-                    mBluetoothLeService.enableTXNotification();
 
+                switch(step){
+                    case STARTED:
+                        forceEndSession();
+                        break;
+                    case ENDED:
+                        launchSession();
+                        break;
+                    case WAIT:
+                        cancelSession();
+                        break;
+                        default:
+                            break;
                 }
+
 
 
             }
@@ -197,7 +220,11 @@ public class NewSessionActivity extends BaseActivity {
 
         }
         this.unbindService(this.getmServiceConnection());
-        mBluetoothLeService.disableTXNotification();
+        if(mBluetoothLeService.device != null){
+            mBluetoothLeService.disableTXNotification();
+        }
+       vibrator = null;
+
     }
 
     @Override
@@ -212,12 +239,86 @@ public class NewSessionActivity extends BaseActivity {
         return true;
     }
 
+    public void launchSession(){
+
+        bt_startSession.setText(R.string.annuler);
+        step = STEP.WAIT;
+        showToast("Wait Before launch");
+        handler.postDelayed(new Runnable() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void run() {
+                if(vibrator != null){
+                    vibrator.vibrate(VibrationEffect.createWaveform(mVibratePattern,  mAmplitudes, VibrationEffect.DEFAULT_AMPLITUDE));
+                }
+
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        bt_startSession.setText(R.string.stop);
+                        step = STEP.STARTED;
+                        // mBluetoothLeService.enableTXNotification();
+                        endSession();
+                    }
+                }, vibrationDuration);
+
+            }
+        }, convertDebutTimeInMillisecond());
+    }
+
+    public void endSession(){
+
+        if(hasTime(fhours, fminute, fseconde)){
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    cancelSession();
+
+                }
+            }, convertFinTimeInMillisecond());
+
+        }
+    }
+
+    public void forceEndSession(){
+
+        cancelSession();
+    }
+
+    public void cancelSession(){
+      //  mBluetoothLeService.disableTXNotification();
+        vibrator.cancel();
+        bt_startSession.setText(R.string.start);
+        step = STEP.ENDED;
+        handler.removeCallbacksAndMessages(null);
+    }
+
+    public int convertDebutTimeInMillisecond(){
+        int mshours = dhours * 3600000;
+        int msminute = dminute * 60000;
+        int msseconde = dseconde*1000;
+
+        return mshours + msminute + msseconde;
+    }
+
+    public int convertFinTimeInMillisecond(){
+        int mshours = fhours * 3600000;
+        int msminute = fminute * 60000;
+        int msseconde = fseconde*1000;
+
+        return mshours + msminute + msseconde;
+    }
+
     public void slideToTop(View view){
         TranslateAnimation animate = new TranslateAnimation(0,0,view.getHeight(),0);
         animate.setDuration(100);
         animate.setFillAfter(true);
         view.startAnimation(animate);
         view.setVisibility(View.VISIBLE);
+    }
+
+    public void showToast(String msg){
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 
 
