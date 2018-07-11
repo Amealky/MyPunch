@@ -16,6 +16,9 @@
             android:key="pref_bluetooth_devices"
             android:title="@string/bluetooth_devices"
             />
+
+
+
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/comptes">
 

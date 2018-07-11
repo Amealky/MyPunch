@@ -38,6 +38,8 @@ import com.esgi.mypunch.settings.SettingsFragment;
 
 import org.w3c.dom.Text;
 
+import java.nio.ByteBuffer;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -184,7 +186,7 @@ public class NewSessionActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
 
-
+            if(mBluetoothLeService.device != null){
                 switch(step){
                     case STARTED:
                         forceEndSession();
@@ -195,9 +197,10 @@ public class NewSessionActivity extends BaseActivity {
                     case WAIT:
                         cancelSession();
                         break;
-                        default:
-                            break;
+                    default:
+                        break;
                 }
+            }
 
 
 
@@ -249,7 +252,7 @@ public class NewSessionActivity extends BaseActivity {
             @Override
             public void run() {
                 if(vibrator != null){
-                    vibrator.vibrate(VibrationEffect.createWaveform(mVibratePattern,  mAmplitudes, VibrationEffect.DEFAULT_AMPLITUDE));
+                   // vibrator.vibrate(VibrationEffect.createWaveform(mVibratePattern,  mAmplitudes, VibrationEffect.DEFAULT_AMPLITUDE));
                 }
 
                 handler.postDelayed(new Runnable() {
@@ -257,7 +260,7 @@ public class NewSessionActivity extends BaseActivity {
                     public void run() {
                         bt_startSession.setText(R.string.stop);
                         step = STEP.STARTED;
-                        // mBluetoothLeService.enableTXNotification();
+                         mBluetoothLeService.enableTXNotification();
                         endSession();
                     }
                 }, vibrationDuration);
@@ -286,7 +289,7 @@ public class NewSessionActivity extends BaseActivity {
     }
 
     public void cancelSession(){
-      //  mBluetoothLeService.disableTXNotification();
+        mBluetoothLeService.disableTXNotification();
         vibrator.cancel();
         bt_startSession.setText(R.string.start);
         step = STEP.ENDED;
@@ -392,21 +395,22 @@ public class NewSessionActivity extends BaseActivity {
         }
     };
 
+
     private final BroadcastReceiver UARTStatusChangeReceiver = new BroadcastReceiver() {
 
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
 
-
-
             if (action.equals(BluetoothLEService.ACTION_DATA_AVAILABLE)) {
 
-                final byte[] txValue = intent.getByteArrayExtra(BluetoothLEService.EXTRA_DATA);
+                final int intValue = intent.getIntExtra(BluetoothLEService.EXTRA_DATA, 0);
+
                 runOnUiThread(new Runnable() {
                     public void run() {
                         try {
-                            String text = new String(txValue, "UTF-8");
-                            Log.i("TX", text);
+
+                            Log.i("TX", String.valueOf(intValue));
+                            //Log.i("TX2", intValue);
                         } catch (Exception e) {
                             Log.e("BROAD", e.toString());
                         }

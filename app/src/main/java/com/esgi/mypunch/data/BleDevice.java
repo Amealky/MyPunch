@@ -10,6 +10,8 @@ public class BleDevice {
 
     public CONNECTION_STATE isConnected = CONNECTION_STATE.DISCONNECTED;
 
+    public boolean isFavorite = false;
+
     public BleDevice(BluetoothDevice bluetoothDevice){
         this.bluetoothDevice = bluetoothDevice;
     }
@@ -21,4 +23,5 @@ public class BleDevice {
     public void setBluetoothDevice(BluetoothDevice bluetoothDevice) {
         this.bluetoothDevice = bluetoothDevice;
     }
+
 }

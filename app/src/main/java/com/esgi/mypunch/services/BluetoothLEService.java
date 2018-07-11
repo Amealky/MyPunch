@@ -25,6 +25,7 @@ import java.util.UUID;
 public class BluetoothLEService extends Service {
 
 
+
     private final static String TAG = BluetoothLEService.class.getSimpleName();
 
     private BluetoothManager mBluetoothManager;
@@ -119,6 +120,12 @@ public class BluetoothLEService extends Service {
         }
 
     };
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.stopSelf();
+
+    }
 
 
     private void broadcastUpdate(final String action) {
@@ -134,7 +141,7 @@ public class BluetoothLEService extends Service {
         if (TX_CHAR_UUID.equals(characteristic.getUuid())) {
 
             // Log.d(TAG, String.format("Received TX: %d",characteristic.getValue() ));
-            intent.putExtra(EXTRA_DATA, characteristic.getValue());
+            intent.putExtra(EXTRA_DATA, characteristic.getValue()[0] & 0xff);
         } else {
 
         }
@@ -294,13 +301,7 @@ public class BluetoothLEService extends Service {
      */
     public void enableTXNotification()
     {
-    	/*
-    	if (mBluetoothGatt == null) {
-    		showMessage("mBluetoothGatt null" + mBluetoothGatt);
-    		broadcastUpdate(DEVICE_DOES_NOT_SUPPORT_UART);
-    		return;
-    	}
-    		*/
+
         BluetoothGattService RxService = mBluetoothGatt.getService(RX_SERVICE_UUID);
         if (RxService == null) {
             showMessage("Rx service not found!");
@@ -341,29 +342,6 @@ public class BluetoothLEService extends Service {
         descriptor.setValue(BluetoothGattDescriptor.DISABLE_NOTIFICATION_VALUE);
         mBluetoothGatt.writeDescriptor(descriptor);
 
-    }
-
-    public void writeRXCharacteristic(byte[] value)
-    {
-
-
-        BluetoothGattService RxService = mBluetoothGatt.getService(RX_SERVICE_UUID);
-        showMessage("mBluetoothGatt null"+ mBluetoothGatt);
-        if (RxService == null) {
-            showMessage("Rx service not found!");
-            broadcastUpdate(DEVICE_DOES_NOT_SUPPORT_UART);
-            return;
-        }
-        BluetoothGattCharacteristic RxChar = RxService.getCharacteristic(RX_CHAR_UUID);
-        if (RxChar == null) {
-            showMessage("Rx charateristic not found!");
-            broadcastUpdate(DEVICE_DOES_NOT_SUPPORT_UART);
-            return;
-        }
-        RxChar.setValue(value);
-        boolean status = mBluetoothGatt.writeCharacteristic(RxChar);
-
-        Log.d(TAG, "write TXchar - status=" + status);
     }
 
     private void showMessage(String msg) {

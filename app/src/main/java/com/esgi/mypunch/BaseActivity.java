@@ -67,11 +67,6 @@ public class BaseActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, makeGattUpdateIntentFilter());
     }
 
-    protected void service_stop(){
-        this.stopService(bindIntent);
-
-    }
-
 
 
 

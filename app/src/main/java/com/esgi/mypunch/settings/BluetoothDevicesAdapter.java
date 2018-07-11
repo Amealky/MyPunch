@@ -17,7 +17,9 @@ import com.esgi.mypunch.data.BleDevice;
 import com.esgi.mypunch.data.enums.CONNECTION_STATE;
 
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 import butterknife.BindView;
@@ -28,6 +30,7 @@ public class BluetoothDevicesAdapter extends RecyclerView.Adapter<BluetoothDevic
     private static final String TAG = "BluetoothDevicesAdapter";
 
     private BluetoothDeviceAdapterListener listener;
+
 
     public void setListener(BluetoothDeviceAdapterListener listener) {
         this.listener = listener;
@@ -43,6 +46,8 @@ public class BluetoothDevicesAdapter extends RecyclerView.Adapter<BluetoothDevic
         ImageView iconBluetooth;
         @BindView(R.id.disconnectBluetooth)
         ImageButton disconnectBluetooth;
+        @BindView(R.id.favoriteBluetooth)
+        ImageButton favoriteBluetooth;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -71,10 +76,8 @@ public class BluetoothDevicesAdapter extends RecyclerView.Adapter<BluetoothDevic
 
 
     @Override
-    public void onBindViewHolder(final BluetoothDevicesAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(final BluetoothDevicesAdapter.MyViewHolder holder, final int position) {
         final BleDevice device = bluetoothDevices.get(position);
-
-
 
         if(device.getBluetoothDevice().getName() != null){
             holder.titleDevice.setText(device.getBluetoothDevice().getName());
@@ -89,7 +92,7 @@ public class BluetoothDevicesAdapter extends RecyclerView.Adapter<BluetoothDevic
             @Override
             public void onClick(View view) {
                 if(device.isConnected == CONNECTION_STATE.DISCONNECTED){
-                    listener.onDeviceClick(device);
+                    listener.onDeviceClick(device, position);
                     refreshHolder(device, holder);
                 }
 
@@ -100,6 +103,18 @@ public class BluetoothDevicesAdapter extends RecyclerView.Adapter<BluetoothDevic
             public void onClick(View view) {
                 listener.onDisconnectBluetoothClick(device);
                 refreshHolder(device, holder);
+            }
+        });
+        holder.favoriteBluetooth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //Set the values
+
+                device.isFavorite = !device.isFavorite;
+                refreshHolder(device, holder);
+                listener.onFavoriteDeviceClicked(device);
+
             }
         });
 
@@ -125,6 +140,12 @@ public class BluetoothDevicesAdapter extends RecyclerView.Adapter<BluetoothDevic
             holder.iconBluetooth.setImageResource(R.drawable.ic_connected_ble);
             holder.disconnectBluetooth.setVisibility(View.VISIBLE);
         }
+
+        if(device.isFavorite){
+            holder.favoriteBluetooth.setImageResource(R.drawable.ic_favorite_fill);
+        }else{
+            holder.favoriteBluetooth.setImageResource(R.drawable.ic_favorite_empty);
+        }
     }
 
     @Override
@@ -133,7 +154,8 @@ public class BluetoothDevicesAdapter extends RecyclerView.Adapter<BluetoothDevic
     }
 
     public interface BluetoothDeviceAdapterListener {
-        void onDeviceClick(BleDevice device);
+        void onDeviceClick(BleDevice device, int pos);
         boolean onDisconnectBluetoothClick(BleDevice device);
+        void onFavoriteDeviceClicked(BleDevice device);
     }
 }
