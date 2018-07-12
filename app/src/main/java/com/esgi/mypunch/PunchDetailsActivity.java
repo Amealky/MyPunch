@@ -43,6 +43,14 @@ public class PunchDetailsActivity extends BaseActivity {
     @BindView(R.id.avgPower) TextView avgPowerTv;
     @BindView(R.id.maxPower) TextView maxPowerTv;*/
 
+    @BindView(R.id.dateValue)
+    TextView dureeValue;
+    @BindView(R.id.nbcoup_value)
+    TextView nbcoup_value;
+    @BindView(R.id.min_value)
+    TextView min_value;
+    @BindView(R.id.max_value)
+    TextView max_value;
     @BindView(R.id.moyenne_chart)
     ColorfulRingProgressView moyenneChart;
 
