@@ -9,9 +9,14 @@ import android.widget.TextView;
 import com.esgi.mypunch.data.dtos.BoxingSession;
 import com.esgi.mypunch.punchlist.PunchListFragment;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.timqi.sectorprogressview.ColorfulRingProgressView;
 
 import java.io.Serializable;
 import java.text.DateFormat;
@@ -27,38 +32,44 @@ public class PunchDetailsActivity extends BaseActivity {
 
     public static final String TAG = "PunchDetailsActivity";
     private BoxingSession bSession;
-    private LineChart mChart;
+    private PieChart mChart;
     private SeekBar mSeekBarX, mSeekBarY;
 
-    @BindView(R.id.day) TextView dayTv;
-    @BindView(R.id.start) TextView startTv;
-    @BindView(R.id.end) TextView endTv;
-    @BindView(R.id.nbPunches) TextView nbPunchesTv;
+    //@BindView(R.id.day) TextView dayTv;
+  //  @BindView(R.id.start) TextView startTv;
+   // @BindView(R.id.end) TextView endTv;
+    /*@BindView(R.id.nbPunches) TextView nbPunchesTv;
     @BindView(R.id.minPower) TextView minPowerTv;
     @BindView(R.id.avgPower) TextView avgPowerTv;
-    @BindView(R.id.maxPower) TextView maxPowerTv;
+    @BindView(R.id.maxPower) TextView maxPowerTv;*/
+
+    @BindView(R.id.moyenne_chart)
+    ColorfulRingProgressView moyenneChart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_punch_details);
         ButterKnife.bind(this);
-        LineChart chart = (LineChart) findViewById(R.id.chart);
 
-        int[] dataObjects = {0, 1, 2, 3};
 
-        List<Entry> entries = new ArrayList<Entry>();
+       /* PieChart chart = (PieChart) findViewById(R.id.chart);
+
+
+        int[] dataObjects = {56};
+
+        List<PieEntry> entries = new ArrayList<PieEntry>();
 
         for (int data : dataObjects) {
 
             // turn your data into Entry objects
-            entries.add(new Entry(data, data));
+            entries.add(new PieEntry(data, data));
         }
-        LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
+        PieDataSet dataSet = new PieDataSet(entries, "Label"); // add entries to dataset
 
-        LineData lineData = new LineData(dataSet);
+        PieData lineData = new PieData(dataSet);
         chart.setData(lineData);
-        chart.invalidate();
+        chart.invalidate();*/
 
 
         Serializable content = getIntent().getSerializableExtra(PunchListFragment.SESSION_KEY);
@@ -82,13 +93,13 @@ public class PunchDetailsActivity extends BaseActivity {
         DateFormat dayFormat = SimpleDateFormat.getDateInstance();
         DateFormat hourFormat = SimpleDateFormat.getTimeInstance();
 
-        nbPunchesTv.setText(nbPunches);
+       /* nbPunchesTv.setText(nbPunches);
         minPowerTv.setText(minPower);
         avgPowerTv.setText(avgPower);
-        maxPowerTv.setText(maxPower);
-        dayTv.setText(dayFormat.format(startDate));
-        startTv.setText(hourFormat.format(startDate));
-        endTv.setText(hourFormat.format(endDate));
+        maxPowerTv.setText(maxPower);*/
+       // dayTv.setText(dayFormat.format(startDate));
+      //  startTv.setText(hourFormat.format(startDate));
+       // endTv.setText(hourFormat.format(endDate));
 
         String title = dayFormat.format(startDate) + " " + hourFormat.format(startDate);
         setTitle(title);

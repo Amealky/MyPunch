@@ -19,10 +19,10 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="$PROJECT_DIR$/../../../Images/boxing-gloves.png" />
-                                      <entry key="outputName" value="ic_punch" />
-                                      <entry key="theme" value="HOLO_DARK" />
-                                      <entry key="themeColor" value="d6d600" />
+                                      <entry key="imageAsset" value="$PROJECT_DIR$/../../../Images/explosion.png" />
+                                      <entry key="outputName" value="ic_hit" />
+                                      <entry key="theme" value="CUSTOM" />
+                                      <entry key="themeColor" value="ffffff" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -114,6 +114,11 @@
                                 </PersistentState>
                               </value>
                             </entry>
+                          </map>
+                        </option>
+                        <option name="values">
+                          <map>
+                            <entry key="outputIconType" value="ACTIONBAR" />
                           </map>
                         </option>
                       </PersistentState>

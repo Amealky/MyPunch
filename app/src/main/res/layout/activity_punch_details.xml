@@ -4,110 +4,214 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context="com.esgi.mypunch.PunchDetailsActivity">
 
-    <TextView
-        style="@style/boxingDetailsTextView"
-        android:id="@+id/dayLabel"
-        android:text="@string/dayLabel"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        style="@style/boxingDetailsTextView"
-        android:id="@+id/day"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/dayLabel"/>
-
-    <TextView
-        style="@style/boxingDetailsTextView"
-        android:id="@+id/startLabel"
-        android:text="@string/startLabel"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dayLabel"/>
-
-    <TextView
-        style="@style/boxingDetailsTextView"
-        android:id="@+id/start"
-        app:layout_constraintLeft_toRightOf="@id/startLabel"
-        app:layout_constraintTop_toBottomOf="@id/day"/>
-
-    <TextView
-        style="@style/boxingDetailsTextView"
-        android:id="@+id/endLabel"
-        android:text="@string/endLabel"
-        app:layout_constraintLeft_toRightOf="@id/start"
-        app:layout_constraintTop_toBottomOf="@id/dayLabel"/>
-
-    <TextView
-        style="@style/boxingDetailsTextView"
-        android:id="@+id/end"
-        app:layout_constraintTop_toBottomOf="@id/day"
-        app:layout_constraintLeft_toRightOf="@id/endLabel"/>
-
-    <TextView
-        style="@style/boxingDetailsTextView"
-        android:id="@+id/nbPunchesLabel"
-        android:text="@string/nbPunchesLabel"
-        app:layout_constraintTop_toBottomOf="@id/startLabel"
-        app:layout_constraintLeft_toLeftOf="parent"/>
-
-    <TextView
-        style="@style/boxingDetailsTextView"
-        android:id="@+id/nbPunches"
-        app:layout_constraintTop_toBottomOf="@id/end"
-        app:layout_constraintLeft_toRightOf="@id/nbPunchesLabel"/>
-
-    <TextView
-        style="@style/boxingDetailsTextView"
-        android:id="@+id/powerLabel"
-        android:text="@string/powerLabel"
-        app:layout_constraintTop_toBottomOf="@id/nbPunchesLabel"
-        app:layout_constraintLeft_toLeftOf="parent"/>
-
-    <TextView
-        style="@style/boxingDetailsTextView"
-        android:id="@+id/minPowerLabel"
-        android:text="@string/minPowerLabel"
-        app:layout_constraintTop_toBottomOf="@id/powerLabel"/>
-
-    <TextView
-        style="@style/boxingDetailsTextView"
-        android:id="@+id/minPower"
-        app:layout_constraintTop_toBottomOf="@id/powerLabel"
-        app:layout_constraintLeft_toRightOf="@id/minPowerLabel"/>
-
-    <TextView
-        style="@style/boxingDetailsTextView"
-        android:id="@+id/avgPowerLabel"
-        android:text="@string/avgPowerLabel"
-        app:layout_constraintTop_toBottomOf="@id/minPowerLabel"
-        app:layout_constraintLeft_toLeftOf="parent"/>
-
-    <TextView
-        style="@style/boxingDetailsTextView"
-        android:id="@+id/avgPower"
-        app:layout_constraintTop_toBottomOf="@id/minPower"
-        app:layout_constraintLeft_toRightOf="@id/avgPowerLabel"/>
-
-    <TextView
-        style="@style/boxingDetailsTextView"
-        android:id="@+id/maxPowerLabel"
-        android:text="@string/maxPowerLabel"
-        app:layout_constraintTop_toBottomOf="@id/avgPower"
-        app:layout_constraintLeft_toLeftOf="parent" />
-
-    <TextView
-        style="@style/boxingDetailsTextView"
-        android:id="@+id/maxPower"
-        app:layout_constraintTop_toBottomOf="@id/avgPower"
-        app:layout_constraintLeft_toRightOf="@id/maxPowerLabel"/>
-
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/chart"
+    <LinearLayout
+        android:id="@+id/dateTitle"
         android:layout_width="match_parent"
-        android:layout_height="200sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/maxPower"/>
+        android:layout_height="50sp"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/iv_timeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_time"
+            android:tint="@color/white"
+            android:paddingLeft="10sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textSize="20sp"
+        android:id="@+id/dayLabel"
+        android:text="@string/temps"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"
+        android:paddingLeft="10sp"
+        />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/dateContent"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        app:layout_constraintTop_toBottomOf="@id/dateTitle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:background="@color/white"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="20sp"
+            android:id="@+id/dureeTitle"
+            android:text="@string/duree"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:paddingLeft="10sp"
+            />
+        <TextView
+            android:id="@+id/dateValue"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="24h 60m 60s"
+            android:gravity="center"
+            android:paddingLeft="10sp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/punchTitle"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+
+        app:layout_constraintTop_toBottomOf="@id/dateContent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/iv_punch"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_hit"
+            android:tint="@color/white"
+            android:paddingLeft="10sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="20sp"
+            android:id="@+id/punchLabel"
+            android:text="@string/coups"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toTopOf="parent"
+            android:gravity="center"
+            android:paddingLeft="10sp"
+            />
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/nbcoup_title"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:text="@string/total_des_coups"
+        android:textSize="15sp"
+        android:padding="10sp"
+        android:textColor="@color/black"
+        android:background="@color/colorPrimaryLight"
+        app:layout_constraintTop_toBottomOf="@id/punchTitle"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+    <TextView
+        android:id="@+id/nbcoup_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="60 coups"
+        android:paddingLeft="10sp"
+        app:layout_constraintLeft_toRightOf="@id/nbcoup_title"
+        app:layout_constraintTop_toTopOf="@id/nbcoup_title"
+        app:layout_constraintBottom_toBottomOf="@id/nbcoup_title"/>
+
+    <TextView
+        android:id="@+id/min_title"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:text="@string/force_min"
+        android:textSize="15sp"
+        android:padding="10sp"
+        android:textColor="@color/black"
+        android:background="@color/colorPrimaryLight"
+        app:layout_constraintTop_toBottomOf="@id/nbcoup_title"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <TextView
+        android:id="@+id/min_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10%"
+        android:paddingLeft="10sp"
+        app:layout_constraintLeft_toRightOf="@id/min_title"
+        app:layout_constraintTop_toTopOf="@id/min_title"
+        app:layout_constraintBottom_toBottomOf="@id/min_title"/>
+
+    <TextView
+        android:id="@+id/max_title"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:text="@string/force_max"
+        android:textSize="15sp"
+        android:padding="10sp"
+        android:textColor="@color/black"
+        android:background="@color/colorPrimaryLight"
+        app:layout_constraintTop_toBottomOf="@id/min_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/max_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="100%"
+        android:paddingLeft="10sp"
+        android:textSize="20sp"
+
+        app:layout_constraintLeft_toRightOf="@id/max_title"
+        app:layout_constraintTop_toTopOf="@id/max_title"
+        app:layout_constraintBottom_toBottomOf="@id/max_title"
+        />
+
+    <TextView
+        android:id="@+id/moy_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/force_moyenne"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/max_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:padding="10sp"
+        android:background="@color/colorPrimaryLight"
+        />
+    <FrameLayout
+        android:id="@+id/frame"
+        android:layout_width="150sp"
+        android:layout_height="150sp"
+        android:layout_centerHorizontal="true"
+        app:layout_constraintTop_toBottomOf="@id/moy_title"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+    <com.timqi.sectorprogressview.ColorfulRingProgressView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/moyenne_chart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:bgColor="@color/white"
+        app:fgColorStart="@color/colorPrimary"
+        app:fgColorEnd="@color/colorPrimaryDark"
+        app:startAngle="0"
+        app:percent="75"
+        app:strokeWidth="10sp"
+        />
+        <TextView
+            android:id="@+id/tvPercent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="75"
+            android:textColor="@color/colorPrimary"
+            android:textSize="34sp" />
+    </FrameLayout>
+
 
 </android.support.constraint.ConstraintLayout>

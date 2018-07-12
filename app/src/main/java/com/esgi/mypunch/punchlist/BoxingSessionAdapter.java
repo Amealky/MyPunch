@@ -1,5 +1,6 @@
 package com.esgi.mypunch.punchlist;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +28,7 @@ public class BoxingSessionAdapter extends RecyclerView.Adapter<BoxingSessionAdap
     public class MyViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.sessionDate)     TextView sessionDate;
         @BindView(R.id.sessionDuration) TextView sessionDuration;
+        @BindView(R.id.sessionOf)       TextView sessionOf;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -64,6 +66,7 @@ public class BoxingSessionAdapter extends RecyclerView.Adapter<BoxingSessionAdap
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
         String stringDate = format.format(session.getStart());
         holder.sessionDate.setText(stringDate);
+
         // session duration
         long startInMillis = session.getStart().getTime();
         long endInMillis = session.getEnd().getTime();
@@ -81,8 +84,14 @@ public class BoxingSessionAdapter extends RecyclerView.Adapter<BoxingSessionAdap
 
         if(position%2 != 0){
             holder.itemView.setBackgroundResource(R.color.colorPrimary);
+            holder.sessionDate.setTextColor(Color.WHITE);
+            holder.sessionDuration.setTextColor(Color.WHITE);
+            holder.sessionOf.setTextColor(Color.WHITE);
         }else{
             holder.itemView.setBackgroundResource(R.color.white);
+            holder.sessionDate.setTextColor(Color.BLACK);
+            holder.sessionDuration.setTextColor(Color.BLACK);
+            holder.sessionOf.setTextColor(Color.BLACK);
         }
     }
 

@@ -41,4 +41,12 @@
     <string name="mon_bluetooth">Mon bluetooth</string>
     <string name="mon_addresse">Mon addresse</string>
     <string name="mypunch">MyPunch</string>
+    <string name="jourLabel">Le</string>
+    <string name="temps">Temps</string>
+    <string name="duree">Durée</string>
+    <string name="coups">Coups</string>
+    <string name="total_des_coups">Total des coups</string>
+    <string name="force_min">Force min</string>
+    <string name="force_max">Force max</string>
+    <string name="force_moyenne">Force moyenne</string>
 </resources>
