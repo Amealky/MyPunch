@@ -1,7 +1,9 @@
 package com.esgi.mypunch.login;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -29,11 +31,13 @@ public class LoginActivity extends BaseActivity implements LoginView {
     private LoginPresenter loginPresenter;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        getSupportActionBar().hide();
         loginPresenter = new LoginPresenterImpl(this);
         ButterKnife.bind(this);
         loginProgressBar.setVisibility(View.GONE);

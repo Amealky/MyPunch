@@ -385,8 +385,6 @@ public class NewSessionActivity extends BaseActivity {
 
             setmBluetoothLeService(((BluetoothLEService.LocalBinder) rawBinder).getService());
 
-
-
         }
 
         public void onServiceDisconnected(ComponentName classname) {

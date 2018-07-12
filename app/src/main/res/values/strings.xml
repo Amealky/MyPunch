@@ -40,4 +40,5 @@
     <string name="settings">settings</string>
     <string name="mon_bluetooth">Mon bluetooth</string>
     <string name="mon_addresse">Mon addresse</string>
+    <string name="mypunch">MyPunch</string>
 </resources>

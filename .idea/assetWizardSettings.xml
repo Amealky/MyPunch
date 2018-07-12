@@ -19,10 +19,38 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="$PROJECT_DIR$/../../../Images/star (1).png" />
-                                      <entry key="outputName" value="ic_favorite_fill" />
-                                      <entry key="theme" value="CUSTOM" />
+                                      <entry key="imageAsset" value="$PROJECT_DIR$/../../../Images/boxing-gloves.png" />
+                                      <entry key="outputName" value="ic_punch" />
+                                      <entry key="theme" value="HOLO_DARK" />
                                       <entry key="themeColor" value="d6d600" />
+                                    </map>
+                                  </option>
+                                </PersistentState>
+                              </value>
+                            </entry>
+                            <entry key="launcher">
+                              <value>
+                                <PersistentState>
+                                  <option name="children">
+                                    <map>
+                                      <entry key="foregroundImage">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="scalingPercent" value="44" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                    </map>
+                                  </option>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="backgroundColor" value="a6111c" />
+                                      <entry key="backgroundImage" value="$PROJECT_DIR$/app/src/main/res/drawable/red_gradient.xml" />
+                                      <entry key="foregroundImage" value="$PROJECT_DIR$/../../../Images/boxing-gloves.png" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -86,11 +114,6 @@
                                 </PersistentState>
                               </value>
                             </entry>
-                          </map>
-                        </option>
-                        <option name="values">
-                          <map>
-                            <entry key="outputIconType" value="ACTIONBAR" />
                           </map>
                         </option>
                       </PersistentState>

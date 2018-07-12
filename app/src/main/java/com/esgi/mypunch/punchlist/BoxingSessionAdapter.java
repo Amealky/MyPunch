@@ -78,6 +78,12 @@ public class BoxingSessionAdapter extends RecyclerView.Adapter<BoxingSessionAdap
                 if (listener != null) listener.onBoxingSessionClick(session);
             }
         });
+
+        if(position%2 != 0){
+            holder.itemView.setBackgroundResource(R.color.colorPrimary);
+        }else{
+            holder.itemView.setBackgroundResource(R.color.white);
+        }
     }
 
     @Override

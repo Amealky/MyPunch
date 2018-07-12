@@ -48,11 +48,12 @@
     <Button
         android:id="@+id/bt_dateStart"
         android:drawableLeft="@drawable/ic_time"
+        android:drawableTint="@color/colorPrimaryDark"
         android:text="@string/indetermine"
         android:background="@color/colorPrimaryLight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_time"
+
         app:layout_constraintTop_toBottomOf="@id/tv_beginSessionIn"
         app:layout_constraintLeft_toLeftOf="parent"/>
 
@@ -72,11 +73,12 @@
     <Button
         android:id="@+id/bt_dateEnd"
         android:drawableLeft="@drawable/ic_time"
+        android:drawableTint="@color/colorPrimaryDark"
         android:text="@string/indetermine"
         android:background="@color/colorPrimaryLight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_time"
+
         app:layout_constraintTop_toBottomOf="@id/tv_endSessionIn"
         app:layout_constraintLeft_toLeftOf="parent"/>
 
