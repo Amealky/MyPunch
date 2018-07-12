@@ -1,0 +1,34 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.esgi.mypunch.Synthesis.SynthesisFragment">
+
+    <TextView
+        android:id="@+id/titleSynthesis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:layout_margin="30sp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="30sp"
+        android:text="@string/synthese"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:padding="10sp"
+        android:textStyle="bold"
+        />
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/chart"
+        android:layout_width="match_parent"
+        android:layout_height="300sp"
+        android:layout_margin="20sp"
+        app:layout_constraintLeft_toLeftOf="@id/titleSynthesis"
+        app:layout_constraintRight_toRightOf="@id/titleSynthesis"
+        app:layout_constraintTop_toBottomOf="@id/titleSynthesis"
+        />
+
+
+</android.support.constraint.ConstraintLayout>

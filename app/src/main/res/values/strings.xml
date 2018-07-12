@@ -49,4 +49,8 @@
     <string name="force_min">Force min</string>
     <string name="force_max">Force max</string>
     <string name="force_moyenne">Force moyenne</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="synthese">Synthèse</string>
 </resources>

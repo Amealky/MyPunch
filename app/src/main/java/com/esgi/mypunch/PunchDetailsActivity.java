@@ -35,14 +35,6 @@ public class PunchDetailsActivity extends BaseActivity {
     private PieChart mChart;
     private SeekBar mSeekBarX, mSeekBarY;
 
-    //@BindView(R.id.day) TextView dayTv;
-  //  @BindView(R.id.start) TextView startTv;
-   // @BindView(R.id.end) TextView endTv;
-    /*@BindView(R.id.nbPunches) TextView nbPunchesTv;
-    @BindView(R.id.minPower) TextView minPowerTv;
-    @BindView(R.id.avgPower) TextView avgPowerTv;
-    @BindView(R.id.maxPower) TextView maxPowerTv;*/
-
     @BindView(R.id.dateValue)
     TextView dureeValue;
     @BindView(R.id.nbcoup_value)
@@ -59,25 +51,6 @@ public class PunchDetailsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_punch_details);
         ButterKnife.bind(this);
-
-
-       /* PieChart chart = (PieChart) findViewById(R.id.chart);
-
-
-        int[] dataObjects = {56};
-
-        List<PieEntry> entries = new ArrayList<PieEntry>();
-
-        for (int data : dataObjects) {
-
-            // turn your data into Entry objects
-            entries.add(new PieEntry(data, data));
-        }
-        PieDataSet dataSet = new PieDataSet(entries, "Label"); // add entries to dataset
-
-        PieData lineData = new PieData(dataSet);
-        chart.setData(lineData);
-        chart.invalidate();*/
 
 
         Serializable content = getIntent().getSerializableExtra(PunchListFragment.SESSION_KEY);

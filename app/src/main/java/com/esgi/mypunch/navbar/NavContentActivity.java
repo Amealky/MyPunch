@@ -16,6 +16,7 @@ import android.view.MenuItem;
 
 import com.esgi.mypunch.BaseActivity;
 import com.esgi.mypunch.R;
+import com.esgi.mypunch.Synthesis.SynthesisFragment;
 import com.esgi.mypunch.login.LoginPresenter;
 import com.esgi.mypunch.login.LoginPresenterImpl;
 import com.esgi.mypunch.login.LoginView;
@@ -58,7 +59,7 @@ public class NavContentActivity extends BaseActivity implements NavContentView {
         List<Fragment> fragments = new Vector<>();
 
         fragments.add(Fragment.instantiate(this, PunchListFragment.class.getName()));
-        fragments.add(new Fragment());
+        fragments.add(Fragment.instantiate(this, SynthesisFragment.class.getName()));
 
         navPageAdapter = new NavPageAdapter(super.getSupportFragmentManager(), fragments);
 
