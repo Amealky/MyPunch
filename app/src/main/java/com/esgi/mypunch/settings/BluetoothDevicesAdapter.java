@@ -46,8 +46,7 @@ public class BluetoothDevicesAdapter extends RecyclerView.Adapter<BluetoothDevic
         ImageView iconBluetooth;
         @BindView(R.id.disconnectBluetooth)
         ImageButton disconnectBluetooth;
-        @BindView(R.id.favoriteBluetooth)
-        ImageButton favoriteBluetooth;
+
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -105,18 +104,7 @@ public class BluetoothDevicesAdapter extends RecyclerView.Adapter<BluetoothDevic
                 refreshHolder(device, holder);
             }
         });
-        holder.favoriteBluetooth.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                //Set the values
-
-                device.isFavorite = !device.isFavorite;
-                refreshHolder(device, holder);
-                listener.onFavoriteDeviceClicked(device);
-
-            }
-        });
 
 
 
@@ -141,11 +129,7 @@ public class BluetoothDevicesAdapter extends RecyclerView.Adapter<BluetoothDevic
             holder.disconnectBluetooth.setVisibility(View.VISIBLE);
         }
 
-        if(device.isFavorite){
-            holder.favoriteBluetooth.setImageResource(R.drawable.ic_favorite_fill);
-        }else{
-            holder.favoriteBluetooth.setImageResource(R.drawable.ic_favorite_empty);
-        }
+
     }
 
     @Override

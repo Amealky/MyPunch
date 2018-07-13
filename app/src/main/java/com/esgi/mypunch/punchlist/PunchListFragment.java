@@ -62,7 +62,7 @@ public class PunchListFragment extends Fragment implements BoxingSessionAdapter.
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), NewSessionActivity.class);
                 startActivity(intent);
-                getActivity().finish();
+
             }
         });
 
@@ -98,6 +98,8 @@ public class PunchListFragment extends Fragment implements BoxingSessionAdapter.
             }
         });
     }
+
+
 
     @Override
     public void onBoxingSessionClick(BoxingSession bSession) {

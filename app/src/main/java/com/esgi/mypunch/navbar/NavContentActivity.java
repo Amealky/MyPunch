@@ -97,6 +97,7 @@ public class NavContentActivity extends BaseActivity implements NavContentView {
     protected void onDestroy() {
         navContentPresenter.onDestroy();
         super.onDestroy();
+        finish();
     }
 
     @Override
@@ -122,6 +123,6 @@ public class NavContentActivity extends BaseActivity implements NavContentView {
     public void navigateSettings(){
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
-        finish();
+
     }
 }

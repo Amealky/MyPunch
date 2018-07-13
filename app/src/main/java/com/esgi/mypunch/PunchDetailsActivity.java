@@ -3,6 +3,7 @@ package com.esgi.mypunch;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -61,6 +62,15 @@ public class PunchDetailsActivity extends BaseActivity {
         } else {
             Log.e(TAG, "couldn't get session");
         }
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return true;
     }
 
     private void renderBoxingSession(BoxingSession bSession) {

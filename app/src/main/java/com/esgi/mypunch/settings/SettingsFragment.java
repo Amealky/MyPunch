@@ -77,8 +77,7 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
 
     List<BleDevice> listBluetoothDevice;
     List<BleDevice> listBluetoothFavoriteDevice;
-    Set<String> setBluetoothDeviceFavoriteName;
-    Set<String> setBluetoothDeviceFavoriteAddr;
+
     BluetoothDevicesAdapter bluetoothDevicesAdapter;
     BleDevice bluetoothConnecting;
 
@@ -109,15 +108,6 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
         addPreferencesFromResource(R.xml.settings);
         parentActivity = (SettingsActivity) getActivity();
 
-        SharedPreferences settings = parentActivity.getSharedPreferences(BLUETOOTH_PREFERENCES, Context.MODE_PRIVATE);
-        setBluetoothDeviceFavoriteName = settings.getStringSet("BleName", null);
-        setBluetoothDeviceFavoriteAddr = settings.getStringSet("BleAddr", null);
-        if(setBluetoothDeviceFavoriteName == null){
-           setBluetoothDeviceFavoriteName = new HashSet<String>();
-        }
-        if(setBluetoothDeviceFavoriteAddr == null){
-            setBluetoothDeviceFavoriteAddr = new HashSet<String>();
-        }
 
 
         dialog = new Dialog(parentActivity);
@@ -271,8 +261,6 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
       //  parentActivity.getBluetoothLeService().stopSelf();
 
 
-
-
     }
 
     public void showDialogDevices() {
@@ -285,9 +273,6 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
         rvDevices.setAdapter(bluetoothDevicesAdapter);
         Log.i("LIST SIZE : ", String.valueOf(listBluetoothDevice.size()));
     }
-
-
-
 
 
     private void getBluetoothAdapterAndLeScanner(){
@@ -316,8 +301,6 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
                         mBluetoothLeScanner.stopScan(scanCallback);
 
                         //listViewLE.invalidateViews();
-
-
 
                         dialogProgressBar.setVisibility(View.GONE);
                         bt_Scan.setText(R.string.scan_devices);
@@ -484,31 +467,7 @@ public class SettingsFragment extends PreferenceFragment implements BluetoothDev
 
     @Override
     public void onFavoriteDeviceClicked(BleDevice device) {
-        SharedPreferences settings = parentActivity.getSharedPreferences(BLUETOOTH_PREFERENCES, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = settings.edit();
 
-        if(device.isFavorite){
-            if(device.getBluetoothDevice().getName() != null){
-                setBluetoothDeviceFavoriteName.add(device.getBluetoothDevice().getName());
-            }else{
-
-                setBluetoothDeviceFavoriteName.add(getString(R.string.no_name));
-            }
-
-            setBluetoothDeviceFavoriteAddr.add(device.getBluetoothDevice().getAddress());
-        }else{
-            if(device.getBluetoothDevice().getName() != null){
-                setBluetoothDeviceFavoriteName.remove(device.getBluetoothDevice().getName());
-            }else{
-                setBluetoothDeviceFavoriteName.remove(getString(R.string.no_name));
-            }
-            setBluetoothDeviceFavoriteAddr.remove(device.getBluetoothDevice().getAddress());
-        }
-
-
-        editor.putStringSet("BleName", setBluetoothDeviceFavoriteName);
-        editor.putStringSet("BleAddr", setBluetoothDeviceFavoriteAddr);
-        editor.apply();
     }
 
     private void eraseToken() {

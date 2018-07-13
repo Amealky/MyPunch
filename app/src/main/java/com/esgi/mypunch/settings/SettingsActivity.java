@@ -39,6 +39,7 @@ public class SettingsActivity extends BaseActivity implements SettingsView{
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 
+        this.getSupportActionBar().setTitle("Options");
 
     }
 
@@ -62,8 +63,6 @@ public class SettingsActivity extends BaseActivity implements SettingsView{
 
     @Override
     public void navigateNavContent() {
-        Intent intent = new Intent(this, NavContentActivity.class);
-        startActivity(intent);
         finish();
     }
 

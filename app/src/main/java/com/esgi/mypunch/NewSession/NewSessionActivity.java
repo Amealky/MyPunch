@@ -49,9 +49,11 @@ public class NewSessionActivity extends BaseActivity {
 
 
     public enum DIALOGS{DEBUT, FIN};
+
     public enum STEP{STARTED, WAIT, ENDED};
 
     int dhours, dminute, dseconde;
+
     int fhours, fminute, fseconde;
 
     final Handler handler = new Handler();
@@ -94,6 +96,7 @@ public class NewSessionActivity extends BaseActivity {
     View view_stop;
 
     long[] mVibratePattern = new long[]{0, 500, 800, 500, 800, 500};
+
     int[] mAmplitudes = new int[]{0, 255, 0, 255, 0, 255};
 
     int vibrationDuration = (int) (mVibratePattern[1]+mVibratePattern[2]+mVibratePattern[3]+mVibratePattern[4]+mVibratePattern[5]);
@@ -102,15 +105,17 @@ public class NewSessionActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_session);
+
         ButterKnife.bind(this);
 
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
-
         dhours = dminute = dseconde = fhours = fminute = fseconde = 0;
 
         dialog = new Dialog(this);
+
         dialog_view = this.getLayoutInflater().inflate(R.layout.dialog_time_picker, null);
+
         np_hours = (NumberPicker) dialog_view.findViewById(R.id.np_hours);
         np_minute = (NumberPicker) dialog_view.findViewById(R.id.np_minute);
         np_seconde = (NumberPicker) dialog_view.findViewById(R.id.np_seconde);
@@ -125,6 +130,7 @@ public class NewSessionActivity extends BaseActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setTitle("Nouvelle session");
 
         bt_exit_dialog.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,7 +145,6 @@ public class NewSessionActivity extends BaseActivity {
             public void onClick(View view) {
                 dialogTitle.setText(R.string.commence_dans);
                 type = DIALOGS.DEBUT;
-
                 showDialogPicker();
             }
         });
@@ -186,24 +191,24 @@ public class NewSessionActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
 
-            if(mBluetoothLeService.device != null){
-                switch(step){
-                    case STARTED:
-                        forceEndSession();
-                        break;
-                    case ENDED:
-                        launchSession();
-                        break;
-                    case WAIT:
-                        cancelSession();
-                        break;
-                    default:
-                        break;
+                if(mBluetoothLeService.device != null){
+                    switch(step){
+                        case STARTED:
+                            forceEndSession();
+                            break;
+                        case ENDED:
+                            launchSession();
+                            break;
+                        case WAIT:
+                            cancelSession();
+                            break;
+                        default:
+                            break;
+                    }
+                }else{
+
+                    showToast("Aucun gant detecté");
                 }
-            }
-
-
-
             }
         });
 
@@ -226,7 +231,7 @@ public class NewSessionActivity extends BaseActivity {
         if(mBluetoothLeService.device != null){
             mBluetoothLeService.disableTXNotification();
         }
-       vibrator = null;
+        vibrator = null;
 
     }
 
@@ -234,8 +239,6 @@ public class NewSessionActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent intent = new Intent(this, NavContentActivity.class);
-                startActivity(intent);
                 finish();
                 break;
         }
@@ -388,8 +391,7 @@ public class NewSessionActivity extends BaseActivity {
         }
 
         public void onServiceDisconnected(ComponentName classname) {
-            ////     mService.disconnect(mDevice);
-            //mBluetoothLeService = null;
+
         }
     };
 
