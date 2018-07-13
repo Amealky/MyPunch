@@ -255,7 +255,7 @@ public class NewSessionActivity extends BaseActivity {
             @Override
             public void run() {
                 if(vibrator != null){
-                   // vibrator.vibrate(VibrationEffect.createWaveform(mVibratePattern,  mAmplitudes, VibrationEffect.DEFAULT_AMPLITUDE));
+                    vibrator.vibrate(VibrationEffect.createWaveform(mVibratePattern,  mAmplitudes, VibrationEffect.DEFAULT_AMPLITUDE));
                 }
 
                 handler.postDelayed(new Runnable() {

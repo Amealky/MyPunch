@@ -41,6 +41,40 @@
         android:layout_margin="20sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/tv_hours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/h"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/dialog_title_bar"
+        app:layout_constraintLeft_toLeftOf="@id/np_hours"
+        app:layout_constraintRight_toRightOf="@id/np_hours"
+        app:layout_constraintBottom_toTopOf="@id/np_hours"/>
+    <TextView
+    android:id="@+id/tv_minute"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/m"
+    android:textSize="20sp"
+    android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/dialog_title_bar"
+    app:layout_constraintLeft_toLeftOf="@id/np_minute"
+    app:layout_constraintRight_toRightOf="@id/np_minute"
+    app:layout_constraintBottom_toTopOf="@id/np_minute"/>
+
+    <TextView
+        android:id="@+id/tv_seconde"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/s"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/dialog_title_bar"
+        app:layout_constraintLeft_toLeftOf="@id/np_seconde"
+        app:layout_constraintRight_toRightOf="@id/np_seconde"
+        app:layout_constraintBottom_toTopOf="@id/np_seconde"/>
 
     <NumberPicker
         android:id="@+id/np_minute"

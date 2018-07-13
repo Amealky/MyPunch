@@ -117,6 +117,7 @@
         android:layout_height="wrap_content"
         android:text="60 coups"
         android:paddingLeft="10sp"
+        android:textSize="20sp"
         app:layout_constraintLeft_toRightOf="@id/nbcoup_title"
         app:layout_constraintTop_toTopOf="@id/nbcoup_title"
         app:layout_constraintBottom_toBottomOf="@id/nbcoup_title"/>
@@ -139,6 +140,7 @@
         android:layout_height="wrap_content"
         android:text="10%"
         android:paddingLeft="10sp"
+        android:textSize="20sp"
         app:layout_constraintLeft_toRightOf="@id/min_title"
         app:layout_constraintTop_toTopOf="@id/min_title"
         app:layout_constraintBottom_toBottomOf="@id/min_title"/>
@@ -201,8 +203,7 @@
         app:fgColorEnd="@color/colorPrimaryDark"
         app:startAngle="0"
         app:percent="75"
-        app:strokeWidth="10sp"
-        />
+        app:strokeWidth="10sp"/>
         <TextView
             android:id="@+id/tvPercent"
             android:layout_width="wrap_content"
