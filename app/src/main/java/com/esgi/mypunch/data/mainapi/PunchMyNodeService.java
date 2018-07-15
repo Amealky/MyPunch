@@ -7,6 +7,7 @@ import com.esgi.mypunch.data.dtos.User;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -25,4 +26,7 @@ public interface PunchMyNodeService {
 
     @GET("./sessions/{userId}")
     Call<List<BoxingSession>> getUserPunches(@Path("userId") int userId, @Header("Authorization") String token);
+
+    @POST("./sessions")
+    Call<Void> addSessions(@Body BoxingSession session);
 }

@@ -13,6 +13,10 @@ public class BoxingSession implements Serializable {
     private int min_power;
     private int max_power;
 
+    public BoxingSession(){
+
+    }
+
     // from the database : has an id
     public BoxingSession(int id, Date start, Date end, int nbPunches, int average_power, int min_power, int max_power) {
         this.id = id;
