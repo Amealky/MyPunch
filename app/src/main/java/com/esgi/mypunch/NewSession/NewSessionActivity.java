@@ -299,34 +299,8 @@ public class NewSessionActivity extends BaseActivity {
                 @Override
                 public void run() {
                     cancelSession();
-                    dateEnd = Calendar.getInstance().getTime();
 
-                    newSession.setNbPunches(coups.size());
-                    newSession.setMax_power(getMaxValue(coups));
-                    newSession.setMin_power(getMinValue(coups));
-                    newSession.setAverage_power(getMoyValue(coups));
-                    newSession.setStart(dateStart);
-                    newSession.setEnd(dateEnd);
-
-
-                    Call<Void> apiResponse =  provider.addSession(newSession);
-                    apiResponse.enqueue(new Callback<Void>() {
-                        @Override
-                        public void onResponse(Call<Void> call, Response<Void> response) {
-                            Log.d("CREATE", "onResponse");
-                            if (response.code() == 200) {
-                                Log.d("CREATE", "200");
-                                //onSuccess();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<Void> call, Throwable t) {
-                            Log.d("CREATE", t.getMessage());
-                        }
-                    });
-
-
+                    sendSession();
 
                 }
             }, convertFinTimeInMillisecond());
@@ -337,6 +311,36 @@ public class NewSessionActivity extends BaseActivity {
     public void forceEndSession(){
 
         cancelSession();
+        sendSession();
+    }
+    public void sendSession(){
+        dateEnd = Calendar.getInstance().getTime();
+
+        newSession.setNbPunches(coups.size());
+        newSession.setMax_power(getMaxValue(coups));
+        newSession.setMin_power(getMinValue(coups));
+        newSession.setAverage_power(getMoyValue(coups));
+        newSession.setStart(dateStart);
+        newSession.setEnd(dateEnd);
+
+
+        Call<Void> apiResponse =  provider.addSession(newSession);
+        apiResponse.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                Log.d("CREATE", "onResponse");
+                if (response.code() == 200) {
+                    Log.d("CREATE", "200");
+                    //onSuccess();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.d("CREATE", t.getMessage());
+            }
+        });
+
     }
 
     public void cancelSession(){

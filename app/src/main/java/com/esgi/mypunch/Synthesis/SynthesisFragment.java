@@ -89,17 +89,20 @@ public class SynthesisFragment extends Fragment {
 
     public void refreshChart(View view){
         final BarChart chart = (BarChart) view.findViewById(R.id.chart);
+
+
         List<BarEntry> entries = new ArrayList<BarEntry>();
+
         int i = 0;
         for (int data : moyList) {
             // turn your data into Entry objects
             entries.add(new BarEntry(i, data));
             i++;
         }
-        BarDataSet dataSet = new BarDataSet(entries, "Force moyenne total / jours"); // add entries to dataset
+        BarDataSet dataSet = new BarDataSet(entries, "Force moyenne total / séance"); // add entries to dataset
+        int color = ContextCompat.getColor(getContext(), R.color.colorPrimary);
 
-
-        dataSet.setColor(R.color.colorPrimaryLight);
+        dataSet.setColor(color);
         BarData lineData = new BarData(dataSet);
 
         chart.setData(lineData);
@@ -121,9 +124,9 @@ public class SynthesisFragment extends Fragment {
         chart.setScaleYEnabled(false);
         chart.setPinchZoom(false);
         chart.setDoubleTapToZoomEnabled(false);
-        int color = ContextCompat.getColor(getContext(), R.color.colorPrimary);
+
         dataSet.setColor(color);
-        chart.getDescription().setText("Synthèse sur une semaine");
+        chart.getDescription().setText("Courbe d'évolution");
         chart.invalidate();
     }
 

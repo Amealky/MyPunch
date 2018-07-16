@@ -66,7 +66,9 @@ public class PunchDetailsActivity extends BaseActivity {
             nbcoup_value.setText(String.valueOf(bSession.getNbPunches()));
             min_value.setText(String.valueOf(bSession.getMin_power()));
             max_value.setText(String.valueOf(bSession.getMax_power()));
-            moyenneChart.setPercent(bSession.getAverage_power());
+            float moyenne = bSession.getAverage_power();
+            float percentage = (moyenne/252)*100;
+            moyenneChart.setPercent(percentage);
             average_value.setText(String.valueOf(bSession.getAverage_power()));
 
             duree = bSession.getEnd().getTime() - bSession.getStart().getTime();

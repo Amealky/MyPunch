@@ -99,7 +99,30 @@ public class PunchListFragment extends Fragment implements BoxingSessionAdapter.
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        User user = SharedPreferencesManager.getUser(getActivity());
+        Log.i(TAG, user.toString());
+        Call<List<BoxingSession>> response = provider.getSessionsForUser(user);
+        response.enqueue(new Callback<List<BoxingSession>>() {
+            @Override
+            public void onResponse(Call<List<BoxingSession>> call, Response<List<BoxingSession>> response) {
+                if (response.code() == 200) {
+                    sessions = response.body();
+                    adapter.updateData(sessions);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    Log.e(TAG, response.message());
+                }
+            }
 
+            @Override
+            public void onFailure(Call<List<BoxingSession>> call, Throwable t) {
+                Log.e(TAG, t.getMessage());
+            }
+        });
+    }
 
     @Override
     public void onBoxingSessionClick(BoxingSession bSession) {

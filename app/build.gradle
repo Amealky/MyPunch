@@ -45,4 +45,5 @@ dependencies {
     implementation "com.github.devlight.navigationtabstrip:navigationtabstrip:$project.navigationTabsStripVersion"
     implementation 'com.timqi.sectorprogressview:library:2.0.1'
 
+
 }
