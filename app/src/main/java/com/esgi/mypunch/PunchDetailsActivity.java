@@ -36,6 +36,9 @@ public class PunchDetailsActivity extends BaseActivity {
     private PieChart mChart;
     private SeekBar mSeekBarX, mSeekBarY;
 
+    Date Dduree;
+    long duree;
+
     @BindView(R.id.dateValue)
     TextView dureeValue;
     @BindView(R.id.nbcoup_value)
@@ -46,6 +49,8 @@ public class PunchDetailsActivity extends BaseActivity {
     TextView max_value;
     @BindView(R.id.moyenne_chart)
     ColorfulRingProgressView moyenneChart;
+    @BindView(R.id.tvPercent)
+    TextView average_value;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +62,21 @@ public class PunchDetailsActivity extends BaseActivity {
         Serializable content = getIntent().getSerializableExtra(PunchListFragment.SESSION_KEY);
         if (content != null) {
             bSession = (BoxingSession) content;
+
+            nbcoup_value.setText(String.valueOf(bSession.getNbPunches()));
+            min_value.setText(String.valueOf(bSession.getMin_power()));
+            max_value.setText(String.valueOf(bSession.getMax_power()));
+            moyenneChart.setPercent(bSession.getAverage_power());
+            average_value.setText(String.valueOf(bSession.getAverage_power()));
+
+            duree = bSession.getEnd().getTime() - bSession.getStart().getTime();
+            DateFormat hourFormat = SimpleDateFormat.getTimeInstance();
+
+            Dduree = new Date();
+            Dduree.setTime(duree);
+
+            dureeValue.setText(hourFormat.format(Dduree));
+
             Log.d(TAG, bSession.toString());
             renderBoxingSession(bSession);
         } else {
@@ -84,13 +104,7 @@ public class PunchDetailsActivity extends BaseActivity {
         DateFormat dayFormat = SimpleDateFormat.getDateInstance();
         DateFormat hourFormat = SimpleDateFormat.getTimeInstance();
 
-       /* nbPunchesTv.setText(nbPunches);
-        minPowerTv.setText(minPower);
-        avgPowerTv.setText(avgPower);
-        maxPowerTv.setText(maxPower);*/
-       // dayTv.setText(dayFormat.format(startDate));
-      //  startTv.setText(hourFormat.format(startDate));
-       // endTv.setText(hourFormat.format(endDate));
+
 
         String title = dayFormat.format(startDate) + " " + hourFormat.format(startDate);
         setTitle(title);
