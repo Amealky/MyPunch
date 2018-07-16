@@ -8,14 +8,34 @@
     tools:context="com.esgi.mypunch.register.RegisterActivity">
 
     <EditText
-        android:id="@+id/registerPseudoField"
+        android:id="@+id/registerEmailField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:hint="@string/pseudoFieldHint"
+        android:hint="@string/registerEmailHint"
         android:inputType="text"
+        />
+
+    <EditText
+        android:id="@+id/registerFirstnameField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:hint="@string/registerFirstnameHint"
+        app:layout_constraintTop_toBottomOf="@id/registerEmailField"
+        />
+
+    <EditText
+        android:id="@+id/registerLastnameField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:hint="@string/registerLastnameHint"
+        app:layout_constraintTop_toBottomOf="@id/registerFirstnameField"
         />
 
     <EditText
@@ -24,7 +44,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/registerPseudoField"
+        app:layout_constraintTop_toBottomOf="@id/registerLastnameField"
         android:hint="@string/pswdFieldHint"
         android:inputType="textPassword"
         />
