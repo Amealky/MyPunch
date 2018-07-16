@@ -5,17 +5,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     
-    tools:context="com.esgi.mypunch.register.RegisterActivity">
+    tools:context="com.esgi.mypunch.register.RegisterActivity"
+    android:background="@drawable/red_gradient"
+    android:layout_gravity="center">
 
     <EditText
-        android:id="@+id/registerPseudoField"
+        android:id="@+id/registerEmailField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:hint="@string/pseudoFieldHint"
+        android:hint="@string/registerEmailHint"
         android:inputType="text"
+        android:padding="10sp"
+        style="@style/connectionField"
+        />
+
+    <EditText
+        android:id="@+id/registerFirstnameField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:hint="@string/registerFirstnameHint"
+        app:layout_constraintTop_toBottomOf="@id/registerEmailField"
+        style="@style/connectionField"
+        android:padding="10sp"
+        />
+
+    <EditText
+        android:id="@+id/registerLastnameField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:hint="@string/registerLastnameHint"
+        app:layout_constraintTop_toBottomOf="@id/registerFirstnameField"
+        style="@style/connectionField"
+        android:padding="10sp"
         />
 
     <EditText
@@ -24,9 +52,11 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/registerPseudoField"
+        app:layout_constraintTop_toBottomOf="@id/registerLastnameField"
         android:hint="@string/pswdFieldHint"
         android:inputType="textPassword"
+        style="@style/connectionField"
+        android:padding="10sp"
         />
 
     <EditText
@@ -38,6 +68,8 @@
         app:layout_constraintTop_toBottomOf="@id/registerPswdField"
         android:hint="@string/repeat_pswd"
         android:inputType="textPassword"
+        style="@style/connectionField"
+        android:padding="10sp"
         />
 
     <Button
@@ -48,6 +80,8 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/repeatPswdField"
         android:text="@string/registerButtonText"
+        style="@style/connectionButton"
+        android:padding="10sp"
         />
 
     <ProgressBar
@@ -57,6 +91,7 @@
         app:layout_constraintTop_toBottomOf="@id/launchRegistrationButton"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        style="@style/connectionField"
         />
 
 </android.support.constraint.ConstraintLayout>

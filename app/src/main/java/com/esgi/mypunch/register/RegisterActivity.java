@@ -1,8 +1,6 @@
 package com.esgi.mypunch.register;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -10,7 +8,6 @@ import android.widget.Toast;
 
 import com.esgi.mypunch.BaseActivity;
 import com.esgi.mypunch.R;
-import com.esgi.mypunch.login.LoginActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,7 +15,9 @@ import butterknife.OnClick;
 
 public class RegisterActivity extends BaseActivity implements RegisterView {
 
-    @BindView(R.id.registerPseudoField) TextView pseudoField;
+    @BindView(R.id.registerEmailField) TextView emailField;
+    @BindView(R.id.registerFirstnameField) TextView firstName;
+    @BindView(R.id.registerLastnameField) TextView lastName;
     @BindView(R.id.registerPswdField) TextView registerPswdField;
     @BindView(R.id.repeatPswdField) TextView repeatPswdField;
     @BindView(R.id.launchRegistrationButton) TextView launchRegistrationButton;
@@ -37,10 +36,12 @@ public class RegisterActivity extends BaseActivity implements RegisterView {
     }
 
     @OnClick(R.id.launchRegistrationButton) public void launchRegistration() {
-        String username = pseudoField.getText().toString();
-        String pswd = registerPswdField.getText().toString();
-        String pswdRepeat = repeatPswdField.getText().toString();
-        registerPresenter.validateCredentials(username, pswd, pswdRepeat);
+        String l_email = emailField.getText().toString();
+        String l_firstname = firstName.getText().toString();
+        String l_lastname = lastName.getText().toString();
+        String l_pswd = registerPswdField.getText().toString();
+        String l_pswdRepeat = repeatPswdField.getText().toString();
+        registerPresenter.validateCredentials(l_email, l_firstname, l_lastname, l_pswd, l_pswdRepeat);
     }
 
     @Override
@@ -78,8 +79,6 @@ public class RegisterActivity extends BaseActivity implements RegisterView {
 
     @Override
     public void navigateToLogin() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
         finish();
     }
 }

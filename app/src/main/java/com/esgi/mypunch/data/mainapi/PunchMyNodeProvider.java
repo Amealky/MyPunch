@@ -1,6 +1,7 @@
 package com.esgi.mypunch.data.mainapi;
 
 import com.esgi.mypunch.data.dtos.BoxingSession;
+import com.esgi.mypunch.data.dtos.CandidateUser;
 import com.esgi.mypunch.data.dtos.Credentials;
 import com.esgi.mypunch.data.dtos.User;
 
@@ -15,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PunchMyNodeProvider {
     // change to your web service host
-    private static final String BASE_URL = "http://192.168.0.24:8080";
+    private static final String BASE_URL = "http://192.168.1.19:8080";
 
     private PunchMyNodeService pmnService;
 
@@ -35,6 +36,10 @@ public class PunchMyNodeProvider {
 
     public Call<User> connect(Credentials credentials) {
         return pmnService.getToken(credentials);
+    }
+
+    public Call<User> register(CandidateUser candidate) {
+        return pmnService.register(candidate);
     }
 
     public Call<Void> logout(String token) {
