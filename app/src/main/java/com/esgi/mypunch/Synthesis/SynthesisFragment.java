@@ -6,11 +6,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.esgi.mypunch.R;
+import com.esgi.mypunch.data.SharedPreferencesManager;
+import com.esgi.mypunch.data.dtos.BoxingSession;
+import com.esgi.mypunch.data.dtos.User;
+import com.esgi.mypunch.data.mainapi.PunchMyNodeProvider;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
@@ -25,21 +30,68 @@ import com.github.mikephil.charting.data.LineDataSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+
 
 public class SynthesisFragment extends Fragment {
+
+    private PunchMyNodeProvider provider;
+    private List<BoxingSession> sessions;
+    private List<Integer> moyList = new ArrayList<Integer>();
+    private final String TAG = "SynthesisFragment";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_synthesis, container, false);
-        BarChart chart = (BarChart) view.findViewById(R.id.chart);
+        final View view = inflater.inflate(R.layout.fragment_synthesis, container, false);
+        provider = new PunchMyNodeProvider();
+        sessions = new ArrayList<>();
+
+        User user = SharedPreferencesManager.getUser(getActivity());
 
 
-        int[] dataObjects = {56, 255, 0, 23, 135, 68, 30};
-        int i = 0;
+        Call<List<BoxingSession>> response = provider.getSessionsForUser(user);
+        response.enqueue(new Callback<List<BoxingSession>>() {
+            @Override
+            public void onResponse(Call<List<BoxingSession>> call, Response<List<BoxingSession>> response) {
+                if (response.code() == 200) {
+                    sessions = response.body();
 
+                    for(int i = 0; i < sessions.size(); i++){
+                        moyList.add(sessions.get(i).getAverage_power());
+                    }
+
+                    refreshChart(view);
+
+                } else {
+                    Log.e(TAG, response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<BoxingSession>> call, Throwable t) {
+                Log.e(TAG, t.getMessage());
+            }
+        });
+
+
+
+        return view;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    public void refreshChart(View view){
+        final BarChart chart = (BarChart) view.findViewById(R.id.chart);
         List<BarEntry> entries = new ArrayList<BarEntry>();
-
-        for (int data : dataObjects) {
+        int i = 0;
+        for (int data : moyList) {
             // turn your data into Entry objects
             entries.add(new BarEntry(i, data));
             i++;
@@ -73,15 +125,8 @@ public class SynthesisFragment extends Fragment {
         dataSet.setColor(color);
         chart.getDescription().setText("Synthèse sur une semaine");
         chart.invalidate();
-
-
-        return view;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-    }
 
 }
