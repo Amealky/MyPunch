@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.e‡sgi.mypunch.login.LoginActivity"
+    tools:context="com.esgi.mypunch.login.LoginActivity"
     android:background="@drawable/red_gradient"
     android:layout_gravity="center">
 
@@ -36,40 +36,26 @@
         />
 
     <EditText
-        android:layout_margin="20sp"
-        android:padding="5sp"
         android:id="@+id/pseudoField"
         android:layout_width="match_parent"
-        android:layout_height="50sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/titleLogin"
         android:hint="@string/pseudoFieldHint"
         android:inputType="text"
-        android:background="@color/white"
-        android:textCursorDrawable="@color/colorPrimary"
-        android:textColor="@color/colorPrimary"
-        android:textStyle="bold"
-
-
+        style="@style/connectionField"
         />
 
     <EditText
         android:id="@+id/pswdField"
-        android:padding="5sp"
         android:layout_width="match_parent"
-        android:layout_height="50sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/pseudoField"
         android:hint="@string/pswdFieldHint"
         android:inputType="textPassword"
-        android:layout_margin="20sp"
-        android:background="@color/white"
-        android:textCursorDrawable="@color/colorPrimary"
-        android:textColor="@color/colorPrimary"
         android:cursorVisible="true"
-        android:textStyle="bold"
+        style="@style/connectionField"
         />
 
     <Button
