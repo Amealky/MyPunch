@@ -31,7 +31,9 @@ import android.widget.Toast;
 import com.esgi.mypunch.BaseActivity;
 import com.esgi.mypunch.R;
 import com.esgi.mypunch.data.BleDevice;
+import com.esgi.mypunch.data.dtos.BoxingSession;
 import com.esgi.mypunch.data.enums.CONNECTION_STATE;
+import com.esgi.mypunch.data.mainapi.PunchMyNodeProvider;
 import com.esgi.mypunch.navbar.NavContentActivity;
 import com.esgi.mypunch.services.BluetoothLEService;
 import com.esgi.mypunch.settings.SettingsFragment;
@@ -39,14 +41,22 @@ import com.esgi.mypunch.settings.SettingsFragment;
 import org.w3c.dom.Text;
 
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.os.VibrationEffect.createOneShot;
 
 public class NewSessionActivity extends BaseActivity {
 
+    private PunchMyNodeProvider provider;
 
     public enum DIALOGS{DEBUT, FIN};
 
@@ -99,6 +109,12 @@ public class NewSessionActivity extends BaseActivity {
 
     int[] mAmplitudes = new int[]{0, 255, 0, 255, 0, 255};
 
+    BoxingSession newSession;
+
+    List<Integer> coups = new ArrayList<Integer>();
+    Date dateStart = new Date();
+    Date dateEnd = new Date();
+
     int vibrationDuration = (int) (mVibratePattern[1]+mVibratePattern[2]+mVibratePattern[3]+mVibratePattern[4]+mVibratePattern[5]);
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -107,6 +123,8 @@ public class NewSessionActivity extends BaseActivity {
         setContentView(R.layout.activity_new_session);
 
         ButterKnife.bind(this);
+
+        newSession = new BoxingSession();
 
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
@@ -264,6 +282,8 @@ public class NewSessionActivity extends BaseActivity {
                         bt_startSession.setText(R.string.stop);
                         step = STEP.STARTED;
                          mBluetoothLeService.enableTXNotification();
+                         dateStart = Calendar.getInstance().getTime();
+
                         endSession();
                     }
                 }, vibrationDuration);
@@ -279,6 +299,34 @@ public class NewSessionActivity extends BaseActivity {
                 @Override
                 public void run() {
                     cancelSession();
+                    dateEnd = Calendar.getInstance().getTime();
+
+                    newSession.setNbPunches(coups.size());
+                    newSession.setMax_power(getMaxValue(coups));
+                    newSession.setMin_power(getMinValue(coups));
+                    newSession.setAverage_power(getMoyValue(coups));
+                    newSession.setStart(dateStart);
+                    newSession.setEnd(dateEnd);
+
+
+                    Call<Void> apiResponse =  provider.addSession(newSession);
+                    apiResponse.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            Log.d("CREATE", "onResponse");
+                            if (response.code() == 200) {
+                                Log.d("CREATE", "200");
+                                //onSuccess();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Log.d("CREATE", t.getMessage());
+                        }
+                    });
+
+
 
                 }
             }, convertFinTimeInMillisecond());
@@ -297,6 +345,42 @@ public class NewSessionActivity extends BaseActivity {
         bt_startSession.setText(R.string.start);
         step = STEP.ENDED;
         handler.removeCallbacksAndMessages(null);
+    }
+
+    public int getMaxValue(List<Integer> listInt){
+
+        int maxValue = 0;
+
+        for(Integer val : listInt){
+            if(val > maxValue){
+                maxValue = val;
+            }
+        }
+
+        return maxValue;
+    }
+
+    public int getMinValue(List<Integer> listInt){
+        int minValue = 1000;
+
+        for(Integer val : listInt){
+            if(val < minValue){
+                minValue = val;
+            }
+        }
+
+        return minValue;
+    }
+
+    public int getMoyValue(List<Integer> listInt){
+        int moy = 0;
+
+        for(Integer val : listInt){
+            moy += val;
+        }
+
+
+        return moy /= listInt.size();
     }
 
     public int convertDebutTimeInMillisecond(){
@@ -409,7 +493,10 @@ public class NewSessionActivity extends BaseActivity {
                     public void run() {
                         try {
 
-                            Log.i("TX", String.valueOf(intValue));
+                            coups.add(intValue);
+                           // newSession.setNbPunches(newSession.getNbPunches() + 1);
+
+                           // Log.i("TX", String.valueOf(intValue));
                             //Log.i("TX2", intValue);
                         } catch (Exception e) {
                             Log.e("BROAD", e.toString());
