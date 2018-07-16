@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.Handler;
@@ -15,12 +14,10 @@ import android.os.Vibrator;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -30,17 +27,13 @@ import android.widget.Toast;
 
 import com.esgi.mypunch.BaseActivity;
 import com.esgi.mypunch.R;
-import com.esgi.mypunch.data.BleDevice;
-import com.esgi.mypunch.data.dtos.BoxingSession;
-import com.esgi.mypunch.data.enums.CONNECTION_STATE;
+import com.esgi.mypunch.data.SharedPreferencesManager;
+import com.esgi.mypunch.data.dtos.BoxingSessionToSend;
+import com.esgi.mypunch.data.dtos.User;
 import com.esgi.mypunch.data.mainapi.PunchMyNodeProvider;
-import com.esgi.mypunch.navbar.NavContentActivity;
 import com.esgi.mypunch.services.BluetoothLEService;
-import com.esgi.mypunch.settings.SettingsFragment;
 
-import org.w3c.dom.Text;
-
-import java.nio.ByteBuffer;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -109,7 +102,7 @@ public class NewSessionActivity extends BaseActivity {
 
     int[] mAmplitudes = new int[]{0, 255, 0, 255, 0, 255};
 
-    BoxingSession newSession;
+    BoxingSessionToSend newSession;
 
     List<Integer> coups = new ArrayList<Integer>();
     Date dateStart = new Date();
@@ -124,7 +117,7 @@ public class NewSessionActivity extends BaseActivity {
 
         ButterKnife.bind(this);
 
-        newSession = new BoxingSession();
+        this.provider = new PunchMyNodeProvider();
 
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
@@ -300,16 +293,29 @@ public class NewSessionActivity extends BaseActivity {
                 public void run() {
                     cancelSession();
                     dateEnd = Calendar.getInstance().getTime();
+                    newSession = new BoxingSessionToSend();
+
 
                     newSession.setNbPunches(coups.size());
                     newSession.setMax_power(getMaxValue(coups));
                     newSession.setMin_power(getMinValue(coups));
                     newSession.setAverage_power(getMoyValue(coups));
-                    newSession.setStart(dateStart);
-                    newSession.setEnd(dateEnd);
+
+                    /*
+                    newSession.setNbPunches(20);
+                    newSession.setMax_power(252);
+                    newSession.setMin_power(30);
+                    newSession.setAverage_power(142);
+                    */
+
+                    //2018-07-16 19:40:54
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    newSession.setStart(format.format(dateStart));
+                    newSession.setEnd(format.format(dateEnd));
 
 
-                    Call<Void> apiResponse =  provider.addSession(newSession);
+                    User user = SharedPreferencesManager.getUser(NewSessionActivity.this);
+                    Call<Void> apiResponse =  provider.addSession(user, newSession);
                     apiResponse.enqueue(new Callback<Void>() {
                         @Override
                         public void onResponse(Call<Void> call, Response<Void> response) {
@@ -317,6 +323,8 @@ public class NewSessionActivity extends BaseActivity {
                             if (response.code() == 200) {
                                 Log.d("CREATE", "200");
                                 //onSuccess();
+                            } else {
+                                Log.d("BUG", response.code() + " " + response.message() );
                             }
                         }
 
@@ -379,8 +387,8 @@ public class NewSessionActivity extends BaseActivity {
             moy += val;
         }
 
-
-        return moy /= listInt.size();
+        moy /= listInt.size();
+        return moy ;
     }
 
     public int convertDebutTimeInMillisecond(){
@@ -496,7 +504,7 @@ public class NewSessionActivity extends BaseActivity {
                             coups.add(intValue);
                            // newSession.setNbPunches(newSession.getNbPunches() + 1);
 
-                           // Log.i("TX", String.valueOf(intValue));
+                           Log.i("TX", String.valueOf(intValue));
                             //Log.i("TX2", intValue);
                         } catch (Exception e) {
                             Log.e("BROAD", e.toString());
