@@ -4,13 +4,13 @@ public class CandidateUser {
     private String email;
     private String firstname;
     private String lastname;
-    private String pswd;
+    private String password;
 
     public CandidateUser(String email, String firstname, String lastname, String pswd) {
         this.email = email;
         this.firstname = firstname;
         this.lastname = lastname;
-        this.pswd = pswd;
+        this.password = pswd;
     }
 
     public String getEmail() {
@@ -37,12 +37,12 @@ public class CandidateUser {
         this.lastname = lastname;
     }
 
-    public String getPswd() {
-        return pswd;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPswd(String pswd) {
-        this.pswd = pswd;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
@@ -51,7 +51,7 @@ public class CandidateUser {
                 "email='" + email + '\'' +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
-                ", pswd='" + pswd + '\'' +
+                ", password='" + password + '\'' +
                 '}';
     }
 }
