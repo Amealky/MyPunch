@@ -1,6 +1,7 @@
 package com.esgi.mypunch.data.mainapi;
 
 import com.esgi.mypunch.data.dtos.BoxingSession;
+import com.esgi.mypunch.data.dtos.CandidateUser;
 import com.esgi.mypunch.data.dtos.Credentials;
 import com.esgi.mypunch.data.dtos.User;
 
@@ -16,6 +17,9 @@ import retrofit2.http.Path;
 public interface PunchMyNodeService {
     @POST("./auth/login")
     Call<User> getToken(@Body Credentials credentials);
+
+    @POST("./users/")
+    Call<User> register(@Body CandidateUser user);
 
     @POST("./auth/logout")
     Call<Void> logout(@Header("Authorization") String token);

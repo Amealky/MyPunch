@@ -15,6 +15,7 @@ public class RegisterPresenterImpl implements RegisterPresenter, OnRegisterFinis
     public void validateCredentials(String username, String password, String passwordRepeat) {
         registerView.showProgress();
         // TODO send to web service
+        //CandidateUser candidateUser = new CandidateUser()
     }
 
     @Override
@@ -43,6 +44,6 @@ public class RegisterPresenterImpl implements RegisterPresenter, OnRegisterFinis
 
     @Override
     public void onSuccess() {
-        registerView.navigateToLogin();
+        //registerView.
     }
 }
