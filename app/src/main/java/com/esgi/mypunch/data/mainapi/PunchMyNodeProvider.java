@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PunchMyNodeProvider {
     // change to your web service host
-    private static final String BASE_URL = "http://192.168.0.21:8080";
+    private static final String BASE_URL = "http://192.168.0.24:8080";
 
     private PunchMyNodeService pmnService;
 

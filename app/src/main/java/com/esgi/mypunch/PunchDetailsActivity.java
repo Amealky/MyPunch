@@ -72,6 +72,7 @@ public class PunchDetailsActivity extends BaseActivity {
             average_value.setText(String.valueOf(bSession.getAverage_power()));
 
             duree = bSession.getEnd().getTime() - bSession.getStart().getTime();
+            duree -= 3600000;
             DateFormat hourFormat = SimpleDateFormat.getTimeInstance();
 
             Dduree = new Date();
@@ -108,7 +109,9 @@ public class PunchDetailsActivity extends BaseActivity {
 
 
 
-        String title = dayFormat.format(startDate) + " " + hourFormat.format(startDate);
+
+
+        String title = dayFormat.format(startDate.getTime()- 3600000) + " " + hourFormat.format(startDate.getTime() - 3600000 * 2);
         setTitle(title);
     }
 }

@@ -13,6 +13,7 @@ import com.esgi.mypunch.data.dtos.BoxingSession;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -62,9 +63,11 @@ public class BoxingSessionAdapter extends RecyclerView.Adapter<BoxingSessionAdap
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder");
         final BoxingSession session = boxingSessions.get(position);
+        Date dateStart = new Date();
+        dateStart.setTime(session.getStart().getTime() - 3600000);
         // format session date
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
-        String stringDate = format.format(session.getStart());
+        String stringDate = format.format(dateStart);
         holder.sessionDate.setText(stringDate);
 
         // session duration
