@@ -1,6 +1,7 @@
 package com.esgi.mypunch.data.mainapi;
 
 import com.esgi.mypunch.data.dtos.BoxingSession;
+import com.esgi.mypunch.data.dtos.BoxingSessionToSend;
 import com.esgi.mypunch.data.dtos.CandidateUser;
 import com.esgi.mypunch.data.dtos.Credentials;
 import com.esgi.mypunch.data.dtos.User;
@@ -8,7 +9,6 @@ import com.esgi.mypunch.data.dtos.User;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -32,5 +32,5 @@ public interface PunchMyNodeService {
     Call<List<BoxingSession>> getUserPunches(@Path("userId") int userId, @Header("Authorization") String token);
 
     @POST("./sessions")
-    Call<Void> addSessions(@Body BoxingSession session);
+    Call<Void> addSessions(@Body BoxingSessionToSend session, @Header("Authorization") String token);
 }
