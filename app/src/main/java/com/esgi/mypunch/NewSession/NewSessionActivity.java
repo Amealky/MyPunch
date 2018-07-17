@@ -1,5 +1,6 @@
 package com.esgi.mypunch.NewSession;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -317,17 +318,20 @@ public class NewSessionActivity extends BaseActivity {
         newSession.setAverage_power(getMoyValue(coups));
 
         //2018-07-16 19:40:54
+        @SuppressLint("SimpleDateFormat")
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         newSession.setStart(format.format(dateStart));
         newSession.setEnd(format.format(dateEnd));
+        User user = SharedPreferencesManager.getUser(NewSessionActivity.this);
 
-                    Call<Void> apiResponse =  provider.addSession(newSession);
+
+        Call<Void> apiResponse =  provider.addSession(user,newSession);
                     apiResponse.enqueue(new Callback<Void>() {
                         @Override
                         public void onResponse(Call<Void> call, Response<Void> response) {
                             Log.d("CREATE", "onResponse");
-                            if (response.code() == 200) {
-                                Log.d("CREATE", "200");
+                            if (response.code() == 201) {
+                                Log.d("CREATE", "201");
                                 //onSuccess();
                             } else {
                                 Log.d("BUG", response.code() + " " + response.message() );
