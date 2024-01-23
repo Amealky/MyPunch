@@ -8,4 +8,4 @@ MyPunch is a boxing app linked with a homemade API and an electronic device insi
 made for a school project
 
 
-![Preview](https://metautbenjamin.com:3000/file/image/punch3.png)
+![Preview](https://i.ibb.co/jTbSybv/Capture-d-e-cran-2024-01-23-a-23-01-50.png)
