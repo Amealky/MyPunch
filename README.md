@@ -1,5 +1,3 @@
-``Reupload project from 2018 : This project was recovered so don't take commits into accounts``
-
 # MyPunch App 🥊
 
 MyPunch App is the Android app of the global MyPunch project, it allow the user to record boxing session and saw chart and datas about performance like :
