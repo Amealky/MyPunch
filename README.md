@@ -14,6 +14,6 @@ It also use a [MPU-6050 Accelerometer and Gyroscope Sensor](https://www.conrad.f
 
 Made with [Android Studio 4.1](https://developer.android.com/studio/archive?hl=en)
 
-This is a final school project
+This is an end of school year project.
 
 ![Preview](https://i.ibb.co/jTbSybv/Capture-d-e-cran-2024-01-23-a-23-01-50.png)
