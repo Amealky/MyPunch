@@ -1,4 +1,5 @@
-# MyPunch App 🥊
+
+ <h1 align="center">🥊 MyPunch APP 🥊</h1>
 
 MyPunch App is the Android app of the global MyPunch project, it allow the user to record boxing session and saw chart and datas about performance like :
 
